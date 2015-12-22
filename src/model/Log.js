@@ -13,8 +13,7 @@ function Log() {
 Log.prototype.addEntry = function(timestamp,attentionLevel, relaxationLevel) {
     
     var data = new DataEntry(timestamp,attentionLevel,relaxationLevel); 
-    JSONentry = JSON.stringify(data);
-    this.entries.push(JSONentry);   
+    this.entries.push(data);   
     
 };
 
