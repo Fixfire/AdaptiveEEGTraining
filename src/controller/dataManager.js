@@ -1,7 +1,8 @@
-var Log = require('../model/Log');
+//var Log = require('../model/Log');
 var log = new Log();
 
-exports.addPacket = function(packet){
+//exports.addPacket = 
+    function addPacket(packet){
     
     log.addEntry(packet.getTimestamp(),packet.getAttention(),packet.getRelaxation());
     
