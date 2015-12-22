@@ -23,6 +23,6 @@ setInterval(function packetGenerator () {
     
     number = number +1;
 
-}, 3000);
+}, 1000);
 
 console.log("timeout started"); 
