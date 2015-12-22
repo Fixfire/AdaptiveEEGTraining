@@ -1,5 +1,7 @@
+// CLASS DATAPACKET //
+
 /**
-* Function for creating a packe object.
+* Function for creating a packet object.
 **/
 function Packet(attention, relaxation, alfa, beta, theta , delta, timestamp) {
     this.attention = attention;
@@ -11,17 +13,25 @@ function Packet(attention, relaxation, alfa, beta, theta , delta, timestamp) {
     this.timestamp = timestamp;
 }
 
-/**
-* Function for creating a new pakcet and return it externally to another module.
-**/
-exports.pakcetCreator = function(attention, relaxation, alfa, beta, theta , delta, timestamp) {
-    return new Packet(attention,relaxation,alfa,beta,theta,delta,timestamp);
+//Class methods
+
+Packet.prototype.getTimestamp = function() {
+    return this.timestamp;
 }
+
+Packet.prototype.getAttention = function() {
+    return this.attention;
+}
+
+Packet.prototype.getRelaxation = function() {
+    return this.relaxation;
+}
+
 
 /**
 * Function for generating a random packet for an external module.
 **/
-exports.randomPacketGenerator = function() {
+Packet.randomPacketGenerator = function() {
     var attention = Math.floor((Math.random() * 100) + 1);
     var alfa = Math.floor((Math.random() * 100) + 1);
     var beta = Math.floor((Math.random() * 100) + 1);
@@ -32,3 +42,7 @@ exports.randomPacketGenerator = function() {
     var timestamp = new Date().getTime();
     return new Packet(attention,relaxation,alfa,beta,theta,delta,timestamp);
 }
+
+//Export class
+
+module.exports = Packet
