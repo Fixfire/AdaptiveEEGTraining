@@ -1,0 +1,12 @@
+{
+  "name": "cylon-example-browserify",
+  "version": "0.0.1",
+
+  "private": true,
+
+  "dependencies": {
+    "cylon": "~1.2.0",
+    "browserify": "~12.0.1",
+    "cylon-neurosky": "~0.14.0"
+  }
+}
