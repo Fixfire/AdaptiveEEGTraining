@@ -1,42 +1,59 @@
 "use strict";
 
 var Cylon = require('cylon');
+var straw = require('straw');
 
-Cylon.robot({
-  name: "NeuroBot",
+module.exports = straw.node({
+  initialize: function (opts, done) {
+    Cylon.robot({
+      name: "NeuroBot",
 
-  connections: {
-    neurosky: { adaptor: 'mindflex', port: '/dev/tty.Mindflex-DevB' }
+      connections: {
+        neurosky: { adaptor: 'mindflex', port: '/dev/tty.Mindflex-DevB' }
+      },
+
+      devices: {
+        headset: { driver: 'mindflex' }
+      },
+
+      work: function(my) {
+        my.headset.on("attention", function(data) {
+          var packet = {
+            attention: data
+          };
+          self.output(JSON.stringify(packet));
+        });
+
+        my.headset.on("meditation", function(data) {
+          var packet = {
+            meditation: data
+          };
+          self.output(JSON.stringify(packet));
+        });
+
+        my.headset.on("eeg", function(data) {
+          self.output(JSON.stringify(data));
+        });
+
+        my.headset.on("wave", function(data) {
+          var packet = {
+            wave: data
+          };
+          self.output(JSON.stringify(packet));
+        });
+      }
+    });
+    done();
   },
-
-  devices: {
-    headset: { driver: 'mindflex' }
+  stop: function (done) {
+    Cylon.stop();
+    done();
   },
-
-  work: function(my) {
-    my.headset.on('attention', function(data) {
-      console.log("attention:" + data);
-    });
-
-    my.headset.on('meditation', function(data) {
-      console.log("meditation:" + data);
-    });
-
-    my.headset.on("eeg", function(data) {
-      console.log("EEG:", data);
-    });
-
-    my.headset.on("wave", function(data) {
-      console.log("Wave:", data);
-    });
-
-    my.headset.on("bad_packet", function(data) {
-      console.log("Bad packet:", data);
-      });
-
-    my.headset.on("mode_1", function() {
-      console.log("MODE 1 found");
-    });
+  start: function (done) {
+    Cylon.start();
+    done();
   }
-}).start();
+});
+
+
 
