@@ -7,5 +7,5 @@ serve:
 	python -m SimpleHTTPServer
 
 build:
-	@echo "Building script.js with Browserify"
-	$(BIN)browserify -r cylon-neurosky script.js > ./browser.js
+	@echo "Building main.js with Browserify"
+	$(BIN)browserify -r cylon-mindflex main.js > ./browser.js
