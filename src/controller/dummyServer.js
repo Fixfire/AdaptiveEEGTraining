@@ -25,4 +25,3 @@ setInterval(function packetGenerator () {
 
 }, 1000);
 
-console.log("timeout started"); 
