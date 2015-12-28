@@ -8,4 +8,4 @@ exports.addPacket =
     //log.addEntry('aaaa:mm:dd::hh:mm:ss',10,10);
     console.log(JSON.stringify(log.getEntries(),null,4));
 
-}
+}   
