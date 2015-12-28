@@ -1,17 +1,13 @@
+var Adapter = require("./adapter.js");
+
 var main = (function() {
 
-    function AdaptiveEeg() {
-    }
+    document.addEventListener('DOMContentLoaded', function() {
+        var adapter = new Adapter();
+        adapter.init();
+        adapter.on("attention", function(data) {
+            console.log(data);
+        })
+    });
 
-    AdaptiveEeg.prototype.init = function() {
-    };
-
-    return {
-        AdaptiveEeg: AdaptiveEeg
-    };
-})();
-
-document.addEventListener('DOMContentLoaded', function() {
-    var AdaptiveEeg = new main.AdaptiveEeg();
-    AdaptiveEeg.init();
-});
+    })();
