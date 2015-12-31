@@ -2,7 +2,7 @@ var level;
 var time;
 var actions;
 var active;
-
+var timeout; 
 
 function AttentionTask(){
     this.level = 0;
@@ -12,23 +12,22 @@ function AttentionTask(){
 }
 
 
-
-
-AttentionTask.prototype.checkPacket = function(packet) {
+AttentionTask.prototype.checkPacket = function(packet,object) {
     console.log("I'm attention session and this is the packet ");
     console.log(packet);
-    
-    var timeout; 
-    console.log(level);
-    console.log(packet.attention);
-    if(packet.attention >= level && !active){
+
+    //Logging in cosole for checking
+    console.log("rule level : " + object.level);
+    console.log("rule time : " + object.time);
+
+    if(packet.attention >= object.level && !object.active){
         console.log("sei over 9000");
-        timeout = setTimeout(startActions(),500 * time);
-        active = true;
+        timeout = setTimeout(startActions(),500 * object.time);
+        object.active = true;
     }
-    if(packet.attention < level && active){
-        timeout = clearTimeout();
-        active = false;
+    if(packet.attention < object.level && object.active){
+        object.timeout = clearTimeout();
+        object.active = false;
     }
     
 }

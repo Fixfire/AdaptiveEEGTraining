@@ -21,10 +21,9 @@ exports.startNewConcentrationSession = function() {
             var attentionTask = new AttentionTask();
 
             createTask(JSONScene[event],attentionTask);
-            receiver.addNewListener(attentionTask.checkPacket,taskNumber);
+            receiver.addNewTaskListener(attentionTask.checkPacket,attentionTask);
             
             taskNumber = taskNumber + 1;
-
 
         }
 
