@@ -21,8 +21,7 @@ AttentionTask.prototype.checkPacket = function(packet,object) {
     console.log("rule time : " + object.time);
 
     if(packet.attention >= object.level && !object.active){
-        console.log("sei over 9000");
-        timeout = setTimeout(startActions(),500 * object.time);
+        object.timeout = setTimeout(function() {startActions(object);}, 1000 * object.time);
         object.active = true;
     }
     if(packet.attention < object.level && object.active){
@@ -33,7 +32,9 @@ AttentionTask.prototype.checkPacket = function(packet,object) {
 }
 
 
-function startActions(){
+function startActions(object){
+    var starter = require("./sessionStarter");
+    starter.removeListener(object);
     console.log("Action Started!");
 }
 
