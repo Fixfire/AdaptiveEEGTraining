@@ -3,7 +3,7 @@ exports.startNewConcentrationSession = function() {
     var AttentionTask = require("./AttentionTask");
     var dataManager = require("../dataManager");
     
-    var JSONSession = '[{"main":{"0":{"when":{"event":"attention","level":"50","time":"1"},"do":{"0":{"label":"video","action":"play"},"1":{"label":"hue","action":"on"}}}},"options":{"device":"pc","timeout":"60"}},{"main":{"0":{"when":{"event":"attention","level":"30","time":"2"},"do":{"0":{"label":"video","action":"play"},"1":{"label":"hue","action":"on"}}}},"options":{"device":"pc","timeout":"60"}}]';
+    var JSONSession = '[{"main":{"0":{"when":{"event":"attention","level":"50","time":"3"},"do":{"0":{"label":"video","action":"play"},"1":{"label":"hue","action":"on"}}}},"options":{"device":"pc","timeout":"60"}},{"main":{"0":{"when":{"event":"attention","level":"30","time":"1"},"do":{"0":{"label":"video","action":"play"},"1":{"label":"hue","action":"on"}}}},"options":{"device":"pc","timeout":"60"}}]';
         
     var taskNumber = 0;
     
@@ -21,7 +21,7 @@ exports.startNewConcentrationSession = function() {
             var attentionTask = new AttentionTask();
 
             createTask(JSONScene[event],attentionTask);
-            receiver.addNewTaskListener(attentionTask.checkPacket,attentionTask);
+            receiver.addNewTaskListener(attentionTask);
             
             taskNumber = taskNumber + 1;
 
@@ -30,14 +30,16 @@ exports.startNewConcentrationSession = function() {
     }
     
     receiver.startReceiving();
-    
-    
+}
+
+exports.startNewRelaxationSession = function() {
     
 }
 
 
-exports.startNewRelaxationSession = function() {
-    
+exports.removeListener = function(listener) {
+    var receiver = require("../headsetReceiver/dataReceiver");
+    receiver.removeTaskListener(listener);
 }
 
 function createTask(JSONTask, task){

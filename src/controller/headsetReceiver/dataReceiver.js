@@ -3,10 +3,14 @@ var packetEmitter = new events.EventEmitter();
 var currentTask = null;
 var listeners = [] ;
 
-exports.addNewTaskListener = function(listener,element) {
+exports.addNewTaskListener = function(element) {
     console.log("added new rule for the current task");
     listeners.push(element);
     packetEmitter.addListener(listeners.length,element.checkPacket);
+}
+
+exports.removeTaskListener = function(listener) {
+    packetEmitter.removeAllListeners(listeners.indexOf(listener) + 1 );
 }
 
 exports.addNewListener = function(listener) {
