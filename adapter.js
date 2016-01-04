@@ -22,29 +22,8 @@ var AdaptiveEeg = module.exports = function AdaptiveEeg() {
         },
 
         work: function(my) {
-            my.headset.on("attention", function(data) {
-                var packet = {
-                    attention: data
-                };
-                self.emit("attention", JSON.stringify(packet));
-            });
-
-            my.headset.on("meditation", function(data) {
-                var packet = {
-                    meditation: data
-                };
-                self.emit("meditation", JSON.stringify(packet));
-            });
-
-            my.headset.on("eeg", function(data) {
-                self.emit("eeg", JSON.stringify(data));
-            });
-
-            my.headset.on("wave", function(data) {
-                var packet = {
-                    wave: data
-                };
-                self.emit("wave", JSON.stringify(packet));
+            my.headset.on("packet", function(data) {
+                process.emit("jsonPacket", JSON.stringify(packet));
             });
         }
     });
