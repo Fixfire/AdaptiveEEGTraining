@@ -14,7 +14,7 @@ exports.removeTaskListener = function(listener) {
 }
 
 exports.addNewListener = function(listener) {
-    packetEmitter.addListener("newPacket",listener);
+    packetEmitter.addListener("jsonPacket",listener);
 }
 
 exports.startReceiving = function() {
@@ -38,7 +38,7 @@ function newPacket(packet) {
         var target = parseInt(index) + 1;
         packetEmitter.emit(target,packet,listeners[index]);
     }
-    packetEmitter.emit("newPacket",packet);
+    packetEmitter.emit("jsonPacket",packet);
     console.log("New packet Emitted");
 
 }
