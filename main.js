@@ -5,7 +5,7 @@ var main = (function() {
     document.addEventListener('DOMContentLoaded', function() {
         var adapter = new Adapter();
         adapter.init();
-        process.on("packet", function(data) {
+        process.on("jsonPacket", function(data) {
             console.log(data);
         })
     });
