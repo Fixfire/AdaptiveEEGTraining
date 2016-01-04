@@ -35,6 +35,10 @@ AttentionTask.prototype.checkPacket = function(packet,object) {
 function startActions(object){
     var starter = require("./sessionStarter");
     
+    for (action in object.actions){
+-        starter.getView().actions(JSON.stringify(object.actions[action]));
+-    }
+
     starter.removeListener(object);
     console.log("Action Started!");
 }
