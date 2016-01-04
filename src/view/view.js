@@ -16,6 +16,8 @@ function View( JSONInitializer ) {
 
 module.exports = View;
 
+
+
 //Distinzione tra azioni
 View.prototype.actions = function( JSONaction ){
     
@@ -30,68 +32,55 @@ View.prototype.actions = function( JSONaction ){
         if(action == "load"){
             this.videoOnScreen(settings.path);
         }
-        if(typeOfAction == "play"){
+        if(action == "play"){
             this.playVideo();
         }
     }
-/*    if(label == "music"){               TODO sistemare su skype
+    
+   if(label == "music"){         
         
         var action = settings.action;
         
         if(action == "play"){
-            //TODO
+            startMusic(settings.path);
         }
-        if(action == "play"){
-            //TODO
+        if(action == "continue"){
+            changeMusicVolume(settings.final_volume, settings.responsive_function);
+        }
+        if(action == "stop"){
+            stopMusic();
         }
     }
+    
     if(action == "light"){
-    //TODO
-    }*/
+        this.setLights( settings.color, settings.final_brightness, settings.position);
+    }
 }
 
 
-//Metodi di startup per le sessioni
-View.prototype.startAttentionSession = function(){
+
+//Metodo di startup per le sessioni
+View.prototype.startSession = function(){
     
     if(this.environment == "magicRoom"){
-        setRuntimeAttentionPanel();
+        setPanel();
     }
 
 }
 
-View.prototype.startRelaxationSession = function( /*TODO parametri*/){
+
+
+//Metodi per inizializzazione e update pannello di controllo
+function setPanel(/*TODO parametri*/) {
     
-    if(this.environment == "magicRoom"){
-        this.setLights( color );
-        startMusic();
-        setRuntimeRelaxationPanel();
-    }
-    else {
-        //TODO serve davvero l'if else? non c'è solo la stanza?
-    }
-}
-
-
-
-//Metodi di settaggio per i pannelli di controllo
-function setRuntimeAttentionPanel() {
-    //TODO 
-}
-
-function setRuntimeRelaxationPanel(/*parametri*/) {
-    //TODO
-}
-
-
-
-//Metodi di aggiornamento dei pannelli di controllo
-function updateAnimalAttentionPanel(/*parametri*/){
-    //TODO faccio una cartella con le icone degli animali che devono matchare i nomi dati ai video
+    //inizializzo i contenitori per i due grafici
+    $(".main-content").append('<div id="container1" style="width:100%; height:400px;"></div><div id="container2" style="width:100%; height:400px;"></div>');
 }
 
 View.prototype.updateGraph = function( packet ) {
-    //TODO 
+    if($(/*TODO id del contenitore del grafico*/).length){
+        //TODO update graph
+    }
 }
 
 
@@ -146,16 +135,21 @@ function playVideoOnBrowser(){
 
 //Metodi per la gestione della stanza
 function startMusic( music ) {
-    //TODO
-}
-
-View.prototype.setLights = function( color ){
     //TODO chiamare SSex
 }
 
-View.prototype.changeLightsIntensity = function( intensity ){
+function changeMusicVolume(finalVolume, responsive_function){
     //TODO chiamare SSex
 }
+
+function stopMusic(){
+    //TODO chiamare SSex 
+}
+
+View.prototype.setLights = function( color, intensity, position ){
+    //TODO chiamare SSex
+}
+
 
 
 
