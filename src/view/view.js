@@ -30,7 +30,7 @@ View.prototype.actions = function( JSONaction ){
             this.videoOnScreen(settings.path);
         }
         if(typeOfAction == "play"){
-            this.playVideo;
+            this.playVideo();
         }
     }
 /*    if(label == "music"){               TODO sistemare su skype
@@ -119,21 +119,21 @@ function videoOnScreenOnBrowser( video ) {
 
 }
 
-View.prototype.playVideo = function( video ) {
+View.prototype.playVideo = function() {
     
     if(this.environment == "magicRoom"){
-        playVideoWithProjector( video );
+        playVideoWithProjector();
     }
     else {
-        playVideoOnBrowser( video );
+        playVideoOnBrowser();
     }
 }
 
-function playVideoWithProjector( video ){
+function playVideoWithProjector(){
     //TODO chiamare SSex
 }
 
-function playVideoOnBrowser( video ){
+function playVideoOnBrowser(){
     $("#video").play();
 }
 
