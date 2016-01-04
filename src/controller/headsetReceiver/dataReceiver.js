@@ -15,6 +15,7 @@ exports.removeTaskListener = function(listener) {
 
 exports.addNewListener = function(listener) {
     packetEmitter.addListener("jsonPacket",listener);
+    //process.on('jsonPacket',listener);
 }
 
 exports.startReceiving = function() {
@@ -26,6 +27,10 @@ exports.startReceiving = function() {
 }
 
 function startConnection() {
+    
+    //var adapter = new Adapter();
+    //adapter.init();
+    
     var dummy = require("../dummyServer");
 
     
