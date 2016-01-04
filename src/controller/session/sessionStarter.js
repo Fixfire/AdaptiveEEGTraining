@@ -1,11 +1,24 @@
+var view;
+
+exports.getView = function(){
+    return view;
+}
+
 exports.startNewConcentrationSession = function() {
     var receiver = require("../headsetReceiver/dataReceiver");
     var AttentionTask = require("./AttentionTask");
     var dataManager = require("../dataManager");
+    var View = require("../../view/view.js");
+    
+    var JSONInitializer = '{"environment":"pc"}';
     
     var JSONSession = '[{"main":{"0":{"when":{"event":"attention","level":"50","time":"3"},"do":{"0":{"label":"video","action":"play"},"1":{"label":"hue","action":"on"}}}},"options":{"device":"pc","timeout":"60"}},{"main":{"0":{"when":{"event":"attention","level":"30","time":"1"},"do":{"0":{"label":"video","action":"play"},"1":{"label":"hue","action":"on"}}}},"options":{"device":"pc","timeout":"60"}}]';
         
     var taskNumber = 0;
+    
+    //Instantiation of View
+    view = new View(JSONInitializer);
+    receiver.addNewListener(view.updateGraph);
     
     var JSONTask = JSON.parse(JSONSession);
     console.log(JSONTask);
