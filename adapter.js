@@ -23,7 +23,7 @@ var AdaptiveEeg = module.exports = function AdaptiveEeg() {
 
         work: function(my) {
             my.headset.on("packet", function(data) {
-                process.emit("jsonPacket", JSON.stringify(packet));
+                process.emit("jsonPacket", JSON.stringify(data));
             });
         }
     });
