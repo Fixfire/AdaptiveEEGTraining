@@ -1,4 +1,4 @@
-var View = function ( JSONInitializer ) {
+function View( JSONInitializer ) {
     
     /* mi aspetto che JSONInitializer sia
      * fatto così: 
