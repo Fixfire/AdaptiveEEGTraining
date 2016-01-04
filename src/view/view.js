@@ -11,9 +11,10 @@ var View = function ( JSONInitializer ) {
     if(this.environment == "magicRoom"){
         this.lights = settings.lights;
     }
+    
 }
 
-
+module.exports = View;
 
 //Distinzione tra azioni
 View.prototype.actions = function( JSONaction ){
@@ -51,13 +52,12 @@ View.prototype.actions = function( JSONaction ){
 
 
 //Metodi di startup per le sessioni
-View.prototype.startAttentionSession = function( firstVideo ){
+View.prototype.startAttentionSession = function(){
     
     if(this.environment == "magicRoom"){
         setRuntimeAttentionPanel();
     }
-    
-    this.videoOnScreen( firstVideo );
+
 }
 
 View.prototype.startRelaxationSession = function( /*TODO parametri*/){
@@ -86,9 +86,14 @@ function setRuntimeRelaxationPanel(/*parametri*/) {
 
 
 //Metodi di aggiornamento dei pannelli di controllo
-function updateAttentionPanel(/*parametri*/){
+function updateAnimalAttentionPanel(/*parametri*/){
     //TODO faccio una cartella con le icone degli animali che devono matchare i nomi dati ai video
 }
+
+View.prototype.updateGraph = function( packet ) {
+    //TODO 
+}
+
 
 
 
@@ -151,3 +156,6 @@ View.prototype.setLights = function( color ){
 View.prototype.changeLightsIntensity = function( intensity ){
     //TODO chiamare SSex
 }
+
+
+
