@@ -14,6 +14,42 @@ var View = function ( JSONInitializer ) {
 }
 
 
+
+//Distinzione tra azioni
+View.prototype.actions = function( JSONaction ){
+    
+    var settings = JSON.parse(JSONaction);
+    
+    var label = settings.label;
+    
+    if(label == "video"){
+        
+        var action = settings.action;
+        
+        if(action == "load"){
+            this.videoOnScreen(settings.path);
+        }
+        if(typeOfAction == "play"){
+            this.playVideo;
+        }
+    }
+/*    if(label == "music"){               TODO sistemare su skype
+        
+        var action = settings.action;
+        
+        if(action == "play"){
+            //TODO
+        }
+        if(action == "play"){
+            //TODO
+        }
+    }
+    if(action == "light"){
+    //TODO
+    }*/
+}
+
+
 //Metodi di startup per le sessioni
 View.prototype.startAttentionSession = function( firstVideo ){
     
@@ -74,14 +110,11 @@ function videoOnScreenWithProjector( video ) {
 
 function videoOnScreenOnBrowser( video ) {
     
-    //TODO suppongo che la variabile video sia solo il nome dell'animale e non anche il formato
-    var videoName = video + ".mp4";
-    
     //pulisco schermo prima mettere nuovo video
     $(".main-content").html("");
     
     //TODO fare CSS per video
-    $(".main-content").append('<video><source src="'+videoName+'" type="video/mp4"></video>');
+    $(".main-content").append('<video><source src="'+video+'" type="video/mp4"></video>');
     $("#video").load();
 
 }
@@ -118,24 +151,3 @@ View.prototype.setLights = function( color ){
 View.prototype.changeLightsIntensity = function( intensity ){
     //TODO chiamare SSex
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-$(document).ready( function(){
-    
-    var a = $("#video").length;
-
-$(".main-content").append(typeof $("#video"));
-    
-});
