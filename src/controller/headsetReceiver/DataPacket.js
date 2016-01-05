@@ -3,7 +3,7 @@
 /**
 * Function for creating a packet object.
 **/
-function Packet(attention, meditation, loAlpha, hiAlpha, loBeta, hiBetam, loGamma, midGamma, theta , delta, timestamp) {
+function Packet(attention, meditation, loAlpha, hiAlpha, loBeta, hiBeta, loGamma, midGamma, theta , delta, timestamp) {
     this.attention = attention;
     this.meditation = meditation;
     this.loAlpha = loAlpha;
@@ -35,7 +35,7 @@ Packet.prototype.getRelaxation = function() {
 /**
 * Function for generating a random packet for an external module.
 **/
-Packet.randomPacketJSONGenerator = function() {
+Packet.randomPacketGenerator = function() {
     var attention = Math.floor((Math.random() * 100) + 1);
     var hiAlpha = Math.floor((Math.random() * 100) + 1);
     var loAlpha = Math.floor((Math.random() * 100) + 1);
@@ -48,7 +48,7 @@ Packet.randomPacketJSONGenerator = function() {
     var relaxation   = Math.floor((Math.random() * 100) + 1);
     var meditation = Math.floor((Math.random() * 100) + 1);
     var timestamp = new Date().getTime();
-    return new Packet(attention, meditation, loAlpha, hiAlpha, loBeta, hiBetam, loGamma, midGamma, theta , delta, timestamp) ;
+    return new Packet(attention, meditation, loAlpha, hiAlpha, loBeta, hiBeta, loGamma, midGamma, theta , delta, timestamp) ;
 }
 
 //Export class
