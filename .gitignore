@@ -16,3 +16,5 @@ target
 /build.sbt
 /project/sbt-ui.sbt
 /project/play-fork-run.sbt
+src/node_modules
+*.log
