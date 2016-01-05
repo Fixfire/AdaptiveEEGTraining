@@ -2,13 +2,15 @@ var level;
 var time;
 var actions;
 var active;
-var timeout; 
+var timeout;
+var condition;
 
 function AttentionTask(){
     this.level = 0;
     this.time = 0;
     this.actions = [];
     this.active = false;
+    this.condition = "above";
 }
 
 
@@ -19,28 +21,43 @@ AttentionTask.prototype.checkPacket = function(packet,object) {
     //Logging in cosole for checking
     console.log("rule level : " + object.level);
     console.log("rule time : " + object.time);
+    if (object.condition == "above") {
+        
+        if(packet.attention >= object.level && !object.active){
+            object.timeout = setTimeout(function() {startActions(object);}, 1000 * object.time);
+            object.active = true;
+        }
+        if(packet.relaxation < object.level && object.active){
+            object.timeout = clearTimeout();
+            object.active = false;
+        }
+    }
+    
+    if (object.condition == "below") {
+        if(packet.attention <= object.level && !object.active){
+            object.timeout = setTimeout(function() {startActions(object);}, 1000 * object.time);
+            object.active = true;
+        }
+        if(packet.attention > object.level && object.active){
+            object.timeout = clearTimeout();
+            object.active = false;
+        }
+    } 
 
-    if(packet.meditation >= object.level && !object.active){
-        object.timeout = setTimeout(function() {startActions(object);}, 1000 * object.time);
-        object.active = true;
-    }
-    if(packet.meditation < object.level && object.active){
-        object.timeout = clearTimeout();
-        object.active = false;
-    }
     
 }
 
 
 function startActions(object){
     var starter = require("./sessionStarter");
+    console.log("Action Started!");
     
     for (action in object.actions){
         starter.getView().actions(JSON.stringify(object.actions[action]));
     }
 
     starter.removeListener(object);
-    console.log("Action Started!");
+
 }
 
 
@@ -51,6 +68,14 @@ AttentionTask.prototype.setLevel = function(level){
 
 AttentionTask.prototype.getLevel = function(){
     return this.level;
+}
+
+AttentionTask.prototype.setCondition = function(condition){
+    this.condition = condition;
+}
+
+AttentionTask.prototype.getCondition = function(){
+    return this.condition;
 }
 
 AttentionTask.prototype.setTime = function(time){

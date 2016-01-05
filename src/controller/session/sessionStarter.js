@@ -68,6 +68,12 @@ function createTask(JSONTask, task){
     } 
     console.log("LEVEL IS: " + task.getLevel());
     
+    var condition = JSONTask.when.condition;
+    if(condition != '' && condition != undefined){
+        task.setCondition(condition);
+    }
+    console.log("CONDITION IS: " + task.getCondition());
+    
     var JSONActions = JSONTask.do;
     
     for(action in JSONActions){
