@@ -1,36 +1,38 @@
 /**
  * Created by Alessandro on 28/12/15.
  */
-"use strict";
 
 var Cylon = require("cylon"),
     util = require('util'),
     EventEmitter = require('events').EventEmitter;
 
-var AdaptiveEeg = module.exports = function AdaptiveEeg() {
+var Adapter = module.exports = function Adapter() {
     EventEmitter.call(this);
-    this._events = ["attention", "meditation", "eeg", "wave"];
+    this._events = ["jsonRawPacket", "jsonComputedPacket"];
     self = this;
-    this.adapter = Cylon.robot({
-
-        connections: {
-            neurosky: { adaptor: 'mindflex', port: '/dev/tty.Mindflex-DevB' }
-        },
-
-        devices: {
-            headset: { driver: 'mindflex' }
-        },
-
-        work: function(my) {
-            my.headset.on("packet", function(data) {
-                process.emit("jsonPacket", JSON.stringify(data));
-            });
-        }
-    });
 }
 
-util.inherits(AdaptiveEeg, EventEmitter);
+util.inherits(Adapter, EventEmitter);
 
-AdaptiveEeg.prototype.init = function() {
-    this.adapter.start();
-};
+Adapter.prototype.eegDevice = Cylon.robot({
+    connections: {
+        neurosky: { adaptor: 'mindflex', port: '/dev/tty.Mindflex-DevB' }
+    },
+    devices: {
+        headset: { driver: 'mindflex' }
+    },
+    work: function(my) {
+        my.headset.on("allComputedPacket", function(data) {
+            self.emit("packet", data);
+        });
+    }
+});
+
+Adapter.prototype.isInit = false;
+
+Adapter.prototype.init = function() {
+    if (!this.isInit) {
+        this.eegDevice.start();
+        this.isInit = true;
+    }
+}
