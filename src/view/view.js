@@ -34,6 +34,7 @@ View.prototype.actions = function( JSONaction ){
             this.videoOnScreen(JSONaction);
         }
         if(action == "play"){
+            console.log("PLAY VIDEO!");
             this.playVideo();
         }
     }
