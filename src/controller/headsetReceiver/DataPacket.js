@@ -3,11 +3,15 @@
 /**
 * Function for creating a packet object.
 **/
-function Packet(attention, relaxation, alfa, beta, theta , delta, timestamp) {
+function Packet(attention, meditation, loAlpha, hiAlpha, loBeta, hiBetam, loGamma, midGamma, theta , delta, timestamp) {
     this.attention = attention;
-    this.relaxation = relaxation;
-    this.alfa = alfa;
-    this.beta = beta;
+    this.meditation = meditation;
+    this.loAlpha = loAlpha;
+    this.hiAlpha = hiAlpha;
+    this.loBeta = loBeta;
+    this.hiBeta = hiBeta;
+    this.loGamma = loGamma;
+    this.midGamma = midGamma;
     this.theta = theta;
     this.delta = delta;
     this.timestamp = timestamp;
@@ -31,16 +35,20 @@ Packet.prototype.getRelaxation = function() {
 /**
 * Function for generating a random packet for an external module.
 **/
-Packet.randomPacketGenerator = function() {
+Packet.randomPacketJSONGenerator = function() {
     var attention = Math.floor((Math.random() * 100) + 1);
-    var alfa = Math.floor((Math.random() * 100) + 1);
-    var beta = Math.floor((Math.random() * 100) + 1);
+    var hiAlpha = Math.floor((Math.random() * 100) + 1);
+    var loAlpha = Math.floor((Math.random() * 100) + 1);
+    var loBeta = Math.floor((Math.random() * 100) + 1);
+    var hiBeta = Math.floor((Math.random() * 100) + 1);
+    var loGamma = Math.floor((Math.random() * 100) + 1);
+    var midGamma = Math.floor((Math.random() * 100) + 1);
     var theta = Math.floor((Math.random() * 100) + 1);
     var delta = Math.floor((Math.random() * 100) + 1);
     var relaxation   = Math.floor((Math.random() * 100) + 1);
-    var attention = Math.floor((Math.random() * 100) + 1);
+    var meditation = Math.floor((Math.random() * 100) + 1);
     var timestamp = new Date().getTime();
-    return new Packet(attention,relaxation,alfa,beta,theta,delta,timestamp);
+    return new Packet(attention, meditation, loAlpha, hiAlpha, loBeta, hiBetam, loGamma, midGamma, theta , delta, timestamp) ;
 }
 
 //Export class

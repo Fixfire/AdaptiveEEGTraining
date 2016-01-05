@@ -20,11 +20,11 @@ AttentionTask.prototype.checkPacket = function(packet,object) {
     console.log("rule level : " + object.level);
     console.log("rule time : " + object.time);
 
-    if(packet.attention >= object.level && !object.active){
+    if(packet.meditation >= object.level && !object.active){
         object.timeout = setTimeout(function() {startActions(object);}, 1000 * object.time);
         object.active = true;
     }
-    if(packet.attention < object.level && object.active){
+    if(packet.meditation < object.level && object.active){
         object.timeout = clearTimeout();
         object.active = false;
     }
