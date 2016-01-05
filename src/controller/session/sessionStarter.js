@@ -12,7 +12,7 @@ exports.startNewConcentrationSession = function() {
     
     var JSONInitializer = '{"environment":"pc"}';
     
-    var JSONSession = '[{"main":{"0":{"when":{"event":"attention","level":"50","time":"3"},"do":{"0":{"label":"video","action":"play"},"1":{"label":"hue","action":"on"}}}},"options":{"device":"pc","timeout":"60"}},{"main":{"0":{"when":{"event":"attention","level":"30","time":"1"},"do":{"0":{"label":"video","action":"play"},"1":{"label":"hue","action":"on"}}}},"options":{"device":"pc","timeout":"60"}}]';
+    var JSONSession = '[{"main":{"0":{"when":{"event":"attention","level":"50","time":"3","condition":"below"},"do":{"0":{"label":"video","action":"play"},"1":{"label":"hue","action":"on"}}}},"options":{"device":"pc","timeout":"60"}},{"main":{"0":{"when":{"event":"attention","level":"20","time":"1"},"do":{"0":{"label":"video","action":"play"},"1":{"label":"hue","action":"on"}}}},"options":{"device":"pc","timeout":"60"}}]';
         
     var taskNumber = 0;
     
@@ -57,15 +57,15 @@ exports.removeListener = function(listener) {
 
 function createTask(JSONTask, task){
     var time = JSONTask.when.time;
-    if(time != ''){
+    if(time != '' && time != undefined){
         task.setTime(time);
     }
     console.log("TIME IS: " + task.getTime());
     
     var level = JSONTask.when.level;
-     if(level != ''){
+    if(level != '' && level != undefined){
         task.setLevel(level);
-    }
+    } 
     console.log("LEVEL IS: " + task.getLevel());
     
     var JSONActions = JSONTask.do;
