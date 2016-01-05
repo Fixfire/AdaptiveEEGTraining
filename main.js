@@ -4,10 +4,10 @@ var main = (function() {
 
     document.addEventListener('DOMContentLoaded', function() {
         var adapter = new Adapter();
-        adapter.init();
-        process.on("jsonPacket", function(data) {
-            console.log(data);
+        adapter.on("packet", function(data) {
+            console.log(JSON.stringify(data));
         })
+        adapter.init();
     });
 
-    })();
+})();
