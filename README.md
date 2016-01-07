@@ -7,5 +7,7 @@ Advanced User Interfaces Project - Polimi
 
 # Browserify app creation
 - From project folder in command line do .\\node_modules\.bin\browserify -r cylon-mindflex main.js > browser.js
-- In Chrome from chrome://extension, enable developer function -> Load Unpacked extension -> select project folder -> Active (To see console right click on the opened window -> inspect)
 
+# Starting Chrome App
+- If browser.js has been already created
+- In Chrome from chrome://extension, enable developer function -> Load Unpacked extension -> select project folder -> Active (To see console right click on the opened window -> inspect)
