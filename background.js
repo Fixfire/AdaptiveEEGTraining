@@ -3,10 +3,10 @@
  */
 
 chrome.app.runtime.onLaunched.addListener(function() {
-    chrome.app.window.create('window.html', {
+    chrome.app.window.create('./src/view/index.html', {
         'outerBounds': {
-            'width': 400,
-            'height': 500
+            'width': 1280,
+            'height': 1024
         }
     });
 });
