@@ -7,12 +7,15 @@ exports.getView = function(){
 exports.startNewSession = function() {
     var receiver = require("../headsetReceiver/dataReceiver");
     var CustomTask = require("./CustomTask");
+    var FollowingTask = require("./FollowingTask")
     var dataManager = require("../dataManager");
     var View = require("../../view/view.js");
     
-    var JSONInitializer = '{"environment":"pc"}';
+    var JSONInitializer = '{"environment":"magicRoom"}';
     
-    var JSONSession = '[{"main":{"0":{"type":"custom","when":{"event":"attention","level":"50","time":"3","condition":"below"},"do":{"0":{"label":"video","action":"play"},"1":{"label":"hue","action":"on"}}}},"options":{"device":"pc","timeout":"60"}},{"main":{"0":{"type":"custom","when":{"event":"attention","level":"20","time":"1"},"do":{"0":{"label":"video","action":"play"},"1":{"label":"hue","action":"on"}}}},"options":{"device":"pc","timeout":"60"}}]';
+    //var JSONSession = '[{"main":[{"type":"custom","when":{"event":"attention","level":"50","time":"3","condition":"below"},"do":{"0":{"label":"video","action":"play"},"1":{"label":"light","action":"on"}}}],"options":{"device":"pc","timeout":"60"}},{"main":[{"type":"custom","when":{"event":"attention","level":"20","time":"1"},"do":{"0":{"label":"video","action":"play"},"1":{"label":"light","action":"on"}}}],"options":{"device":"pc","timeout":"60"}}]';
+    
+    var JSONSession = '[{"main":[{"type":"follow","when":{"event":"attention","level":"50","time":"3"},"do":{"0":{"label":"music","intensity":"100","responsive_function":"quadratic"}}}],"options":{"device":"pc"}}]';
         
     var taskNumber = 0;
     
@@ -33,13 +36,15 @@ exports.startNewSession = function() {
             
             if(JSONScene[event].type == "custom"){
                 var task = new CustomTask();
+                 createCustomTask(JSONScene[event],task);
             } else if(JSONScene[event].type == "follow"){
-                var task = new FollowTask();
+                var task = new FollowingTask();
+                createFollowingTask(JSONScene[event],task);
+                task.startIntensity();
             }
 
-            createTask(JSONScene[event],task);
+           
             receiver.addNewTaskListener(task);
-            
             taskNumber = taskNumber + 1;
 
         }
@@ -55,7 +60,7 @@ exports.removeListener = function(listener) {
     receiver.removeTaskListener(listener);
 }
 
-function createTask(JSONTask, task){
+function createCustomTask(JSONTask, task){
     var variable = JSONTask.when.event;
     if(variable != '' && variable != undefined){
         task.setVariable(variable);
@@ -89,5 +94,40 @@ function createTask(JSONTask, task){
     }
     
     console.log("ACTIONS ARE "+task.getActions());
+
+}
+
+function createFollowingTask(JSONTask, task){
+    var variable = JSONTask.when.event;
+    if(variable != '' && variable != undefined){
+        task.setVariable(variable);
+    }
+    console.log("VARIABLE IS: " + task.getVariable());
+    
+
+    var time = JSONTask.when.time;
+    if(time != '' && time != undefined){
+        task.setTime(time);
+    }
+    console.log("TIME IS: " + task.getTime());
+    
+    var level = JSONTask.when.level;
+    if(level != '' && level != undefined){
+        task.setLevel(level);
+    } 
+    console.log("LEVEL IS: " + task.getLevel());
+    
+    
+    var JSONActions = JSONTask.do;
+    
+    for(action in JSONActions){
+        console.log(JSONActions[action]);
+        task.setFunctionType(JSONActions[action].responsive_function);
+        task.setIntensity(JSONActions[action].intensity);
+        task.setAction(JSONActions[action]);
+    }
+    console.log("FUNCTION IS "+task.getFunctionType());
+    console.log("INTENSITY IS "+task.getIntensity());
+    console.log("ACTION IS "+task.getAction());
 
 }
