@@ -4,16 +4,15 @@ exports.getView = function(){
     return view;
 }
 
-exports.startNewConcentrationSession = function() {
+exports.startNewSession = function() {
     var receiver = require("../headsetReceiver/dataReceiver");
-    var AttentionTask = require("./AttentionTask");
-    var RelaxationTask = require("./relaxationTask");
+    var CustomTask = require("./CustomTask");
     var dataManager = require("../dataManager");
     var View = require("../../view/view.js");
     
     var JSONInitializer = '{"environment":"pc"}';
     
-    var JSONSession = '[{"main":{"0":{"when":{"event":"attention","level":"50","time":"3","condition":"below"},"do":{"0":{"label":"video","action":"play"},"1":{"label":"hue","action":"on"}}}},"options":{"device":"pc","timeout":"60"}},{"main":{"0":{"when":{"event":"attention","level":"20","time":"1"},"do":{"0":{"label":"video","action":"play"},"1":{"label":"hue","action":"on"}}}},"options":{"device":"pc","timeout":"60"}}]';
+    var JSONSession = '[{"main":{"0":{"type":"custom","when":{"event":"attention","level":"50","time":"3","condition":"below"},"do":{"0":{"label":"video","action":"play"},"1":{"label":"hue","action":"on"}}}},"options":{"device":"pc","timeout":"60"}},{"main":{"0":{"type":"custom",when":{"event":"attention","level":"20","time":"1"},"do":{"0":{"label":"video","action":"play"},"1":{"label":"hue","action":"on"}}}},"options":{"device":"pc","timeout":"60"}}]';
         
     var taskNumber = 0;
     
@@ -31,11 +30,11 @@ exports.startNewConcentrationSession = function() {
         receiver.addNewListener(dataManager.addPacket);
 
         for(event in JSONScene){
-            if(JSONScene[event].when.event == "attention"){
-                var task = new AttentionTask();
-            }
-            if(JSONScene[event].when.event == "relaxation"){
-                var task = new RelaxationTask();
+            
+            if(JSONScene[event].type == "custom"){
+                var task = new CustomTask();
+            } else if(JSONScene[event].type == "follow"){
+                var task = new FollowTask();
             }
 
             createTask(JSONScene[event],task);
@@ -50,10 +49,6 @@ exports.startNewConcentrationSession = function() {
     receiver.startReceiving();
 }
 
-exports.startNewRelaxationSession = function() {
-    
-}
-
 
 exports.removeListener = function(listener) {
     var receiver = require("../headsetReceiver/dataReceiver");
@@ -61,6 +56,13 @@ exports.removeListener = function(listener) {
 }
 
 function createTask(JSONTask, task){
+    var variable = JSONTask.when.event;
+    if(variable != '' && variable != undefined){
+        task.setVariable(variable);
+    }
+    console.log("VARIABLE IS: " + task.getVariable());
+    
+    
     var time = JSONTask.when.time;
     if(time != '' && time != undefined){
         task.setTime(time);
