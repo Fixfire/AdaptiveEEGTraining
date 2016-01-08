@@ -10,7 +10,7 @@ exports.start = function(){
 
     var starter = require('./session/sessionStarter');
 
-    starter.startNewConcentrationSession();
+    starter.startNewSession();
 
     var number = 0;
 
