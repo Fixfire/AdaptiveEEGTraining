@@ -26,10 +26,18 @@ exports.startReceiving = function() {
     console.log("Program Ended." )
 }
 
+exports.stopTasks = function(){
+    for (task in listeners){
+        var target = parseInt(task) + 1;
+        packetEmitter.removeListener(target,listeners[task].checkPacket);
+    }
+}
+
 function startConnection() {
-    
+    //var Adapter = require(...)
     //var adapter = new Adapter();
     //adapter.init();
+    //adapter.on('packet',newPacket);
     
     var dummy = require("../dummyServer");
 
