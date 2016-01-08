@@ -20,7 +20,7 @@ module.exports = View;
 //TODO da fare lo stop del video e la fine della sessione
 
 //Distinzione tra azioni
-View.prototype.actions = function( JSONaction ){
+View.prototype.actions = function(packet, JSONaction ){
     
     var settings = JSON.parse(JSONaction);
     
@@ -54,7 +54,7 @@ View.prototype.actions = function( JSONaction ){
         }
     }
     
-    if(action == "light"){
+    if(label == "light"){
         this.setLights(JSONaction);
     }
 }
@@ -204,6 +204,8 @@ function startMusic( musicJSON ) {
 }
 
 function changeMusicVolume(finalVolume, responsive_function){
+    //Prendere il nuovo livello passato
+    //Applicare la funzione (es. newVol = liv o newVol = sqrt(liv))
     //TODO chiamare SSex
 }
 
@@ -212,6 +214,7 @@ function stopMusic(){
 }
 
 View.prototype.setLights = function( lightsJSON ){
+    //Come music Volume
     //TODO chiamare SSex
 }
 
