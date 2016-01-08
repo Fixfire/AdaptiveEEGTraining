@@ -1,18 +1,24 @@
+var BOUND = 5;
+
+var starter = require("./sessionStarter");
+
 var level;
-var intesity;
+var intensity;
 var functionType;
 var active;
 var variable;
 var time;
 var action;
+var lastIntensity;
 
 function FollowingTask(){
-    this.level = 0;
+    this.level = 100;
     this.active = false;
     this.time = 180;
-    this.intesity = 100;
+    this.intensity = 100;
     this.functionType = "linear";
     this.variable = "attention";
+    this.lastIntensity = 100;
 }
 
 
@@ -33,42 +39,63 @@ FollowingTask.prototype.checkPacket = function(packet,object) {
         currentVariable = packet.meditation;
     }
     
-    var currentIntesity;
+    var currentIntensity;
     
-    if (object.functionType == "quadratic") {
-        currentIntesity = (object.intensity * packet.currentVariable) / (object.level * object.level);
-    }  else if (object.functionType == "linear") {
-        currentIntesity = (object.intensity * packet.currentVariable) / object.level;    
+    if(currentVariable > object.level){
+        currentVariable = object.level;
     }
     
-    changeIntensity(object, intesity);
+    if (object.functionType == "quadratic") {
+        
+        currentIntensity = (object.intensity / object.level) * Math.pow(currentVariable,2) / 100;
+        
+    }  else if (object.functionType == "linear") {
+        
+        currentIntensity = ((object.intensity) / object.level )* currentVariable;   
+        
+        /*
+        if (Math.abs(currentIntensity - object.lastIntensity)>object.BOUND){
+            console.log('SONO DENTRO');
+            if(currentIntensity - object.lastIntensity > 0){
+                currentIntensity = object.lastIntensity + object.BOUND;
+            }else{
+                currentIntensity = object.lastIntensity - object.BOUND;
+            }
+        }*/
+    }
+    currentIntensity = 100 - currentIntensity;
+    //object.lastIntensity = currentIntensity;
+    
+    changeIntensity(object, currentIntensity);
 }
 
 
-function changeIntensity(object, intesity){
-    var starter = require("./sessionStarter");
-    console.log("Intensity is now : " + intesity);
-    starter.getView().followingActions(JSON.stringify(object.action),"continue",object.intensity);
+function changeIntensity(object, intensity){
+    console.log("Intensity is now : " + intensity);
+    starter.getView().followingActions(JSON.stringify(object.action),"continue",intensity);
 }
 
-FollowingTask.prototype.startIntensity() {
+FollowingTask.prototype.startIntensity = function() {
     starter.getView().followingActions(JSON.stringify(this.action),"play",100);
-    setTimeout(this.stopIntensity, 1000 * object.time);
+    var object = this;
+    setTimeout(function(){
+        stopIntensity(object);
+    }, 1000 * this.time);
 }
 
 
-FollowingTask.prototype.stopIntensity() {
+function stopIntensity(object) {
     starter.getView().followingActions(JSON.stringify(this.action),"stop",0);
-    starter.removeListener(this);
+    starter.removeListener(object);
 }
 
 
 
 FollowingTask.prototype.setIntensity = function(intensity){
-    this.intesity = intensity;
+    this.intensity = intensity;
 }
 
-FollowingTask.prototype.getIntesity = function(){
+FollowingTask.prototype.getIntensity = function(){
     return this.intensity;
 }
 
@@ -107,11 +134,11 @@ FollowingTask.prototype.getTime = function(){
     return this.time;
 }
 
-CustomTask.prototype.setAction = function(action){
-    this.action;
+FollowingTask.prototype.setAction = function(action){
+    this.action = action;
 }
 
-CustomTask.prototype.getAction = function(){
+FollowingTask.prototype.getAction = function(){
     return this.action;
 }
 
