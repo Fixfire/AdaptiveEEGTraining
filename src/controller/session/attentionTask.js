@@ -10,7 +10,7 @@ function AttentionTask(){
     this.time = 0;
     this.actions = [];
     this.active = false;
-    this.condition = "above";
+    this.condition = "";
 }
 
 
@@ -24,36 +24,36 @@ AttentionTask.prototype.checkPacket = function(packet,object) {
     if (object.condition == "above") {
         
         if(packet.attention >= object.level && !object.active){
-            object.timeout = setTimeout(function() {startActions(object);}, 1000 * object.time);
+            object.timeout = setTimeout(function() {startActions(packet,object);}, 1000 * object.time);
             object.active = true;
         }
-        if(packet.relaxation < object.level && object.active){
+        if(packet.attention < object.level && object.active){
             object.timeout = clearTimeout();
             object.active = false;
         }
-    }
-    
-    if (object.condition == "below") {
+    } else if (object.condition == "below") {
         if(packet.attention <= object.level && !object.active){
-            object.timeout = setTimeout(function() {startActions(object);}, 1000 * object.time);
+            object.timeout = setTimeout(function() {startActions(packet,object);}, 1000 * object.time);
             object.active = true;
         }
         if(packet.attention > object.level && object.active){
             object.timeout = clearTimeout();
             object.active = false;
         }
+    } else {
+        startActions(packet,object);
     } 
 
     
 }
 
 
-function startActions(object){
+function startActions(packet,object){
     var starter = require("./sessionStarter");
     console.log("Action Started!");
     
     for (action in object.actions){
-        starter.getView().actions(JSON.stringify(object.actions[action]));
+        starter.getView().actions(packet,JSON.stringify(object.actions[action]));
     }
 
     starter.removeListener(object);
