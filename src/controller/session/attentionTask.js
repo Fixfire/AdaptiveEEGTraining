@@ -10,7 +10,7 @@ function AttentionTask(){
     this.time = 0;
     this.actions = [];
     this.active = false;
-    this.condition = "";
+    this.condition = "above";
 }
 
 
@@ -40,9 +40,7 @@ AttentionTask.prototype.checkPacket = function(packet,object) {
             object.timeout = clearTimeout();
             object.active = false;
         }
-    } else {
-        startActions(packet,object);
-    } 
+    }
 
     
 }
