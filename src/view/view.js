@@ -20,7 +20,7 @@ module.exports = View;
 //TODO da fare lo stop del video e la fine della sessione
 
 //Distinzione tra azioni
-View.prototype.actions = function(packet, JSONaction ){
+View.prototype.actions = function(JSONaction ){
     
     var settings = JSON.parse(JSONaction);
     
@@ -44,10 +44,11 @@ View.prototype.actions = function(packet, JSONaction ){
         var action = settings.action;
         
         if(action == "play"){
-            startMusic(JSONaction);
+            startMusic(settings.path, settings.final_intensity);
         }
+       
         if(action == "continue"){
-            changeMusicVolume(settings.final_volume, settings.responsive_function);
+            changeMusicVolume(settings.final_intensity);
         }
         if(action == "stop"){
             stopMusic();
@@ -55,7 +56,35 @@ View.prototype.actions = function(packet, JSONaction ){
     }
     
     if(label == "light"){
-        this.setLights(JSONaction);
+        this.setLights(settings.color, settings.final_intensity, settings.position);
+    }
+}
+
+View.prototype.followingActions = function(JSONaction,action,intesity) {
+    var settings = JSON.parse(JSONaction);
+    
+    var label = settings.label;
+    
+    settings.final_volume = intensity;
+  
+   if(label == "music"){         
+        
+        var action = settings.action;
+        
+        if(action == "play"){
+            startMusic(settings.path, intesity);
+        }
+       
+        if(action == "continue"){
+            changeMusicVolume(intensity);
+        }
+        if(action == "stop"){
+            stopMusic();
+        }
+    }
+    
+    if(label == "light"){
+        this.setLights(settings.color, intensity, settings.position);
     }
 }
 
@@ -199,13 +228,12 @@ function playVideoOnBrowser(){
 
 
 //Metodi per la gestione della stanza
-function startMusic( musicJSON ) {
+function startMusic( musicPath, musicIntensity ) {
     //TODO chiamare SSex
 }
 
-function changeMusicVolume(finalVolume, responsive_function){
+function changeMusicVolume(finalVolume){
     //Prendere il nuovo livello passato
-    //Applicare la funzione (es. newVol = liv o newVol = sqrt(liv))
     //TODO chiamare SSex
 }
 
@@ -213,7 +241,7 @@ function stopMusic(){
     //TODO chiamare SSex 
 }
 
-View.prototype.setLights = function( lightsJSON ){
+View.prototype.setLights = function( lightsColor, lightIntensity, lightPosition ){
     //Come music Volume
     //TODO chiamare SSex
 }
