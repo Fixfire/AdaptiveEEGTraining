@@ -60,7 +60,7 @@ View.prototype.actions = function(JSONaction ){
     }
 }
 
-View.prototype.followingActions = function(JSONaction,action,intesity) {
+View.prototype.followingActions = function(JSONaction,action,intensity) {
     var settings = JSON.parse(JSONaction);
     
     var label = settings.label;
@@ -72,7 +72,7 @@ View.prototype.followingActions = function(JSONaction,action,intesity) {
         var action = settings.action;
         
         if(action == "play"){
-            startMusic(settings.path, intesity);
+            startMusic(settings.path, intensity);
         }
        
         if(action == "continue"){
