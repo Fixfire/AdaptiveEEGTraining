@@ -26,7 +26,7 @@ CustomTask.prototype.checkPacket = function(packet,object) {
     
     var currentVariable;
     
-    if (variable == "attention") {
+    if (object.variable == "attention") {
         currentVariable = packet.attention;
     } else {
         currentVariable = packet.meditation;
@@ -35,7 +35,7 @@ CustomTask.prototype.checkPacket = function(packet,object) {
     if (object.condition == "above") {
         
         if(currentVariable >= object.level && !object.active){
-            object.timeout = setTimeout(function() {startActions(packet,object);}, 1000 * object.time);
+            object.timeout = setTimeout(function() {startActions(object);}, 1000 * object.time);
             object.active = true;
         }
         if(currentVariable < object.level && object.active){
@@ -44,7 +44,7 @@ CustomTask.prototype.checkPacket = function(packet,object) {
         }
     } else if (object.condition == "below") {
         if(currentVariable <= object.level && !object.active){
-            object.timeout = setTimeout(function() {startActions(packet,object);}, 1000 * object.time);
+            object.timeout = setTimeout(function() {startActions(object);}, 1000 * object.time);
             object.active = true;
         }
         if(currentVariable > object.level && object.active){
@@ -56,12 +56,12 @@ CustomTask.prototype.checkPacket = function(packet,object) {
 }
 
 
-function startActions(packet,object){
+function startActions(object){
     var starter = require("./sessionStarter");
     console.log("Action Started!");
     
     for (action in object.actions){
-        starter.getView().actions(packet,JSON.stringify(object.actions[action]));
+        starter.getView().actions(JSON.stringify(object.actions[action]));
     }
 
     starter.removeListener(object);
