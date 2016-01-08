@@ -169,10 +169,11 @@ View.prototype.updateGraph = function( packet ) {
     if($("#container").length){
               
         var graph = $("#container").highcharts();
-        var slide = (graph.series[0] > 5);
+        var date = new Date.now();
+        var timestamp = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() + ':' date.getMilliseconds();
         
-        graph.series[0].addPoint([packet.timestamp, packet.attention], true, slide);
-        graph.series[1].addPoint([packet.timestamp, packet.meditation], true, slide);
+        graph.series[0].addPoint([timestamp, packet.attention], true);
+        graph.series[1].addPoint([timestamp, packet.meditation], true);
     }
 }
 
