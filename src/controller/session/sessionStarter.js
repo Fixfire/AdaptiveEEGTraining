@@ -7,6 +7,7 @@ exports.getView = function(){
 exports.startNewConcentrationSession = function() {
     var receiver = require("../headsetReceiver/dataReceiver");
     var AttentionTask = require("./AttentionTask");
+    var RelaxationTask = require("./relaxationTask");
     var dataManager = require("../dataManager");
     var View = require("../../view/view.js");
     
@@ -30,11 +31,15 @@ exports.startNewConcentrationSession = function() {
         receiver.addNewListener(dataManager.addPacket);
 
         for(event in JSONScene){
+            if(JSONScene[event].when.event == "attention"){
+                var task = new AttentionTask();
+            }
+            if(JSONScene[event].when.event == "relaxation"){
+                var task = new RelaxationTask();
+            }
 
-            var attentionTask = new AttentionTask();
-
-            createTask(JSONScene[event],attentionTask);
-            receiver.addNewTaskListener(attentionTask);
+            createTask(JSONScene[event],task);
+            receiver.addNewTaskListener(task);
             
             taskNumber = taskNumber + 1;
 
