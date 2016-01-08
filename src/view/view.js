@@ -153,12 +153,10 @@ function setPanel() {
         },
         series: [{
             name: 'Attenzione',
-            data: [[20, 20], [30, 30]],
             color: '#ffbf00'
         },
         {
             name: 'Rilassamento',
-            data: [[25, 56], [56, 37]],
             color: '#00bfff'
         }]
     });
@@ -171,9 +169,10 @@ View.prototype.updateGraph = function( packet ) {
     if($("#container").length){
               
         var graph = $("#container").highcharts();
+        var slide = (graph.series[0] > 5);
         
-        graph.series[0].addPoint([packet.timestamp, packet.attention], true);
-        graph.series[1].addPoint([packet.timestamp, packet.meditation], true);
+        graph.series[0].addPoint([packet.timestamp, packet.attention], true, slide);
+        graph.series[1].addPoint([packet.timestamp, packet.meditation], true, slide);
     }
 }
 
