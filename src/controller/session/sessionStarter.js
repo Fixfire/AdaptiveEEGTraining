@@ -13,9 +13,9 @@ exports.startNewSession = function() {
     
     var JSONInitializer = '{"environment":"magicRoom"}';
     
-    //var JSONSession = '[{"main":[{"type":"custom","when":{"event":"attention","level":"50","time":"3","condition":"below"},"do":{"0":{"label":"video","action":"play"},"1":{"label":"light","action":"on"}}}],"options":{"device":"pc","timeout":"60"}},{"main":[{"type":"custom","when":{"event":"attention","level":"20","time":"1"},"do":{"0":{"label":"video","action":"play"},"1":{"label":"light","action":"on"}}}],"options":{"device":"pc","timeout":"60"}}]';
+    //var JSONSession = '[{"main":[{"type":"custom","when":{"event":"attention","level":"50","time":"3","condition":"below"},"do":{"0":{"label":"video","action":"play"},"1":{"label":"light","action":"on"}}}],"options":{"device":"pc","timeout":"60"}},{"main":[{"type":"custom","when":{"event":"attention","level":"20","time":"1"},"do":{"0":{"label":"video","action":"play"},"1":{"label":"light","action":"on"}}}],"options":{"device":"pc","timeout":"3"}}]';
     
-    var JSONSession = '[{"main":[{"type":"follow","when":{"event":"attention","level":"50","time":"3"},"do":{"0":{"label":"music","intensity":"100","responsive_function":"quadratic"}}}],"options":{"device":"pc"}}]';
+    var JSONSession = '[{"main":[{"type":"follow","when":{"event":"attention","level":"50","time"="5"},"do":{"0":{"label":"music","intensity":"100","responsive_function":"quadratic"}}}],"options":{"device":"pc"}}]';
         
     var taskNumber = 0;
     
@@ -29,6 +29,8 @@ exports.startNewSession = function() {
     for (task in JSONTask){
     
         var JSONScene = JSONTask[task].main;
+        var JSONOption = JSONTask[task].options;
+        console.log(JSONOption);
 
         receiver.addNewListener(dataManager.addPacket);
 
@@ -49,9 +51,17 @@ exports.startNewSession = function() {
 
         }
 
+       
+       if(JSONOption.timeout != '' && JSONOption.timeout != undefined){
+            setTimeout(receiver.stopTasks,JSONOption.timeout*1000);
+        }else{
+            setTimeout(receiver.stopTasks,10*1000);
+        }
+        
     }
     
     receiver.startReceiving();
+    
 }
 
 
