@@ -170,7 +170,7 @@ View.prototype.updateGraph = function( packet ) {
               
         var graph = $("#container").highcharts();
         var date = new Date.now();
-        var timestamp = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() + ':' date.getMilliseconds();
+        var timestamp = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() + ':' + date.getMilliseconds();
         
         graph.series[0].addPoint([timestamp, packet.attention], true);
         graph.series[1].addPoint([timestamp, packet.meditation], true);
