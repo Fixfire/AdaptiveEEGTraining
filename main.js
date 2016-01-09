@@ -1,6 +1,6 @@
 var Adapter = require("./adapter.js");
-var dataReceiver = require("./controller/headsetReceiver/dataReceiver.js")
-var starter = require('./session/sessionStarter');
+var dataReceiver = require("./src/controller/headsetReceiver/dataReceiver.js")
+var starter = require('./src/controller/session/sessionStarter');
 
 //choose between dummy or normal (yes/no)
 var DUMMY = "yes"
@@ -45,7 +45,7 @@ function startDummy(){
     var number = 0;
 
     setInterval(function packetGenerator () {
-        var dataPacket = require("./headsetReceiver/dataPacket");
+        var dataPacket = require("./src/controller/headsetReceiver/dataPacket");
 
         var packet = dataPacket.randomPacketGenerator();
 
