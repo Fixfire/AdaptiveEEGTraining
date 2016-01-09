@@ -2,6 +2,7 @@ var events = require('events');
 var packetEmitter = new events.EventEmitter();
 var currentTask = null;
 var listeners = [] ;
+var adapter;
 
 exports.addNewTaskListener = function(element) {
     console.log("added new rule for the current task");
@@ -33,16 +34,16 @@ exports.stopTasks = function(){
     }
 }
 
-function startConnection() {
-    //var Adapter = require(...)
-    //var adapter = new Adapter();
-    //adapter.init();
-    //adapter.on('packet',newPacket);
-    
-    var dummy = require("../dummyServer");
+exports.setAdapter = function(adapter) {
+    this.adapter = adapter;
+}
 
-    
-    dummy.newListener(newPacket);
+exports.getAdapter = function() {
+    return this.adapter;
+}
+
+function startConnection() {
+    adapter.on("packet",newPacket);
 }
 
 function newPacket(packet) {
@@ -54,8 +55,4 @@ function newPacket(packet) {
     packetEmitter.emit("jsonPacket",packet);
     console.log("New packet Emitted");
 
-}
-
-function nextSession(){
-    currentTask++;
 }
