@@ -14,7 +14,7 @@ var main = (function() {
         adapter.on("packet", function(data) {
             console.log(JSON.stringify(data));
         })
-        adapter.init();
+        
         
         if (DUMMY == "yes") {
             adapter = this;
@@ -22,6 +22,7 @@ var main = (function() {
             startDummy();
         } else {
             dataReceiver.setAdapter(adapter);
+            adapter.init();
         }
         
         starter.startNewSession();
