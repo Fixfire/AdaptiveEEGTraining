@@ -169,7 +169,7 @@ View.prototype.updateGraph = function( packet ) {
     if($("#container").length){
               
         var graph = $("#container").highcharts();
-        var date = new Date.now();
+        var date = new Date();
         var timestamp = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() + ':' + date.getMilliseconds();
         
         graph.series[0].addPoint([timestamp, packet.attention], true);
