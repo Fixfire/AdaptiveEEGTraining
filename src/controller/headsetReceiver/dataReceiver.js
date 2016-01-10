@@ -22,9 +22,6 @@ exports.addNewListener = function(listener) {
 exports.startReceiving = function() {
     currentTask = 0;
     startConnection();
-
-
-    console.log("Program Ended." )
 }
 
 exports.stopTasks = function(){
@@ -34,8 +31,8 @@ exports.stopTasks = function(){
     }
 }
 
-exports.setAdapter = function(adapter) {
-    this.adapter = adapter;
+exports.setAdapter = function(adapt) {
+    adapter = adapt;
 }
 
 exports.getAdapter = function() {
@@ -44,6 +41,7 @@ exports.getAdapter = function() {
 
 function startConnection() {
     adapter.on("packet",newPacket);
+    console.log(adapter);
 }
 
 function newPacket(packet) {
