@@ -6,6 +6,12 @@ var DataEntry = require('../model/DataEntry');
 function Log() {
     
     this.entries = [];
+    this.timestamps = [];
+    this.attentionLevels = [];
+    this.relaxationLevels = [];
+    this.JSONTimestamps = '"timestamps":"';
+    this.JSONAttentionLevels = '"attentionLevels":"';
+    this.JSONRelaxationLevels = '"relaxationLevels":"';
     
 }
 
@@ -31,6 +37,20 @@ Log.prototype.getEntry = function() {
     return this.entries.pop();
     
 };
+
+Log.prototype.createJSON = function() {
+    
+    for (entry in this.entries) {
+        this.timestamps.push(this.entries[entry].timestamp);
+        this.attentionLevels.push(this.entries[entry].attentionLevel);
+        this.relaxationLevels.push(this.entries[entry].relaxationLevel);
+    }
+    
+    this.JSONTimestamps = this.JSONTimestamps + JSON.stringify(this.timestamps) +'"';
+    this.JSONAttentionLevels = this.JSONAttentionLevels + JSON.stringify(this.attentionLevels) +'"';
+    this.JSONRelaxationLevels = this.JSONRelaxationLevels + JSON.stringify(this.relaxationLevels) +'"';
+
+}
 
 //Export class
 module.exports = Log;
