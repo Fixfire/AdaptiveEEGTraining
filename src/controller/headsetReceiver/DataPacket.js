@@ -27,8 +27,8 @@ Packet.prototype.getAttention = function() {
     return this.attention;
 }
 
-Packet.prototype.getRelaxation = function() {
-    return this.relaxation;
+Packet.prototype.getMeditation = function() {
+    return this.meditation;
 }
 
 
