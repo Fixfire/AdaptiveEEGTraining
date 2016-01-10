@@ -50,8 +50,9 @@ exports.startNewSession = function() {
             taskNumber = taskNumber + 1;
 
         }
-
-       
+        
+        //TODO
+        //QUESTA PARTE ANDREBBE SPOSTATA QUANDO SI PASSA ALLA SESSION SUCCESSIVA
        if(JSONOption.timeout != '' && JSONOption.timeout != undefined){
             setTimeout(receiver.stopTasks,JSONOption.timeout*1000);
         }else{
