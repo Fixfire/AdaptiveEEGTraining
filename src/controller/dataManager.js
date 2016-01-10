@@ -11,4 +11,9 @@ exports.addPacket =
 
 }   
 
-}   
+exports.save = function(){
+    log.createJSON();
+    console.log(log.JSONTimestamps);
+    console.log(log.JSONAttentionLevels);
+    console.log(log.JSONRelaxationLevels);
+}
