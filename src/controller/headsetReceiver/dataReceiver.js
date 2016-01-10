@@ -4,6 +4,8 @@ var currentTask = null;
 var listeners = [] ;
 var adapter;
 
+var dataManager = require('../dataManager');
+
 exports.addNewTaskListener = function(element) {
     console.log("added new rule for the current task");
     listeners.push(element);
@@ -29,6 +31,7 @@ exports.stopTasks = function(){
         var target = parseInt(task) + 1;
         packetEmitter.removeListener(target,listeners[task].checkPacket);
     }
+    dataManager.save();
 }
 
 exports.setAdapter = function(adapt) {
