@@ -116,7 +116,6 @@ function setPanel() {
             gridLineWidth: 1,
             minPadding: 0.2,
             maxPadding: 0.2,
-            min: 0,
             floor: 0,
             tickInterval: 2
         },
