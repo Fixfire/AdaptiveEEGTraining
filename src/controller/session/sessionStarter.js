@@ -1,74 +1,89 @@
+
+var receiver = require("../headsetReceiver/dataReceiver");
+var CustomTask = require("./CustomTask");
+var FollowingTask = require("./FollowingTask")
+var dataManager = require("../dataManager");
+var View = require("../../view/view.js");
+    
 var view;
+var task = 0;
+var JSONTask;
+var timeout;
+
+var JSONInitializer = '{"environment":"magicRoom"}';
+    
+var JSONSession = '[{"main":[{"type":"custom","when":{"event":"attention","level":"50","time":"3","condition":"below"},"do":{"0":{"label":"light","action":"on"}}},{"type":"custom","when":{"event":"attention","level":"30","time":"5","condition":"above"},"do":{"0":{"label":"video","action":"play"}}}],"options":{"device":"pc","timeout":"10"}},{"main":[{"type":"custom","when":{"event":"attention","level":"20","time":"1"},"do":{"0":{"label":"light","action":"on"}}}],"options":{"device":"pc","timeout":"3"}}]';
+    
+//var JSONSession = '[{"main":[{"type":"follow","when":{"event":"attention","level":"50","time":"5"},"do":{"0":{"label":"music","intensity":"100","responsive_function":"quadratic"}}}],"options":{"device":"pc"}}]';
 
 exports.getView = function(){
     return view;
 }
 
 exports.startNewSession = function() {
-    var receiver = require("../headsetReceiver/dataReceiver");
-    var CustomTask = require("./CustomTask");
-    var FollowingTask = require("./FollowingTask")
-    var dataManager = require("../dataManager");
-    var View = require("../../view/view.js");
-    
-    var JSONInitializer = '{"environment":"magicRoom"}';
-    
-    //var JSONSession = '[{"main":[{"type":"custom","when":{"event":"attention","level":"50","time":"3","condition":"below"},"do":{"0":{"label":"video","action":"play"},"1":{"label":"light","action":"on"}}}],"options":{"device":"pc","timeout":"60"}},{"main":[{"type":"custom","when":{"event":"attention","level":"20","time":"1"},"do":{"0":{"label":"video","action":"play"},"1":{"label":"light","action":"on"}}}],"options":{"device":"pc","timeout":"3"}}]';
-    
-    var JSONSession = '[{"main":[{"type":"follow","when":{"event":"attention","level":"50","time":"5"},"do":{"0":{"label":"music","intensity":"100","responsive_function":"quadratic"}}}],"options":{"device":"pc"}}]';
-        
-    var taskNumber = 0;
     
     //Instantiation of View
     view = new View(JSONInitializer);
     receiver.addNewListener(view.updateGraph);
     
-    var JSONTask = JSON.parse(JSONSession);
-    console.log(JSONTask);
+    receiver.addNewSessionListener(nextTask);
     
-    for (task in JSONTask){
+    JSONTask = JSON.parse(JSONSession);
     
-        var JSONScene = JSONTask[task].main;
-        var JSONOption = JSONTask[task].options;
-        console.log(JSONOption);
-
-        receiver.addNewListener(dataManager.addPacket);
-
-        for(event in JSONScene){
-            
-            if(JSONScene[event].type == "custom"){
-                var task = new CustomTask();
-                 createCustomTask(JSONScene[event],task);
-            } else if(JSONScene[event].type == "follow"){
-                var task = new FollowingTask();
-                createFollowingTask(JSONScene[event],task);
-                task.startIntensity();
-            }
-
-           
-            receiver.addNewTaskListener(task);
-            taskNumber = taskNumber + 1;
-
-        }
-        
-        //TODO
-        //QUESTA PARTE ANDREBBE SPOSTATA QUANDO SI PASSA ALLA SESSION SUCCESSIVA
-       if(JSONOption.timeout != '' && JSONOption.timeout != undefined){
-            setTimeout(receiver.stopTasks,JSONOption.timeout*1000);
-        }else{
-            setTimeout(receiver.stopTasks,10*1000);
-        }
-        
-    }
     
     receiver.startReceiving();
     
+    //for (task in JSONTask){
+    newTask(0);
+ 
 }
 
 
 exports.removeListener = function(listener) {
     var receiver = require("../headsetReceiver/dataReceiver");
     receiver.removeTaskListener(listener);
+}
+
+function newTask(task){
+    console.log(JSONTask);
+    var JSONScene = JSONTask[task].main;
+    var JSONOption = JSONTask[task].options;
+    console.log(JSONOption);
+
+    receiver.addNewListener(dataManager.addPacket);
+
+    for(event in JSONScene){
+        clearTimeout(timeout);
+        if(JSONScene[event].type == "custom"){
+              var task = new CustomTask();
+             createCustomTask(JSONScene[event],task);
+         } else if(JSONScene[event].type == "follow"){
+            var task = new FollowingTask();
+              createFollowingTask(JSONScene[event],task);
+              task.startIntensity();
+           }
+
+           
+        receiver.addNewTaskListener(task);
+
+     }
+    
+    if(JSONOption.timeout != '' && JSONOption.timeout != undefined){
+        timeout = setTimeout(receiver.stopTasks,JSONOption.timeout*1000);
+      }else{
+        timeout = setTimeout(receiver.stopTasks,10*1000);
+   }
+    return task;
+}
+
+function nextTask(){
+    task = task + 1;
+    if(task > JSONTask.length - 1){
+        clearTimeout(timeout);
+        dataManager.save();
+    } else {
+        newTask(task);
+    }
 }
 
 function createCustomTask(JSONTask, task){
