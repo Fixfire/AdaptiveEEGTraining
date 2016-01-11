@@ -19,6 +19,7 @@ function CustomTask(){
 CustomTask.prototype.checkPacket = function(packet,object) {
     console.log("I'm attention session and this is the packet ");
     console.log(packet);
+    console.log(object);
 
     //Logging in cosole for checking
     console.log("rule level : " + object.level);
@@ -39,8 +40,9 @@ CustomTask.prototype.checkPacket = function(packet,object) {
             object.active = true;
         }
         if(currentVariable < object.level && object.active){
-            object.timeout = clearTimeout();
+            clearTimeout(object.timeout);
             object.active = false;
+            console.log("RESETTO TIMEOUT"+object.timeout);
         }
     } else if (object.condition == "below") {
         if(currentVariable <= object.level && !object.active){
@@ -48,8 +50,9 @@ CustomTask.prototype.checkPacket = function(packet,object) {
             object.active = true;
         }
         if(currentVariable > object.level && object.active){
-            object.timeout = clearTimeout();
+            clearTimeout(object.timeout);
             object.active = false;
+            console.log("RESETTO TIMEOUT"+object.timeout);
         }
     }
     
@@ -109,5 +112,8 @@ CustomTask.prototype.getActions = function(){
     return this.actions;
 }
 
+CustomTask.prototype.getTimeout = function(){
+    return this.timeout;
+}
 
 module.exports = CustomTask;
