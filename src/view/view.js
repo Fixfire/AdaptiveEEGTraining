@@ -140,6 +140,9 @@ function setPanel() {
         exporting: {
             enabled: false
         },
+        scrollbar: {
+            enabled: true
+        },
         plotOptions: {
             area: {
                 pointStart: 0,
@@ -171,9 +174,14 @@ View.prototype.updateGraph = function( packet ) {
         var graph = $("#container").highcharts();
         var date = new Date();
         var timestamp = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() + ':' + date.getMilliseconds();
+        var slide = false;
         
-        graph.series[0].addPoint([timestamp, packet.attention], true);
-        graph.series[1].addPoint([timestamp, packet.meditation], true);
+        if(graph.series[0].data.length > 35){
+            slide = true;
+        }
+        
+        graph.series[0].addPoint([timestamp, packet.attention], true, slide);
+        graph.series[1].addPoint([timestamp, packet.meditation], true, slide);
     }
 }
 
