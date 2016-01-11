@@ -50,6 +50,7 @@ Log.prototype.createJSON = function() {
     this.JSONAttentionLevels = this.JSONAttentionLevels + JSON.stringify(this.attentionLevels) +'"';
     this.JSONRelaxationLevels = this.JSONRelaxationLevels + JSON.stringify(this.relaxationLevels) +'"';
 
+    return '{' + this.JSONTimestamps + ',' + this.JSONAttentionLevels + ',' + this.JSONRelaxationLevels +'}';
 }
 
 //Export class
