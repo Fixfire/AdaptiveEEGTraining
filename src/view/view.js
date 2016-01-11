@@ -249,7 +249,7 @@ function stopMusic(){
 }
 
 View.prototype.setLights = function( lightsColor, lightIntensity, lightPosition ){
-    //Come music Volume
+    console.log("LIGHTS ON");
     //TODO chiamare SSex
 }
 
