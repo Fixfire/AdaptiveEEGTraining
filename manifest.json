@@ -5,6 +5,8 @@
   "manifest_version": 2,
 
   "version": "0.1.0",
+    
+  "key" : "oj0VC35ShSEqlfJ0rLGgkqJCyIK+mXSsa/X/xAur+lI/RVOVTWd7oQQGTdI/0rLXPdQR02Na3X9Rptezh6J04PfMGeFysxdT6RpC+rkHRPVbN0F4TqxSNNXzkwK70+EFdSuDMyVKv9YN4wWDf0g6VKe4ShAH/sqICQBrVyzWyYLvH/hwZmZZ1QEab6ylIKtbEJunwu9BxVVA04bbuATKkKjJOqDn0fG8hb4bYbyD02dJwgLePzzn36F31kcBCEHItESlD3RsS+EtfpfgPkplXNOhqYzkD9auDb7Zy+ZwL20fjnJb75OSGu8gOg3KTljtmApZOg0nJ5Jk9ATAdyzyVSFOM1Hhcw12ws06Dq9KRnXgO6bbuadLTFRDdvSYDFvDijUb+97UolQfYIXQMqXli3EIvHr7CTWe/3mpoDgK1mtr0+923Bm97XgE7KSr0L46n5QpNjCZf1vbXldNmW+TRifiJMgtVdS7x0N4vqDPNEe+FelVv3U4Pz3HIOtFuWLrZCxlgVxJY4IsyYlV0ItQjIv8fJiAyemZdO2lA9K6h0eEF+9Apr3i79JGWUi74p5DOoak4le0Va9O34f6FxCGn/a54A6bhKu24Ub/0gr/e4WRa7693euEdgIAZXhtMu2ZtaU5SKjjXPzjmRCM2kINHTCENlaU4oFzTmj3TYY/jdKyNP1bHa07NhlomladkIHKGD6HaYkcbuwvh8hOPsopSwuS+NqjnGPq9Vv4ecBC+9veDEmpIE1iR6FK9Hjrre88kLoMQNmA+vuc8jG4/FIHM3SauQiR1ZJ6+zkz97kcmOf+X7LRaS4j6lfFR6qHiJ6y",
 
   "app": {
     "background": {
@@ -13,7 +15,10 @@
   },
 
   "permissions": [
-    "serial"
+    "serial",
+    "storage"
+
   ]
+
 }
 
