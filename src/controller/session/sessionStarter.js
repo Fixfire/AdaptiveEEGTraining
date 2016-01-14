@@ -25,6 +25,7 @@ exports.startNewSession = function() {
     //Instantiation of View
     view = new View(JSONInitializer);
     receiver.addNewListener(view.updateGraph);
+    receiver.addNewListener(dataManager.addPacket);
     
     receiver.addNewSessionListener(nextTask);
     
@@ -49,8 +50,6 @@ function newTask(task){
     var JSONScene = JSONTask[task].main;
     var JSONOption = JSONTask[task].options;
     console.log(JSONOption);
-
-    receiver.addNewListener(dataManager.addPacket);
 
     for(event in JSONScene){
         clearTimeout(timeout);
