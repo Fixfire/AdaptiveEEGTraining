@@ -20,37 +20,39 @@ exports.getView = function(){
     return view;
 }
 
+/* Function to start a new session */
 exports.startNewSession = function() {
     
     //Instantiation of View
     view = new View(JSONInitializer);
+    
+    //Listeners adding
     receiver.addNewListener(view.updateGraph);
     receiver.addNewListener(dataManager.addPacket);
-    
     receiver.addNewSessionListener(nextTask);
     
     JSONTask = JSON.parse(JSONSession);
     
-    
     receiver.startReceiving();
     
-    //for (task in JSONTask){
     newTask(0);
  
 }
 
-
+/* Removes task from listeners list */
 exports.removeListener = function(listener) {
     var receiver = require("../headsetReceiver/dataReceiver");
     receiver.removeTaskListener(listener);
 }
 
+/* Function to create a new tasks of the session */
 function newTask(task){
     console.log(JSONTask);
     var JSONScene = JSONTask[task].main;
     var JSONOption = JSONTask[task].options;
     console.log(JSONOption);
 
+    //Creation of new task for every event-condition
     for(event in JSONScene){
         clearTimeout(timeout);
         if(JSONScene[event].type == "custom"){
@@ -62,11 +64,11 @@ function newTask(task){
               task.startIntensity();
            }
 
-           
         receiver.addNewTaskListener(task);
 
      }
     
+    // Checking JSON task's option field
     if(JSONOption.timeout != '' && JSONOption.timeout != undefined){
         timeout = setTimeout(receiver.stopTasks,JSONOption.timeout*1000);
       }else{
@@ -75,6 +77,7 @@ function newTask(task){
     return task;
 }
 
+/* Pass to the next task when all the previous task's event-conditions are finished and verify if the session is finished */
 function nextTask(){
     task = task + 1;
     if(task > JSONTask.length - 1){
@@ -85,6 +88,7 @@ function nextTask(){
     }
 }
 
+/* Function to set parameters of a "custom" type task */
 function createCustomTask(JSONTask, task){
     var variable = JSONTask.when.event;
     if(variable != '' && variable != undefined){
@@ -122,6 +126,7 @@ function createCustomTask(JSONTask, task){
 
 }
 
+/* Function to set parameters of a "following" type task */
 function createFollowingTask(JSONTask, task){
     var variable = JSONTask.when.event;
     if(variable != '' && variable != undefined){

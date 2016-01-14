@@ -38,6 +38,7 @@ Log.prototype.getEntry = function() {
     
 };
 
+/* Function to create the final JSON of all log entries for Abilia DB*/
 Log.prototype.createJSON = function() {
     
     for (entry in this.entries) {

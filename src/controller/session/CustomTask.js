@@ -15,7 +15,7 @@ function CustomTask(){
     this.variable = "attention";
 }
 
-
+/* Function called when a new packet arrives */
 CustomTask.prototype.checkPacket = function(packet,object) {
     console.log("I'm attention session and this is the packet ");
     console.log(packet);
@@ -58,7 +58,7 @@ CustomTask.prototype.checkPacket = function(packet,object) {
     
 }
 
-
+/* Function to start view's action */
 function startActions(object){
     var starter = require("./sessionStarter");
     console.log("Action Started!");
@@ -71,7 +71,7 @@ function startActions(object){
 
 }
 
-
+/* Setters & getters */
 CustomTask.prototype.setVariable = function(variable){
     this.variable = variable;
 }
