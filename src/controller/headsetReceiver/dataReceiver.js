@@ -55,7 +55,6 @@ exports.getAdapter = function() {
 
 function startConnection() {
     adapter.on("packet",newPacket);
-    console.log(adapter);
 }
 
 function newPacket(packet) {
