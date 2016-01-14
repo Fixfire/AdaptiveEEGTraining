@@ -17,7 +17,7 @@ var main = (function() {
             adapter.startDummy();
         } else {
                 
-            var adapter = new Adapter();
+            adapter = new Adapter();
             adapter.on("packet", function(data) {
                 console.log(JSON.stringify(data));
             })
