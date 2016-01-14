@@ -1,26 +1,17 @@
-function View( JSONInitializer ) {
+function View() {
     
-    /* mi aspetto che JSONInitializer sia
-     * fatto così: 
-     * {"environment":"magicRoom/valore-per-indicare-altro","lights":"array-di-tutte-le-luci/null"}
-    */
-    var settings = JSON.parse(JSONInitializer);
+    //inizializzo per settarla in setPanel
+    this.myWin = null;
     
-    this.environment = settings.environment;
-
-    if(this.environment == "magicRoom"){
-        this.lights = settings.lights;
-        setPanel();
-    }
+    this.setPanel();
     
 }
 
 module.exports = View;
 
-//TODO da fare lo stop del video e la fine della sessione
 
 //Distinzione tra azioni
-View.prototype.actions = function(JSONaction ){
+View.prototype.actions = function( JSONaction ){
     
     var settings = JSON.parse(JSONaction);
     
@@ -31,7 +22,9 @@ View.prototype.actions = function(JSONaction ){
         var action = settings.action;
         
         if(action == "load"){
-            this.videoOnScreen(JSONaction);
+            if(settings.path != undefined){
+                this.videoOnScreen(settings.path);
+            }
         }
         if(action == "play"){
             console.log("PLAY VIDEO!");
@@ -44,11 +37,15 @@ View.prototype.actions = function(JSONaction ){
         var action = settings.action;
         
         if(action == "play"){
-            startMusic(settings.path, settings.final_intensity);
+            if(settings.path != undefined && settings.final_intensity != undefined){
+                startMusic(settings.path, settings.final_intensity);
+            }
         }
        
         if(action == "continue"){
-            changeMusicVolume(settings.final_intensity);
+            if(settings.final_intensity != undefined){
+                changeMusicVolume(settings.final_intensity);
+            }
         }
         if(action == "stop"){
             stopMusic();
@@ -56,11 +53,14 @@ View.prototype.actions = function(JSONaction ){
     }
     
     if(label == "light"){
-        this.setLights(settings.color, settings.final_intensity, settings.position);
+        if(settings.color != undefined && settings.final_intensity != undefined){
+            this.setLights(settings.color, settings.final_intensity);
+        }
     }
 }
 
 View.prototype.followingActions = function(JSONaction,action,intensity) {
+    
     var settings = JSON.parse(JSONaction);
     
     var label = settings.label;
@@ -68,8 +68,6 @@ View.prototype.followingActions = function(JSONaction,action,intensity) {
     settings.final_volume = intensity;
   
    if(label == "music"){         
-        
-        var action = settings.action;
         
         if(action == "play"){
             startMusic(settings.path, intensity);
@@ -91,10 +89,14 @@ View.prototype.followingActions = function(JSONaction,action,intensity) {
 
 
 //Metodi per inizializzazione e update pannello di controllo
-function setPanel() {
+View.prototype.setPanel = function() {
     
+    this.myWin = window.open("control-panel.html");
+    
+    if(this.myWin != null){
+               
     //inizializzo il contenitore per il grafico
-    $(".main-content").append('<div id="container" style="width:100%; height:400px;"></div>');
+    this.myWin.document.$(".main-content").append('<div id="container" style="width:100%; height:400px;"></div>');
     
     $('#container').highcharts({
         chart: {
@@ -162,20 +164,23 @@ function setPanel() {
             color: '#00bfff'
         }]
     });
+    } else {
+        alert("Il pannello di controllo non si è potuto aprire");
+    }
     
 }
 
 View.prototype.updateGraph = function( packet ) {
     
     //controllo che il container esista e quindi ci sia il pannello 
-    if($("#container").length){
+    if(this.myWin.document.$("#container").length){
               
-        var graph = $("#container").highcharts();
-        var date = new Date();
+        var graph = this.myWin.document.$("#container").highcharts();
+        var date = new Date(packet.timestamp);
         var timestamp = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() + ':' + date.getMilliseconds();
         var slide = false;
         
-        if(graph.series[0].data.length > 35){
+        if(graph.series[0].data.length > 30){
             slide = true;
         }
         
@@ -187,48 +192,18 @@ View.prototype.updateGraph = function( packet ) {
 
 
 //Metodi per gestione dei video
-View.prototype.videoOnScreen = function( videoJSON ){
-    
-    if(this.environment == "magicRoom"){
-        videoOnScreenWithProjector( videoJSON );
-    }
-    else {
+View.prototype.videoOnScreen = function( videoPath ){
         
-        var video = JSON.parse(videoJSON);
-        videoOnScreenOnBrowser( video.path );
-    }
-}
-
-function videoOnScreenWithProjector( videoJSON ) {
-    //TODO 
-}
-
-function videoOnScreenOnBrowser( video ) {
+        //pulisco schermo prima mettere nuovo video
+        $(".main-content").html("");
     
-    //pulisco schermo prima mettere nuovo video
-    $(".main-content").html("");
+        //TODO fare CSS per video
+        $(".main-content").append('<video id="video"><source src="'+videoPath+'" type="video/mp4"></video>');
+        $("#video").load();
     
-    //TODO fare CSS per video
-    $(".main-content").append('<video><source src="'+video+'" type="video/mp4"></video>');
-    $("#video").load();
-
 }
 
-View.prototype.playVideo = function() {
-    
-    if(this.environment == "magicRoom"){
-        playVideoWithProjector();
-    }
-    else {
-        playVideoOnBrowser();
-    }
-}
-
-function playVideoWithProjector(){
-    //TODO chiamare SSex
-}
-
-function playVideoOnBrowser(){
+View.prototype.playVideo = function() {   
     $("#video").play();
 }
 
@@ -236,21 +211,32 @@ function playVideoOnBrowser(){
 
 //Metodi per la gestione della stanza
 function startMusic( musicPath, musicIntensity ) {
-    //TODO chiamare SSex
+    $(".main-content").html("");
+    
+    $(".main-content").append('<audio id="audio"><source src="'+musicPath+'" type="audio/mpeg"></audio>');
+    $("#audio").volume = musicIntensity;
+    $("#audio").play();
 }
 
-function changeMusicVolume(finalVolume){
-    //Prendere il nuovo livello passato
-    //TODO chiamare SSex
+function changeMusicVolume(volume){
+    $("#audio").volume = volume;
 }
 
 function stopMusic(){
-    //TODO chiamare SSex 
+    $("#audio").stop(); 
 }
 
-View.prototype.setLights = function( lightsColor, lightIntensity, lightPosition ){
+View.prototype.setLights = function( lightsColor, lightIntensity ){
     console.log("LIGHTS ON");
-    //TODO chiamare SSex
+    
+    /*var json = '{"Action":"EnvironmentAction", "Color":"'+lightsColor+'", "Luminosity":"'+lightIntensity+'"}';
+    
+    $.ajax({
+        type: "POST",
+        url: "url",             <---- INSERIRE URL SERVER --->
+        data: json,
+        dataType: "json"
+    });*/
 }
 
 
