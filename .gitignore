@@ -33,4 +33,5 @@ target
 /project/play-fork-run.sbt
 src/node_modules
 *.log
+*.db
 
