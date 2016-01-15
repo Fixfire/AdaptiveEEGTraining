@@ -94,7 +94,8 @@ View.prototype.updateGraph = function( packet ) {
 View.prototype.updateActions = function( event ){
     
     if(chrome.app.window.get('controlPanel') != undefined){
-        var graph = chrome.app.window.get('controlPanel').contentWindow.Highcharts.charts[0];
+        var graph1 = chrome.app.window.get('controlPanel').contentWindow.Highcharts.charts[0];
+        var graph2 = chrome.app.window.get('controlPanel').contentWindow.Highcharts.charts[1];
         
         if(event.label == "video"){
                     
@@ -114,11 +115,11 @@ View.prototype.updateActions = function( event ){
                 pointToAdd.marker.symbol = 'url(./icons/play-icon.jpg)';
             }
             
-            graph.series[2].addPoint(pointToAdd, true);
+            graph1.series[2].addPoint(pointToAdd, true);
         } else if(event.label == "light"){
-            graph.series[3].addPoint([event.timestamp, event.intensity], true);
+            graph2.series[0].addPoint([event.timestamp, event.intensity], true);
         } else if(event.label == "music"){
-            graph.series[4].addPoint([event.timestamp, event.intensity], true);
+            graph2.series[1].addPoint([event.timestamp, event.intensity], true);
         }
     }
 }
