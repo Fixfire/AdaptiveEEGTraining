@@ -1,12 +1,15 @@
 /**
  * Created by Alessandro on 28/12/15.
  */
+var port;
+
 
 var Cylon = require("cylon"),
     util = require('util'),
     EventEmitter = require('events').EventEmitter;
 
-var Adapter = module.exports = function Adapter() {
+var Adapter = module.exports = function Adapter(port) {;
+    this.port = port;
     EventEmitter.call(this);
     this._events = ["jsonRawPacket", "jsonComputedPacket"];
     self = this;
@@ -32,6 +35,8 @@ Adapter.prototype.isInit = false;
 
 Adapter.prototype.init = function() {
     if (!this.isInit) {
+        console.log(this.port);
+        console.log("porto la port");
         this.eegDevice.start();
         this.isInit = true;
     }
