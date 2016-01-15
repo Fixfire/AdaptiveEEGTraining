@@ -12,9 +12,9 @@ var timeout;
 
 var JSONInitializer = '{"environment":"magicRoom"}';
     
-var JSONSession = '[{"main":[{"type":"custom","when":{"event":"attention","level":"50","time":"3","condition":"below"},"do":{"0":{"label":"light","action":"on"}}},{"type":"custom","when":{"event":"attention","level":"30","time":"5","condition":"above"},"do":{"0":{"label":"video","action":"play"}}}],"options":{"device":"pc","timeout":"10"}},{"main":[{"type":"custom","when":{"event":"attention","level":"20","time":"1"},"do":{"0":{"label":"light","action":"on"}}}],"options":{"device":"pc","timeout":"3"}}]';
+//var JSONSession = '[{"main":[{"type":"custom","when":{"event":"attention","level":"50","time":"3","condition":"below"},"do":{"0":{"label":"light","action":"on"}}},{"type":"custom","when":{"event":"attention","level":"30","time":"5","condition":"above"},"do":{"0":{"label":"video","action":"play"}}}],"options":{"device":"pc","timeout":"10"}},{"main":[{"type":"custom","when":{"event":"attention","level":"20","time":"1"},"do":{"0":{"label":"light","action":"on"}}}],"options":{"device":"pc","timeout":"3"}}]';
     
-//var JSONSession = '[{"main":[{"type":"follow","when":{"event":"attention","level":"50","time":"5"},"do":{"0":{"label":"music","intensity":"100","responsive_function":"quadratic"}}}],"options":{"device":"pc"}}]';
+var JSONSession = '[{"main":[{"type":"follow","when":{"event":"attention","level":"50","time":"5"},"do":{"0":{"label":"music","intensity":"100","responsive_function":"quadratic"}}}],"options":{"device":"pc"}}]';
 
 exports.getView = function(){
     return view;

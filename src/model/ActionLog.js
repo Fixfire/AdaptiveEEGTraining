@@ -15,7 +15,8 @@ function ActionLog() {
 
 //Class methods
 ActionLog.prototype.addEntry = function(action) {
-    
+    console.log('pushing action:');
+    console.log(action);
     this.entries.push(action);   
     
 };
