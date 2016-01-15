@@ -114,9 +114,10 @@ View.prototype.updateActions = function( event ){
             }
             
             graph.series[2].addPoint(pointToAdd, true);
-        }
-        if(event.label == "music" || event.label == "light"){
+        } else if(event.label == "light"){
             graph.series[3].addPoint([event.timestamp, event.intensity], true);
+        } else if(event.label == "music"){
+            graph.series[4].addPoint([event.timestamp, event.intensity], true);
         }
     }
 }
