@@ -52,25 +52,25 @@ View.prototype.actions = function( JSONaction ){
     }
 }
 
-View.prototype.followingActions = function(JSONaction,action,intensity) {
+View.prototype.followingActions = function(JSONaction,action) {
     
     var settings = JSON.parse(JSONaction);
     
     var label = settings.label;
-    
+    console.log(settings.intensity);
     //settings.final_volume = settings.intensity;
   
    if(label == "music"){         
         
         if(action == "play"){
-            startMusic(settings.path, settings.intensity);
+            //startMusic(settings.path, settings.intensity);
         }
        
         if(action == "continue"){
-            changeMusicVolume(settings.intensity);
+            //changeMusicVolume(settings.intensity);
         }
         if(action == "stop"){
-            stopMusic();
+            //stopMusic();
         }
     }
     
