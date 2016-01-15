@@ -1,9 +1,4 @@
-function View() {
-    
-    //inizializzo per settarla in setPanel
-    this.setPanel();
-    
-}
+function View() {}
 
 module.exports = View;
 
@@ -63,16 +58,16 @@ View.prototype.followingActions = function(JSONaction,action,intensity) {
     
     var label = settings.label;
     
-    settings.final_volume = intensity;
+    //settings.final_volume = settings.intensity;
   
    if(label == "music"){         
         
         if(action == "play"){
-            startMusic(settings.path, intensity);
+            startMusic(settings.path, settings.intensity);
         }
        
         if(action == "continue"){
-            changeMusicVolume(intensity);
+            changeMusicVolume(settings.intensity);
         }
         if(action == "stop"){
             stopMusic();
@@ -80,17 +75,10 @@ View.prototype.followingActions = function(JSONaction,action,intensity) {
     }
     
     if(label == "light"){
-        this.setLights(settings.color, intensity, settings.position);
+        this.setLights(settings.color, settings.intensity, settings.position);
     }
 }
 
-
-
-//Metodi per inizializzazione e update pannello di controllo
-View.prototype.setPanel = function(callback) {
-    
-    
-}
 
 View.prototype.updateGraph = function( packet ) {
    
@@ -102,6 +90,9 @@ View.prototype.updateGraph = function( packet ) {
     }
 }
 
+View.prototype.updateActions = function( action ){
+    
+}
 
 //Metodi per gestione dei video
 View.prototype.videoOnScreen = function( videoPath ){
