@@ -16,6 +16,7 @@ var main = (function() {
         } else {
                 
             var adapter = new Adapter(port);
+
             adapter.on("packet", function(data) {
                 console.log(JSON.stringify(data));
             })

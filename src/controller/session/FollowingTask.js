@@ -21,7 +21,7 @@ function FollowingTask(){
     this.lastIntensity = 100;
 }
 
-
+/* Function called when a new packet arrives */
 FollowingTask.prototype.checkPacket = function(packet,object) {
     console.log("I'm following session and this is the packet ");
     console.log(packet);
@@ -45,6 +45,7 @@ FollowingTask.prototype.checkPacket = function(packet,object) {
         currentVariable = object.level;
     }
     
+    //Following functions
     if (object.functionType == "quadratic") {
         
         currentIntensity = (object.intensity / object.level) * Math.pow(currentVariable,2) / 100;
@@ -69,12 +70,13 @@ FollowingTask.prototype.checkPacket = function(packet,object) {
     changeIntensity(object, currentIntensity);
 }
 
-
+/* Start view's action */
 function changeIntensity(object, intensity){
     console.log("Intensity is now : " + intensity);
     starter.getView().followingActions(JSON.stringify(object.action),"continue",intensity);
 }
 
+/* Init function to set starting intensity */
 FollowingTask.prototype.startIntensity = function() {
     starter.getView().followingActions(JSON.stringify(this.action),"play",100);
     var object = this;
@@ -83,14 +85,14 @@ FollowingTask.prototype.startIntensity = function() {
     }, 1000 * this.time);
 }
 
-
+/* Stopping following actions */
 function stopIntensity(object) {
     starter.getView().followingActions(JSON.stringify(this.action),"stop",0);
     starter.removeListener(object);
 }
 
 
-
+/* Getters & Setters */
 FollowingTask.prototype.setIntensity = function(intensity){
     this.intensity = intensity;
 }
