@@ -93,19 +93,20 @@ View.prototype.setPanel = function(callback) {
 }
 
 View.prototype.updateGraph = function( packet ) {
-            var graph = chrome.app.window.get('controlPanel').contentWindow.document.getElementById("container").highcharts();
-            console.log(chrome.app.window.get('controlPanel').contentWindow.document);
-            var date = new Date(packet.timestamp);
-            var timestamp = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() + ':' + date.getMilliseconds();
-            var slide = false;
+   
+    if(chrome.app.window.get('controlPanel') != undefined){   
+        var graph = chrome.app.window.get('controlPanel').contentWindow.Highcharts.charts[0];
+        var date = new Date(packet.timestamp);
+        var timestamp = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() + ':' + date.getMilliseconds();
+        var slide = false;
 
-            if(graph.series[0].data.length > 30){
-                slide = true;
-            }
+        if(graph.series[0].data.length > 30){
+            slide = true;
+        }
 
-            graph.series[0].addPoint([timestamp, packet.attention], true, slide);
-            graph.series[1].addPoint([timestamp, packet.meditation], true, slide);
-        
+        graph.series[0].addPoint([timestamp, packet.attention], true, slide);
+        graph.series[1].addPoint([timestamp, packet.meditation], true, slide);
+    }
 }
 
 
