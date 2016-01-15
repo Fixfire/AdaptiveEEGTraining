@@ -79,14 +79,17 @@ function changeIntensity(object, intensity){
     var timestamp = Date.now();
     object.action.timestamp = timestamp;
     object.action.intensity = intensity;
-    starter.getView().followingActions(JSON.stringify(object.action),"continue",intensity);
+    starter.getView().followingActions(JSON.stringify(object.action),"continue");
     object.packetEmitter.emit("newAction",object.action);
 }
 
 /* Init function to set starting intensity */
 FollowingTask.prototype.startIntensity = function() {
+    var timestamp = Date.now();
+    this.action.timestamp = timestamp;
     this.action.intensity = 100;
-    starter.getView().followingActions(JSON.stringify(this.action),"play",100);
+    console.log(this.action);
+    starter.getView().followingActions(JSON.stringify(this.action),"play");
     var object = this;
     setTimeout(function(){
         stopIntensity(object);
@@ -96,10 +99,12 @@ FollowingTask.prototype.startIntensity = function() {
 
 /* Stopping following actions */
 function stopIntensity(object) {
+    var timestamp = Date.now();
+    object.action.timestamp = timestamp;
     this.action.intensity = 0;
-    starter.getView().followingActions(JSON.stringify(this.action),"stop",0);
+    starter.getView().followingActions(JSON.stringify(this.action),"stop");
     starter.removeListener(object);
-    this.packetEmitter.emit("newAction",this.action);
+    object.packetEmitter.emit("newAction",object.action);
 }
 
 
