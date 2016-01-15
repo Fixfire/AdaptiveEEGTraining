@@ -103,8 +103,8 @@ function stopIntensity(object) {
     object.action.timestamp = timestamp;
     this.action.intensity = 0;
     starter.getView().followingActions(JSON.stringify(this.action),"stop");
+    object.packetEmitter.emit("newAction",{label:object.action.label,timestamp:timestamp,intensity:0});
     starter.removeListener(object);
-    object.packetEmitter.emit("newAction",{label:object.action.label,timestamp:timestamp,intensity:intensity});
 }
 
 
