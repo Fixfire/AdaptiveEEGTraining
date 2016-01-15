@@ -24,7 +24,7 @@ exports.getView = function(){
 exports.startNewSession = function() {
     
     //Instantiation of View
-    view = new View(JSONInitializer);
+    view = new View();
     
     //Listeners adding
     receiver.addNewListener(view.updateGraph);
@@ -63,7 +63,9 @@ function newTask(task){
               createFollowingTask(JSONScene[event],task);
               task.startIntensity();
            }
-
+        
+        task.packetEmitter.on("newAction",dataManager.addAction);
+        task.packetEmitter.on("newAction",view.updateActions);
         receiver.addNewTaskListener(task);
 
      }
