@@ -75,7 +75,7 @@ View.prototype.followingActions = function(JSONaction,action) {
     }
     
     if(label == "light"){
-        this.setLights(settings.color, settings.intensity, settings.position);
+        this.setLights(settings.color, settings.intensity);
     }
 }
 
@@ -90,8 +90,35 @@ View.prototype.updateGraph = function( packet ) {
     }
 }
 
-View.prototype.updateActions = function( action ){
+View.prototype.updateActions = function( event ){
     
+    if(chrome.app.window.get('controlPanel') != undefined){
+        var graph = chrome.app.window.get('controlPanel').contentWindow.Highcharts.charts[0];
+        
+        if(event.label == "video"){
+                    
+            var pointToAdd = {x:event.timestamp, 
+                              y:0,
+                              marker: {
+                                symbol:null,
+                                width:25,
+                                height:25
+                             }
+            };
+            
+            if(event.action == "load"){
+                pointToAdd.marker.symbol = "/icons/pause-icon.png";
+            }
+            if(event.action == "play"){
+                pointToAdd.marker.symbol = "/icons/play-icon.jpg";
+            }
+            
+            graph.series[2].addPoint(pointToAdd, true);
+        }
+        if(event.label == "music" || event.label == "light"){
+            graph.series[3].addPoint([event.timestamp, event.intensity], true);
+        }
+    }
 }
 
 //Metodi per gestione dei video

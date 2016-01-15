@@ -113,6 +113,11 @@ $(document).ready(function(){
             showInLegend: false,
             data: [],
             color: '#FFFFFF'
+        },{
+            name: 'Intensity',
+            showInLegend: true,
+            data: [],
+            color: '#00cc00'
         }]
     });
 });
