@@ -21,7 +21,7 @@ View.prototype.actions = function( JSONaction ){
         }
         if(action == "play"){
             console.log("PLAY VIDEO!");
-            this.playVideo();
+            //this.playVideo();
         }
     }
     
@@ -87,6 +87,7 @@ View.prototype.updateGraph = function( packet ) {
 
         graph.series[0].addPoint([packet.timestamp, packet.attention], true);
         graph.series[1].addPoint([packet.timestamp, packet.meditation], true);
+        graph.series[2].addPoint([packet.timestamp,0], true);
     }
 }
 
@@ -98,7 +99,7 @@ View.prototype.updateActions = function( event ){
         if(event.label == "video"){
                     
             var pointToAdd = {x:event.timestamp, 
-                              y:0,
+                              y:50,
                               marker: {
                                 symbol:null,
                                 width:25,
@@ -107,10 +108,10 @@ View.prototype.updateActions = function( event ){
             };
             
             if(event.action == "load"){
-                pointToAdd.marker.symbol = "/icons/pause-icon.png";
+                pointToAdd.marker.symbol = 'url(./icons/pause-icon.png)';
             }
             if(event.action == "play"){
-                pointToAdd.marker.symbol = "/icons/play-icon.jpg";
+                pointToAdd.marker.symbol = 'url(./icons/play-icon.jpg)';
             }
             
             graph.series[2].addPoint(pointToAdd, true);
