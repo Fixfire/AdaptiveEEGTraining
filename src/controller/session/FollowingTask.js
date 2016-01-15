@@ -101,7 +101,7 @@ FollowingTask.prototype.startIntensity = function() {
 function stopIntensity(object) {
     var timestamp = Date.now();
     object.action.timestamp = timestamp;
-    this.action.intensity = 0;
+    object.action.intensity = 0;
     starter.getView().followingActions(JSON.stringify(this.action),"stop");
     object.packetEmitter.emit("newAction",{label:object.action.label,timestamp:timestamp,intensity:0});
     starter.removeListener(object);
