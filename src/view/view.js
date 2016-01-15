@@ -96,16 +96,9 @@ View.prototype.updateGraph = function( packet ) {
    
     if(chrome.app.window.get('controlPanel') != undefined){   
         var graph = chrome.app.window.get('controlPanel').contentWindow.Highcharts.charts[0];
-        var date = new Date(packet.timestamp);
-        var timestamp = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() + ':' + date.getMilliseconds();
-        var slide = false;
 
-        if(graph.series[0].data.length > 30){
-            slide = true;
-        }
-
-        graph.series[0].addPoint([timestamp, packet.attention], true, slide);
-        graph.series[1].addPoint([timestamp, packet.meditation], true, slide);
+        graph.series[0].addPoint([packet.timestamp, packet.attention], true);
+        graph.series[1].addPoint([packet.timestamp, packet.meditation], true);
     }
 }
 
