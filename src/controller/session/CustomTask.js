@@ -1,3 +1,6 @@
+var events = require('events');
+var packetEmitter;
+
 var level;
 var time;
 var actions;
@@ -13,6 +16,7 @@ function CustomTask(){
     this.active = false;
     this.condition = "above";
     this.variable = "attention";
+    this.packetEmitter = new events.EventEmitter();
 }
 
 /* Function called when a new packet arrives */
@@ -64,9 +68,12 @@ function startActions(object){
     console.log("Action Started!");
     
     for (action in object.actions){
+        var timestamp = Date.now();
+        object.actions[action].timestamp = timestamp;
         starter.getView().actions(JSON.stringify(object.actions[action]));
+        object.packetEmitter.emit("newAction",object.actions[action]);
     }
-
+    
     starter.removeListener(object);
 
 }

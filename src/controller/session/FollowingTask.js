@@ -1,6 +1,8 @@
 var BOUND = 5;
 
 var starter = require("./sessionStarter");
+var events = require('events');
+var packetEmitter;
 
 var level;
 var intensity;
@@ -19,6 +21,7 @@ function FollowingTask(){
     this.functionType = "linear";
     this.variable = "attention";
     this.lastIntensity = 100;
+    this.packetEmitter = new events.EventEmitter();
 }
 
 /* Function called when a new packet arrives */
@@ -73,22 +76,30 @@ FollowingTask.prototype.checkPacket = function(packet,object) {
 /* Start view's action */
 function changeIntensity(object, intensity){
     console.log("Intensity is now : " + intensity);
+    var timestamp = Date.now();
+    object.action.timestamp = timestamp;
+    object.action.intensity = intensity;
     starter.getView().followingActions(JSON.stringify(object.action),"continue",intensity);
+    object.packetEmitter.emit("newAction",object.action);
 }
 
 /* Init function to set starting intensity */
 FollowingTask.prototype.startIntensity = function() {
+    this.action.intensity = 100;
     starter.getView().followingActions(JSON.stringify(this.action),"play",100);
     var object = this;
     setTimeout(function(){
         stopIntensity(object);
     }, 1000 * this.time);
+    this.packetEmitter.emit("newAction",this.action);
 }
 
 /* Stopping following actions */
 function stopIntensity(object) {
+    this.action.intensity = 0;
     starter.getView().followingActions(JSON.stringify(this.action),"stop",0);
     starter.removeListener(object);
+    this.packetEmitter.emit("newAction",this.action);
 }
 
 

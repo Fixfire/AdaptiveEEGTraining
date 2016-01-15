@@ -63,6 +63,9 @@ function newTask(task){
               createFollowingTask(JSONScene[event],task);
               task.startIntensity();
            }
+        
+        task.packetEmitter.on("newAction",dataManager.addAction);
+        task.packetEmitter.on("newAction",view.updateActions);
 
         receiver.addNewTaskListener(task);
 
