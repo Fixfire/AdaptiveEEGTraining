@@ -89,13 +89,7 @@ View.prototype.followingActions = function(JSONaction,action,intensity) {
 //Metodi per inizializzazione e update pannello di controllo
 View.prototype.setPanel = function(callback) {
     
-    chrome.app.window.create('./src/view/control-panel.html', {
-        id: 'controlPanel',
-        outerBounds: {
-            'width': 1280,
-            'height': 1024
-        }
-    });
+    
 }
 
 View.prototype.updateGraph = function( packet ) {
