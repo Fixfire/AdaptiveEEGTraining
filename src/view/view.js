@@ -99,11 +99,11 @@ View.prototype.setPanel = function(callback) {
     function(createdWindow){
         
         //inizializzo il contenitore per il grafico
- $(chrome.app.window.get('controlPanel').contentWindow.document.getElementsByClassName("main-content")).append('<div id="container" style="width:100%; height:400px;"></div>');
+ $(createdWindow.contentWindow.document.getElementsByClassName("main-content")).append('<div id="container" style="width:100%; height:400px;"></div>');
 
        
-console.log(chrome.app.window.get('controlPanel').contentWindow.document.getElementById("container"));
-        $(chrome.app.window.get('controlPanel').contentWindow.document.getElementById("container")).highcharts({
+console.log($(createdWindow.contentWindow.document.getElementById("container")).get());
+        $(createdWindow.contentWindow.document.getElementById("container")).highcharts({
             chart: {
                 type: 'scatter',
                 margin: [50, 50, 60, 80],
