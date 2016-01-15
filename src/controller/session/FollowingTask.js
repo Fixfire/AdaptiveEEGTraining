@@ -90,11 +90,11 @@ FollowingTask.prototype.startIntensity = function() {
     this.action.intensity = 100;
     //console.log(this.action);
     starter.getView().followingActions(JSON.stringify(this.action),"play");
+    this.packetEmitter.emit("newAction",{label:this.action.label,timestamp:timestamp,intensity:100});
     var object = this;
     setTimeout(function(){
         stopIntensity(object);
     }, 1000 * this.time);
-    this.packetEmitter.emit("newAction",{label:this.action.label,timestamp:timestamp,intensity:intensity});
 }
 
 /* Stopping following actions */
