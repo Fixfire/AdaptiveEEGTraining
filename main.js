@@ -3,21 +3,19 @@ var dataReceiver = require("./src/controller/headsetReceiver/dataReceiver");
 var starter = require('./src/controller/session/sessionStarter');
 var Dummy = require("./Dummy.js")
 
-//choose between dummy or normal (yes/no)
-var DUMMY = "yes";
-
 var main = (function() {
 
     document.addEventListener('DOMContentLoaded', function() {
-        
-        
-        if (DUMMY == "yes") {
+        var dummy = getUrlVars()["dummy"];
+        var port = getUrlVars()["port"];
+
+        if (dummy == "true") {
             adapter = new Dummy();
             dataReceiver.setAdapter(adapter);
             adapter.startDummy();
         } else {
                 
-            var adapter = new Adapter();
+            var adapter = new Adapter(port);
             adapter.on("packet", function(data) {
                 console.log(JSON.stringify(data));
             })
@@ -30,6 +28,16 @@ var main = (function() {
     });
 
 })();
+
+
+
+function getUrlVars() {
+var vars = {};
+var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+vars[key] = value;
+});
+return vars;
+}
 
 
 
