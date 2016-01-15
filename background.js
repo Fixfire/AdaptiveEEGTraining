@@ -9,11 +9,5 @@ chrome.app.runtime.onLaunched.addListener(function() {
             'height': 1024
         }
     });
-    chrome.app.window.create('./src/view/control-panel.html', {
-        id: 'controlPanel',
-        outerBounds: {
-            'width': 1280,
-            'height': 1024
-        }
-    });
+    
 });
