@@ -56,12 +56,12 @@ function newTask(task){
     for(event in JSONScene){
         clearTimeout(timeout);
         if(JSONScene[event].type == "custom"){
-              var task = new CustomTask();
-             createCustomTask(JSONScene[event],task);
+            var task = new CustomTask();
+            createCustomTask(JSONScene[event],task);
          } else if(JSONScene[event].type == "follow"){
             var task = new FollowingTask();
-              createFollowingTask(JSONScene[event],task);
-              task.startIntensity();
+            createFollowingTask(JSONScene[event],task);
+            task.startIntensity();
            }
         
         task.packetEmitter.on("newAction",dataManager.addAction);
