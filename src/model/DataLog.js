@@ -3,7 +3,7 @@
 var DataEntry = require('../model/DataEntry');
 
 //Constructor
-function Log() {
+function DataLog() {
     
     this.entries = [];
     this.timestamps = [];
@@ -16,14 +16,14 @@ function Log() {
 }
 
 //Class methods
-Log.prototype.addEntry = function(timestamp,attentionLevel, relaxationLevel) {
+DataLog.prototype.addEntry = function(timestamp,attentionLevel, relaxationLevel) {
     
     var data = new DataEntry(timestamp,attentionLevel,relaxationLevel); 
     this.entries.push(data);   
     
 };
 
-Log.prototype.getEntries = function() {
+DataLog.prototype.getEntries = function() {
     
     return this.entries;
     /*this.entries.forEach(function (eachEntry) {
@@ -32,14 +32,14 @@ Log.prototype.getEntries = function() {
     
 };
 
-Log.prototype.getEntry = function() {
+DataLog.prototype.getEntry = function() {
     
     return this.entries.pop();
     
 };
 
 /* Function to create the final JSON of all log entries for Abilia DB*/
-Log.prototype.createJSON = function() {
+DataLog.prototype.createJSON = function() {
     
     for (entry in this.entries) {
         this.timestamps.push(this.entries[entry].timestamp);
@@ -50,10 +50,10 @@ Log.prototype.createJSON = function() {
     this.JSONTimestamps = this.JSONTimestamps + JSON.stringify(this.timestamps) +'"';
     this.JSONAttentionLevels = this.JSONAttentionLevels + JSON.stringify(this.attentionLevels) +'"';
     this.JSONRelaxationLevels = this.JSONRelaxationLevels + JSON.stringify(this.relaxationLevels) +'"';
-
+    console.log(this.timestamps);
     return '{' + this.JSONTimestamps + ',' + this.JSONAttentionLevels + ',' + this.JSONRelaxationLevels +'}';
 }
 
 //Export class
-module.exports = Log;
+module.exports = DataLog;
 
