@@ -114,10 +114,16 @@ $(document).ready(function(){
             data: [],
             color: '#FFFFFF'
         },{
-            name: 'Intensity',
+            name: 'Light Intensity',
             showInLegend: true,
             data: [],
             color: '#00cc00'
+        },
+                 {
+            name: 'Music Intensity',
+            showInLegend: true,
+            data: [],
+            color: '#000000'
         }]
     });
 });
