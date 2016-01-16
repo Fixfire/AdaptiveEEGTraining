@@ -81,48 +81,54 @@ View.prototype.followingActions = function(JSONaction,action) {
 
 
 View.prototype.updateGraph = function( packet ) {
-   
-    if(chrome.app.window.get('controlPanel') != undefined){   
-        var graph = chrome.app.window.get('controlPanel').contentWindow.Highcharts.charts[0];
-
-        graph.series[0].addPoint([packet.timestamp, packet.attention], true);
-        graph.series[1].addPoint([packet.timestamp, packet.meditation], true);
-        graph.series[2].addPoint([packet.timestamp,0], true);
-    }
+    chart1.dataProvider.push({
+        "column-1": packet.attention,
+        "column-2": packet.meditation,
+        "date": new Date(packet.timestamp)
+    });
+    chart1.validateData();
 }
 
 View.prototype.updateActions = function( event ){
-    
-    if(chrome.app.window.get('controlPanel') != undefined){
-        var graph1 = chrome.app.window.get('controlPanel').contentWindow.Highcharts.charts[0];
-        var graph2 = chrome.app.window.get('controlPanel').contentWindow.Highcharts.charts[1];
         
         if(event.label == "video"){
-                    
-            var pointToAdd = {x:event.timestamp, 
-                              y:50,
-                              marker: {
-                                symbol:null,
-                                width:25,
-                                height:25
-                             }
-            };
+            
+            var point = {
+			"date": event.timestamp,
+			"column-3": 0,
+			"customBullet": ""
+		    };
             
             if(event.action == "load"){
-                pointToAdd.marker.symbol = 'url(./icons/pause-icon.png)';
-            }
+                
+                point.customBullet = "icons/pause-icon.png";             }
             if(event.action == "play"){
-                pointToAdd.marker.symbol = 'url(./icons/play-icon.jpg)';
+                
+                point.customBullet = "icons/play-icon.jpg"; 
             }
             
-            graph1.series[2].addPoint(pointToAdd, true);
+            chart1.dataProvider.push(point);
+            chart1.validateData();
+            
         } else if(event.label == "light"){
-            graph2.series[0].addPoint([event.timestamp, event.intensity], true);
+
+            chart2.dataProvider.push({
+			"date": event.timestamp,
+			"column-1": event.intensity
+            });
+            
+            chart2.validateData();
+            
         } else if(event.label == "music"){
-            graph2.series[1].addPoint([event.timestamp, event.intensity], true);
+            
+            chart2.dataProvider.push({
+			"date": event.timestamp,
+			"column-2": event.intensity
+            });
+            
+            chart2.validateData();
         }
     }
-}
 
 //Metodi per gestione dei video
 View.prototype.videoOnScreen = function( videoPath ){
