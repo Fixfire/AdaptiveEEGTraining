@@ -12,8 +12,8 @@ var timeout;
 
 var JSONInitializer = '{"environment":"magicRoom"}';
     
-var JSONSession = '[{"main":[{"type":"custom","when":{"event":"attention","level":"50","time":"3","condition":"below"},"do":{"0":{"label":"light","action":"on"}}},{"type":"custom","when":{"event":"attention","level":"30","time":"5","condition":"above"},"do":{"0":{"label":"video","action":"play"}}}],"options":{"device":"pc","timeout":"10"}},{"main":[{"type":"custom","when":{"event":"attention","level":"20","time":"1"},"do":{"0":{"label":"light","action":"on"}}}],"options":{"device":"pc","timeout":"3"}}]';
-    
+/*var JSONSession = '[{"main":[{"type":"custom","when":{"event":"attention","level":"50","time":"3","condition":"below"},"do":{"0":{"label":"light","action":"on"}}},{"type":"custom","when":{"event":"attention","level":"30","time":"5","condition":"above"},"do":{"0":{"label":"video","action":"play"}}}],"options":{"device":"pc","timeout":"10"}},{"main":[{"type":"custom","when":{"event":"attention","level":"20","time":"1"},"do":{"0":{"label":"light","action":"on"}}}],"options":{"device":"pc","timeout":"3"}}]';
+    */
 //var JSONSession = '[{"main":[{"type":"follow","when":{"event":"attention","level":"50","time":"5"},"do":{"0":{"label":"music","intensity":"100","responsive_function":"quadratic"}}}],"options":{"device":"pc"}}]';
 
 exports.getView = function(){
@@ -21,7 +21,8 @@ exports.getView = function(){
 }
 
 /* Function to start a new session */
-exports.startNewSession = function() {
+exports.startNewSession = function(json) {
+
     
     //Instantiation of View
     view = new View();
@@ -31,7 +32,7 @@ exports.startNewSession = function() {
     receiver.addNewListener(dataManager.addPacket);
     receiver.addNewSessionListener(nextTask);
     
-    JSONTask = JSON.parse(JSONSession);
+    JSONTask = JSON.parse(json);
     
     receiver.startReceiving();
     
