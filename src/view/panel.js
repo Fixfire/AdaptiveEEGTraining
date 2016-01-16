@@ -6,6 +6,23 @@ document.addEventListener('DOMContentLoaded', function() {
         startApplication();
     });
     
+    $('#portListButton').on('click', function setPortList(callback) {
+        var list = document.getElementById('portListDropdown');
+        chrome.serial.getDevices(function(portList) {
+            console.log(portList);
+            for (port in portList) {
+                var path = String(port.path);
+                console.log(path);  
+                var li = document.createElement("li");
+                var link = document.createElement("a");             
+                var text = document.createTextNode(path);
+                link.appendChild(text);
+                link.href = "#";
+                li.appendChild(link);
+                list.appendChild(li);
+            }
+        });
+    });
 });
 
 function startApplication() {    
