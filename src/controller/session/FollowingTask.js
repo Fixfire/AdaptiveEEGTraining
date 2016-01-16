@@ -160,5 +160,7 @@ FollowingTask.prototype.getAction = function(){
     return this.action;
 }
 
+FollowingTask.prototype.getTimeout = function(){}
+
 
 module.exports = FollowingTask;
