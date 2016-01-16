@@ -11,10 +11,6 @@ var JSONTask;
 var timeout;
 
 var JSONInitializer = '{"environment":"magicRoom"}';
-    
-/*var JSONSession = '[{"main":[{"type":"custom","when":{"event":"attention","level":"50","time":"3","condition":"below"},"do":{"0":{"label":"light","action":"on"}}},{"type":"custom","when":{"event":"attention","level":"30","time":"5","condition":"above"},"do":{"0":{"label":"video","action":"play"}}}],"options":{"device":"pc","timeout":"10"}},{"main":[{"type":"custom","when":{"event":"attention","level":"20","time":"1"},"do":{"0":{"label":"light","action":"on"}}}],"options":{"device":"pc","timeout":"3"}}]';
-    */
-//var JSONSession = '[{"main":[{"type":"follow","when":{"event":"attention","level":"50","time":"5"},"do":{"0":{"label":"music","intensity":"100","responsive_function":"quadratic"}}}],"options":{"device":"pc"}}]';
 
 exports.getView = function(){
     return view;
@@ -57,12 +53,12 @@ function newTask(task){
     for(event in JSONScene){
         clearTimeout(timeout);
         if(JSONScene[event].type == "custom"){
-              var task = new CustomTask();
-             createCustomTask(JSONScene[event],task);
+            var task = new CustomTask();
+            createCustomTask(JSONScene[event],task);
          } else if(JSONScene[event].type == "follow"){
             var task = new FollowingTask();
-              createFollowingTask(JSONScene[event],task);
-              task.startIntensity();
+            createFollowingTask(JSONScene[event],task);
+            task.startIntensity();
            }
         
         task.packetEmitter.on("newAction",dataManager.addAction);

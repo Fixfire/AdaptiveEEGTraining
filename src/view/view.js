@@ -21,7 +21,7 @@ View.prototype.actions = function( JSONaction ){
         }
         if(action == "play"){
             console.log("PLAY VIDEO!");
-            this.playVideo();
+            //this.playVideo();
         }
     }
     
@@ -52,30 +52,30 @@ View.prototype.actions = function( JSONaction ){
     }
 }
 
-View.prototype.followingActions = function(JSONaction,action,intensity) {
+View.prototype.followingActions = function(JSONaction,action) {
     
     var settings = JSON.parse(JSONaction);
     
     var label = settings.label;
-    
+    console.log(settings.intensity);
     //settings.final_volume = settings.intensity;
   
    if(label == "music"){         
         
         if(action == "play"){
-            startMusic(settings.path, settings.intensity);
+            //startMusic(settings.path, settings.intensity);
         }
        
         if(action == "continue"){
-            changeMusicVolume(settings.intensity);
+            //changeMusicVolume(settings.intensity);
         }
         if(action == "stop"){
-            stopMusic();
+            //stopMusic();
         }
     }
     
     if(label == "light"){
-        this.setLights(settings.color, settings.intensity, settings.position);
+        this.setLights(settings.color, settings.intensity);
     }
 }
 
@@ -87,11 +87,41 @@ View.prototype.updateGraph = function( packet ) {
 
         graph.series[0].addPoint([packet.timestamp, packet.attention], true);
         graph.series[1].addPoint([packet.timestamp, packet.meditation], true);
+        graph.series[2].addPoint([packet.timestamp,0], true);
     }
 }
 
-View.prototype.updateActions = function( action ){
+View.prototype.updateActions = function( event ){
     
+    if(chrome.app.window.get('controlPanel') != undefined){
+        var graph1 = chrome.app.window.get('controlPanel').contentWindow.Highcharts.charts[0];
+        var graph2 = chrome.app.window.get('controlPanel').contentWindow.Highcharts.charts[1];
+        
+        if(event.label == "video"){
+                    
+            var pointToAdd = {x:event.timestamp, 
+                              y:50,
+                              marker: {
+                                symbol:null,
+                                width:25,
+                                height:25
+                             }
+            };
+            
+            if(event.action == "load"){
+                pointToAdd.marker.symbol = 'url(./icons/pause-icon.png)';
+            }
+            if(event.action == "play"){
+                pointToAdd.marker.symbol = 'url(./icons/play-icon.jpg)';
+            }
+            
+            graph1.series[2].addPoint(pointToAdd, true);
+        } else if(event.label == "light"){
+            graph2.series[0].addPoint([event.timestamp, event.intensity], true);
+        } else if(event.label == "music"){
+            graph2.series[1].addPoint([event.timestamp, event.intensity], true);
+        }
+    }
 }
 
 //Metodi per gestione dei video
