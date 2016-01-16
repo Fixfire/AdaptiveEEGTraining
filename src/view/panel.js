@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-function createCustomTastk() {    
+function startApplication() {    
     var port = document.getElementById("port").value;
     var path = document.getElementById("path").value;
     var dummyBool = document.getElementById("dummyBool");

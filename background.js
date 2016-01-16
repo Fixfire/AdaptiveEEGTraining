@@ -3,7 +3,7 @@
  */
 
 chrome.app.runtime.onLaunched.addListener(function() {
-    chrome.app.window.create('./src/view/controlPanel.html', {
+    chrome.app.window.create('./src/view/startingPanel.html', {
         'outerBounds': {
             'width': 1280,
             'height': 1024
