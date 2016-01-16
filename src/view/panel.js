@@ -1,27 +1,40 @@
-
 document.addEventListener('DOMContentLoaded', function() {
-    var link = document.getElementById('form');
+    var form = document.getElementById('form');
+
     // onClick's logic below:
-    link.addEventListener('submit', function() {
-        createCustomTastk();
+    form.addEventListener('submit', function() {
+        startApplication();
     });
+    
 });
-
-
 
 function startApplication() {    
     var port = document.getElementById("port").value;
-    var path = document.getElementById("path").value;
-    var dummyBool = document.getElementById("dummyBool");
-    
+    var dummyBool = document.getElementById("dummyBool").checked;
+        
 
-    chrome.app.window.create('./src/view/index.html?port=' + port + '&path=' + path + '&dummy=' + dummyBool.checked, {
+    if(dummyBool == false) {
+        if (port == ''){
+            var opt = {        
+                type: "basic",
+                title: "ALERT",
+                message: "port is not defined for not dummy applcation!",
+                iconUrl: "../../alert.jpg"
+            }
+
+            chrome.notifications.create("string notificationId",opt);
+            return;
+        }      
+    }
+
+
+    chrome.app.window.create('./src/view/index.html?port=' + port + '&dummy=' + dummyBool, {
         'outerBounds': {
             'width': 1280,
             'height': 1024
         }
     });
-    
+
     chrome.app.window.create('./src/view/control-panel.html', {
         id: 'controlPanel',
         outerBounds: {
@@ -29,6 +42,4 @@ function startApplication() {
             'height': 1024
         }
     });
-
-    
 }
