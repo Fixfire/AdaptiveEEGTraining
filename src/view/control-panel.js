@@ -81,9 +81,7 @@ $(document).ready(function(){
 							"text": "Chart Title"
 						}
 					],
-					"dataProvider": [{
-                        "date": dateFormatter(Date.now())
-                    }]
+					"dataProvider": []
 				}
 			);
     
@@ -94,6 +92,7 @@ $(document).ready(function(){
 					"dataDateFormat": "YYYY-MM-DD HH:NN:SS",
 					"maxSelectedSeries": -1,
 					"marginTop": 16,
+        	        "zoomOutOnDataUpdate": false,
 					"colors": [
 						"#e60000",
 						"#FCD202",
@@ -160,9 +159,20 @@ $(document).ready(function(){
 					"dataProvider": []
 				}
 			);
-
+    
+    chart1.addListener("dataUpdated", scale1);
+    chart2.addListener("dataUpdated", scale2);
         
 });
 
+function scale1(){
+    if(chart1.dataProvider.length > 10)
+    
+    chart1.zoomToIndexes(chart1.dataProvider.length - 10, chart1.dataProvider.length -1);   
+}
 
-
+function scale2(){
+    if(chart2.dataProvider.length > 10)
+    
+    chart2.zoomToCategoryValues(chart2.dataProvider.length - 10, chart2.dataProvider.length -1);   
+}

@@ -90,7 +90,7 @@ View.prototype.updateGraph = function( packet ) {
         "column-2": packet.meditation,
         "date": data
     });
-    chart1.validateNow(true, false);
+    chart1.validateData();
 }
 
 View.prototype.updateActions = function( event ){
@@ -217,7 +217,7 @@ function dateFormatter(date){
     if((dat.getHours()*1) <10 ){
         data += "0"+dat.getHours()+":";
     }else{
-        data += dat.getMonth()+":";
+        data += dat.getHours()+":";
     }
 
     //MINUTI
