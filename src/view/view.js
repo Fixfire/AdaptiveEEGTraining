@@ -81,52 +81,67 @@ View.prototype.followingActions = function(JSONaction,action) {
 
 
 View.prototype.updateGraph = function( packet ) {
+    
+    var chart1 = chrome.app.window.get("controlPanel").contentWindow.chart1;
+    var data = dateFormatter(new Date(packet.timestamp));
+   
     chart1.dataProvider.push({
         "column-1": packet.attention,
         "column-2": packet.meditation,
-        "date": new Date(packet.timestamp)
+        "date": data
     });
-    chart1.validateData();
+    chart1.validateNow(true, false);
 }
 
 View.prototype.updateActions = function( event ){
         
         if(event.label == "video"){
             
+            var date = dateFormatter(new Date(packet.timestamp));
+            
             var point = {
-			"date": event.timestamp,
+			"date": date,
 			"column-3": 0,
 			"customBullet": ""
 		    };
             
             if(event.action == "load"){
                 
-                point.customBullet = "icons/pause-icon.png";             }
+                point.customBullet = "icons/pause-icon.png";             
+            }
             if(event.action == "play"){
                 
                 point.customBullet = "icons/play-icon.jpg"; 
             }
             
+            var chart1 = chrome.app.window.get("controlPanel").contentWindow.chart1;
+            
             chart1.dataProvider.push(point);
-            chart1.validateData();
+            chart1.validateNow(true, false);
             
         } else if(event.label == "light"){
+            
+            var chart2 = chrome.app.window.get("controlPanel").contentWindow.chart2;
+            var date = dateFormatter(new Date(packet.timestamp));
 
             chart2.dataProvider.push({
-			"date": event.timestamp,
+			"date": date,
 			"column-1": event.intensity
             });
             
-            chart2.validateData();
+            chart2.validateNow(true, false);
             
         } else if(event.label == "music"){
             
+            var chart2 = chrome.app.window.get("controlPanel").contentWindow.chart2;
+            var date = dateFormatter(new Date(packet.timestamp));
+            
             chart2.dataProvider.push({
-			"date": event.timestamp,
+			"date": date,
 			"column-2": event.intensity
             });
             
-            chart2.validateData();
+            chart2.validateNow(true, false);
         }
     }
 
@@ -178,6 +193,49 @@ View.prototype.setLights = function( lightsColor, lightIntensity ){
     });*/
 }
 
+function dateFormatter(date){
+    
+    var dat = new Date(date);
+    
+    var data = ""+dat.getFullYear()+"-";
+    
+    // MESI
+    if((dat.getMonth()*1) <10 ){
+        data += "0"+dat.getMonth()+"-";
+    }else{
+        data += dat.getMonth()+"-";
+    }
+    
+    // GIORNI
+    if((dat.getDate()*1) <10 ){
+        data += "0"+dat.getDate()+" ";
+    }else{
+        data += dat.getDate()+" ";
+    }
+    
+    //ORE
+    if((dat.getHours()*1) <10 ){
+        data += "0"+dat.getHours()+":";
+    }else{
+        data += dat.getMonth()+":";
+    }
 
+    //MINUTI
+    if((dat.getMinutes()*1) <10 ){
+        data += "0"+dat.getMinutes()+":";
+    }else{
+        data += dat.getMinutes()+":";
+    }
+    
+    //SECONDI
+    if((dat.getSeconds()*1) <10 ){
+        data += "0"+dat.getSeconds();
+    }else{
+        data += dat.getSeconds();
+    }
+    
+    return data;
+    
+}
 
 

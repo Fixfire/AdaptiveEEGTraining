@@ -1,13 +1,10 @@
-var chart1;
-var chart2;
-
 $(document).ready(function(){
         
         //inizializzo il contenitore per il grafico
-    $("#main-content").append('<div id="container1" style="width:100%; height:400px;"></div>');
-    $("#main-content").append('<div id="container2" style="width:100%; height:400px;"></div>');
+    $("#main-content").append('<div id="cont1" style="width:100%; height:400px;"></div>');
+    $("#main-content").append('<div id="cont2" style="width:100%; height:400px;"></div>');
     
-    chart1 = AmCharts.makeChart("chartdiv",
+    chart1 = AmCharts.makeChart("cont1",
 				{
 					"type": "serial",
 					"categoryField": "date",
@@ -84,11 +81,13 @@ $(document).ready(function(){
 							"text": "Chart Title"
 						}
 					],
-					"dataProvider": []
+					"dataProvider": [{
+                        "date": dateFormatter(Date.now())
+                    }]
 				}
 			);
     
-    chart2 = AmCharts.makeChart("chartdiv",
+    chart2 = AmCharts.makeChart("cont2",
 				{
 					"type": "serial",
 					"categoryField": "date",
@@ -161,39 +160,9 @@ $(document).ready(function(){
 					"dataProvider": []
 				}
 			);
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+        
 });
+
+
+
