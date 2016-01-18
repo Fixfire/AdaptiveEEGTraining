@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function startApplication() {    
     var port = document.getElementById("port").value;
     var dummyBool = document.getElementById("dummyBool").checked;
+    var JSONSession = document.getElementById("JSONSession").value;
         
 
     if(dummyBool == false) {
@@ -52,9 +53,9 @@ function startApplication() {
             return;
         }      
     }
+    console.log(JSONSession);
 
-
-    chrome.app.window.create('./src/view/index.html?port=' + port + '&dummy=' + dummyBool, {
+    chrome.app.window.create('./src/view/index.html?port=' + port + '&dummy=' + dummyBool + '&JSONSession=' + JSONSession, {
         'outerBounds': {
             'width': 1280,
             'height': 1024

@@ -13,9 +13,9 @@ $(document).ready(function(){
 					"marginTop": 16,
 					"colors": [
 						"#e60000",
-						"#FCD202",
-						"#ffffff",
 						"#0D8ECF",
+						"#ffffff",
+						"#FCD202",
 						"#2A0CD0",
 						"#CD0D74",
 						"#CC0000",
@@ -78,7 +78,7 @@ $(document).ready(function(){
 						{
 							"id": "Title-1",
 							"size": 15,
-							"text": "Chart Title"
+							"text": "Realtime EEG levels"
 						}
 					],
 					"dataProvider": []
@@ -153,7 +153,7 @@ $(document).ready(function(){
 						{
 							"id": "Title-1",
 							"size": 15,
-							"text": "Chart Title"
+							"text": "Responsive levels"
 						}
 					],
 					"dataProvider": []

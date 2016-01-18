@@ -72,8 +72,8 @@ function startActions(object){
     
     for (action in object.actions){
         object.actions[action].timestamp = object.timestamp;
-        starter.getView().actions(JSON.stringify(object.actions[action]));
         object.packetEmitter.emit("newAction",object.actions[action]);
+        starter.getView().actions(JSON.stringify(object.actions[action]));
     }
     
     starter.removeListener(object);

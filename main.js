@@ -8,7 +8,9 @@ var main = (function() {
     document.addEventListener('DOMContentLoaded', function() {
         var dummy = getUrlVars()["dummy"];
         var port = getUrlVars()["port"];
-        var json = require("./JSON.json")
+        var session = getUrlVars()["JSONSession"];
+        //TODO var json = require("./" + session + ".json");
+        var json = require("./JSON.json");
         
         if (dummy == "true") {
             adapter = new Dummy();
