@@ -80,7 +80,6 @@ FollowingTask.prototype.checkPacket = function(packet,object) {
 function changeIntensity(object, intensity){
     console.log("Intensity is now : " + intensity);
     object.action.timestamp = object.timestamp;
-    console.log(object.action.timestamp);
     object.action.intensity = intensity;
     object.packetEmitter.emit("newAction",{label:object.action.label,timestamp:object.action.timestamp,intensity:intensity});
     starter.getView().followingActions(JSON.stringify(object.action),"continue");
@@ -102,11 +101,10 @@ FollowingTask.prototype.startIntensity = function() {
 
 /* Stopping following actions */
 function stopIntensity(object) {
-    var timestamp = Date.now();
-    object.action.timestamp = timestamp;
+    object.action.timestamp = object.timestamp;
     object.action.intensity = 0;
     starter.getView().followingActions(JSON.stringify(this.action),"stop");
-    object.packetEmitter.emit("newAction",{label:object.action.label,timestamp:timestamp,intensity:0});
+    object.packetEmitter.emit("newAction",{label:object.action.label,timestamp:object.action.timestamp,intensity:0});
     starter.removeListener(object);
 }
 
