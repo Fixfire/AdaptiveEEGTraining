@@ -21,7 +21,7 @@ View.prototype.actions = function( JSONaction ){
         }
         if(action == "play"){
             console.log("PLAY VIDEO!");
-            //this.playVideo();
+            this.playVideo();
         }
     }
     
@@ -58,19 +58,19 @@ View.prototype.followingActions = function(JSONaction,action) {
     
     var label = settings.label;
     console.log(settings.intensity);
-    //settings.final_volume = settings.intensity;
   
    if(label == "music"){         
         
         if(action == "play"){
-            //startMusic(settings.path, settings.intensity);
+            startMusic(settings.path, settings.intensity);
         }
        
         if(action == "continue"){
-            //changeMusicVolume(settings.intensity);
+            changeMusicVolume(settings.intensity);
         }
         if(action == "stop"){
-            //stopMusic();
+            console.log("STOPPING MUSIC");
+            stopMusic();
         }
     }
     
@@ -146,19 +146,20 @@ View.prototype.updateActions = function( event ){
     }
 
 //Metodi per gestione dei video
-View.prototype.videoOnScreen = function( videoPath ){
+View.prototype.videoOnScreen = function ( videoPath ){
         
         //pulisco schermo prima mettere nuovo video
         $(".main-content").html("");
     
         //TODO fare CSS per video
-        $(".main-content").append('<video id="video"><source src="'+videoPath+'" type="video/mp4"></video>');
+        $(".main-content").append('<video id="video"><source src="'+videoPath+'" type="video/mp4"></video>');   
         $("#video").load();
     
 }
 
-View.prototype.playVideo = function() {   
-    $("#video").play();
+View.prototype.playVideo = function() {  
+    $("#video").load();
+    $("#video").get(0).play();
 }
 
 
@@ -169,15 +170,20 @@ function startMusic( musicPath, musicIntensity ) {
     
     $(".main-content").append('<audio id="audio"><source src="'+musicPath+'" type="audio/mpeg"></audio>');
     $("#audio").volume = musicIntensity;
-    $("#audio").play();
+    $("#audio").get(0).play();
 }
 
 function changeMusicVolume(volume){
-    $("#audio").volume = volume;
+    if(volume == 0){
+        $("#audio").get(0).pause();
+    }else { 
+        $("#audio").get(0).play();
+        $("#audio").get(0).volume = volume/100;
+    }
 }
 
 function stopMusic(){
-    $("#audio").stop(); 
+    $("#audio").get(0).pause(); 
 }
 
 View.prototype.setLights = function( lightsColor, lightIntensity ){
