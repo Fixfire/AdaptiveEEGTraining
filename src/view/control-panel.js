@@ -122,15 +122,14 @@ $(document).ready(function(){
 					"trendLines": [],
 					"graphs": [
 						{
-							"bullet": "round",
-							"id": "Music",
-							"title": "Music Volume",
-							"valueField": "column-1"
-						},
-						{
 							"bullet": "square",
 							"id": "Light",
 							"title": "Lights Intensity",
+							"valueField": "column-1"
+						},{
+							"bullet": "round",
+							"id": "Music",
+							"title": "Music Volume",
 							"valueField": "column-2"
 						}
 					],
