@@ -175,11 +175,11 @@ function startMusic( musicPath, musicIntensity ) {
 
 function changeMusicVolume(volume){
     if(volume == 0){
-        $("#audio").get(0).pause();
-    }else { 
-        $("#audio").get(0).play();
-        $("#audio").get(0).volume = volume/100;
-    }
+        volume = 0.0;
+    } 
+    $("#audio").get(0).play();
+    $("#audio").get(0).volume = volume/100;
+    
 }
 
 function stopMusic(){
