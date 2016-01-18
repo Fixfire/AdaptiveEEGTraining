@@ -8,6 +8,7 @@ var active;
 var timeout;
 var condition;
 var variable;
+var timestamp;
 
 function CustomTask(){
     this.level = 0;
@@ -24,7 +25,9 @@ CustomTask.prototype.checkPacket = function(packet,object) {
     console.log("I'm attention session and this is the packet ");
     console.log(packet);
     console.log(object);
-
+    
+    object.timestamp = packet.timestamp;
+    console.log(object.timestamp);
     //Logging in cosole for checking
     console.log("rule level : " + object.level);
     console.log("rule time : " + object.time);
@@ -68,8 +71,7 @@ function startActions(object){
     console.log("Action Started!");
     
     for (action in object.actions){
-        var timestamp = Date.now();
-        object.actions[action].timestamp = timestamp;
+        object.actions[action].timestamp = object.timestamp;
         starter.getView().actions(JSON.stringify(object.actions[action]));
         object.packetEmitter.emit("newAction",object.actions[action]);
     }

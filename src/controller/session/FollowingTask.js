@@ -12,6 +12,7 @@ var variable;
 var time;
 var action;
 var lastIntensity;
+var timestamp;
 
 function FollowingTask(){
     this.level = 100;
@@ -29,6 +30,8 @@ FollowingTask.prototype.checkPacket = function(packet,object) {
     console.log("I'm following session and this is the packet ");
     console.log(packet);
 
+    object.timestamp = packet.timestamp;
+    console.log(object.timestamp);
     //Logging in cosole for checking
     console.log("target level : " + object.level);
     console.log("total time : " + object.time);
@@ -69,23 +72,23 @@ FollowingTask.prototype.checkPacket = function(packet,object) {
     }
     currentIntensity = 100 - currentIntensity;
     //object.lastIntensity = currentIntensity;
-    
+
     changeIntensity(object, currentIntensity);
 }
 
 /* Start view's action */
 function changeIntensity(object, intensity){
     console.log("Intensity is now : " + intensity);
-    var timestamp = Date.now();
-    object.action.timestamp = timestamp;
+    object.action.timestamp = object.timestamp;
+    console.log(object.action.timestamp);
     object.action.intensity = intensity;
     starter.getView().followingActions(JSON.stringify(object.action),"continue");
-    object.packetEmitter.emit("newAction",{label:object.action.label,timestamp:timestamp,intensity:intensity});
+    object.packetEmitter.emit("newAction",{label:object.action.label,timestamp:object.action.timestamp,intensity:intensity});
 }
 
 /* Init function to set starting intensity */
 FollowingTask.prototype.startIntensity = function() {
-    var timestamp = Date.now();
+    //var timestamp = Date.now();
     this.action.timestamp = timestamp;
     this.action.intensity = 100;
     //console.log(this.action);
