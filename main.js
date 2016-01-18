@@ -15,6 +15,10 @@ var port ;
 var dummyBool;
 
 document.addEventListener('DOMContentLoaded', function() {
+    $('#form').submit(function () {
+     startApplication();
+     return false;
+    });
         
         if (dummy == "true") {
             adapter = new Dummy();
@@ -29,6 +33,32 @@ document.addEventListener('DOMContentLoaded', function() {
             dataReceiver.setAdapter(adapter);
             adapter.init();
         } 
+    $('#JSONSession').on('change', function(session) {
+        var reader = new FileReader();
+       
+        //Read file inserted 
+        reader.onload = function(event) {
+            json = event.target.result;
+
+            //Check if the file inserted is a valid JSON format
+            try {
+                json = JSON.parse(json); 
+            } catch (err) {
+                var opt = {        
+                    type: "basic",
+                    title: "ALERT",
+                    message: "This is not a well formed JSON file. Error" + err  + " detected",
+                    iconUrl: "../../alert.jpg"
+                }
+
+                chrome.notifications.create("string notificationId",opt);
+                json = undefined;
+                return;
+            }
+       
+        };
+        reader.readAsText(session.target.files[0]);
+    });
     
     $('#portListButton').on('click', function setPortList(callback) {
         var list = document.getElementById('portListDropdown');
@@ -97,6 +127,14 @@ function startApplication() {
             return;
         }      
     }
+    
+    $('#controlPanel').hide();
+    chrome.app.window.create('./src/view/control-panel.html', {
+        id: 'controlPanel',
+        outerBounds: {
+            'width': 1280,
+            'height': 1024
+        }
     });
     return vars;
   
