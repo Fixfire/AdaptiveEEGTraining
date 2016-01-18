@@ -183,11 +183,11 @@ function stopMusic(){
 View.prototype.setLights = function( lightsColor, lightIntensity ){
     console.log("LIGHTS ON");
     
-    /*var json = '{"Action":"EnvironmentAction", "Color":"'+lightsColor+'", "Luminosity":"'+lightIntensity+'"}';
+    /*var json = '{"Action":"EnvironmentAction", "Color":"' + lightsColor + '", "Luminosity":"' + lightIntensity + '"}';
     
     $.ajax({
         type: "POST",
-        url: "url",             <---- INSERIRE URL SERVER --->
+        url: "localhost:5050",
         data: json,
         dataType: "json"
     });*/
