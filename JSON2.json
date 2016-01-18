@@ -27,7 +27,8 @@
                "0":{  
                   "label":"music",
                   "intensity":"100",
-                   "responsive_function":"quadratic"
+                   "responsive_function":"quadratic",
+                   "path":"../../media/music/music.mp3"
                }
             }
          }

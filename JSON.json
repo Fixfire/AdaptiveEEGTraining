@@ -11,8 +11,9 @@
             },
             "do":{  
                "0":{  
-                  "label":"video",
-                  "action":"play"
+                    "label":"light",
+                    "action":"on",
+                    "color":"ccff00"
                }
             }
          },
@@ -21,13 +22,19 @@
             "when":{  
                "event":"attention",
                "level":"30",
-               "time":"5",
+               "time":"1",
                "condition":"above"
             },
             "do":{  
-               "0":{  
-                  "label":"video",
-                  "action":"play"
+              "0":{  
+                    "label":"video",
+                    "action":"load",
+                    "path":"../../media/video/giraffa.mp4"
+               },
+                "1":{  
+                    "label":"video",
+                    "action":"play",
+                    "path":"../../media/video/giraffa.mp4"
                }
             }
          }
