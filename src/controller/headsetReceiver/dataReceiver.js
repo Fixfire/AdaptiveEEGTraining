@@ -4,8 +4,6 @@ var currentTask = null;
 var listeners = [] ;
 var adapter;
 
-var dataManager = require('../dataManager');
-
 exports.addNewSessionListener = function(element){
     console.log("added new session for the current task");
     packetEmitter.addListener('endSession', element);
@@ -27,7 +25,6 @@ exports.removeTaskListener = function(listener) {
 
 exports.addNewListener = function(listener) {
     packetEmitter.addListener("jsonPacket",listener);
-    //process.on('jsonPacket',listener);
 }
 
 exports.startReceiving = function() {
@@ -42,7 +39,6 @@ exports.stopTasks = function(){
         packetEmitter.removeListener(target,listeners[task].checkPacket);
     }
     packetEmitter.emit('endSession');
-    //dataManager.save();
 }
 
 exports.setAdapter = function(adapt) {
