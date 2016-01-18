@@ -82,8 +82,8 @@ function changeIntensity(object, intensity){
     object.action.timestamp = object.timestamp;
     console.log(object.action.timestamp);
     object.action.intensity = intensity;
-    starter.getView().followingActions(JSON.stringify(object.action),"continue");
     object.packetEmitter.emit("newAction",{label:object.action.label,timestamp:object.action.timestamp,intensity:intensity});
+    starter.getView().followingActions(JSON.stringify(object.action),"continue");
 }
 
 /* Init function to set starting intensity */
