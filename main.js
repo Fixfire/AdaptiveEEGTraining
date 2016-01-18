@@ -14,24 +14,17 @@ var main = (function() {
             adapter = new Dummy();
             dataReceiver.setAdapter(adapter);
             adapter.startDummy();
-        } else {
-                
+            starter.startNewSession(JSON.stringify(json));
+        } else {  
             var adapter = new Adapter(port);
-
-            adapter.on("packet", function(data) {
-                console.log(JSON.stringify(data));
-            })
+			adapter.once("packet", function(data) {
+				starter.startNewSession(JSON.stringify(json));
+			})
             dataReceiver.setAdapter(adapter);
             adapter.init();
-        }
-        
-        starter.startNewSession(JSON.stringify(json));
-        
+        } 
     });
-
 })();
-
-
 
 function getUrlVars() {
     var vars = {};
