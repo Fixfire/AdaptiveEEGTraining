@@ -12,7 +12,7 @@
                "0":{  
                   "label":"light",
                   "intensity":"100",
-                   "responsive_function":"linear"
+                   "responsive_function":"quadratic"
                }
             }
          },
@@ -27,7 +27,7 @@
                "0":{  
                   "label":"music",
                   "intensity":"100",
-                   "responsive_function":"quadratic",
+                   "responsive_function":"linear",
                    "path":"../../media/music/music.mp3"
                }
             }
