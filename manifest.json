@@ -16,8 +16,7 @@
 
   "permissions": [
     "serial",
-    "notifications",
-    "storage"
+    "notifications"
   ]
 
 }
