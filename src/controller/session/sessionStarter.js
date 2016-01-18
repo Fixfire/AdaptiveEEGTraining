@@ -30,6 +30,7 @@ exports.startNewSession = function(json) {
     
     JSONTask = JSON.parse(json);
     
+    dataManager.initializeAbiliaDb();
     dataManager.setDateStart(Date.now());
     receiver.startReceiving();
     
