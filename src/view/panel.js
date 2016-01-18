@@ -10,9 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
         var list = document.getElementById('portListDropdown');
         chrome.serial.getDevices(function(portList) {
             console.log(portList);
-            for (port in portList) {
-                var path = String(port.path);
-                console.log(path);  
+            for (var entry = 0; entry < portList.length; entry++) {
+                var path = String(portList[entry].path);
                 var li = document.createElement("li");
                 var link = document.createElement("a");             
                 var text = document.createTextNode(path);
@@ -23,7 +22,17 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+ 
+/* WIP copy selected to entry text field
+    $('.portListEntry').on('click', function setPortList(callback) {
+        console.log("clicked on " + this.text());
+        var port = document.getElementById('port');
+        var path = this.text();
+        port.val(path);
+        
+    });
 });
+*/
 
 function startApplication() {    
     var port = document.getElementById("port").value;
