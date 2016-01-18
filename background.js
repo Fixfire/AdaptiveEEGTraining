@@ -3,7 +3,8 @@
  */
 
 chrome.app.runtime.onLaunched.addListener(function() {
-    chrome.app.window.create('./src/view/startingPanel.html', {
+    chrome.app.window.create('./index.html', {
+        id: 'index',
         'outerBounds': {
             'width': 1280,
             'height': 1024
@@ -32,7 +33,6 @@ chrome.runtime.onSuspend.addListener(function() {
   			}
         });
       });
- 
     }
   });
 });
