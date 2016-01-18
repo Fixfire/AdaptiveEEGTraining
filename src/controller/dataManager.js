@@ -41,30 +41,35 @@ exports.save = function(){
     //TODO: Call Abilia DB
     /*
     var dbInitializer = '{"idTherapeuticCenter": "' + idTherapeuticCenter + '","idActivity": "'+ idActivity + '","idChild": "' + idChild + '","idTherapist": "' + idTherapist + '","idParent": "' + idParent + '","notes": "' + notes + '","rating": "' + rating + '","fieldList": {"timestamp":"DATETIME","attention": "INT(10)","relaxation": "INT(3)",“label”: “VARCHAR(32)”,"action": "VARCHAR(32)",“intensity”: “FLOAT”,“color”:”VARCHAR(32)”,“path”:”VARCHAR(100)”},"dateStart": "' + dateStart + '","dateEnd": "' + dateEnd + '","outcome": "' + outcome + '"}';
+    
     $.ajax({
         type: "POST",
         url: "url",             <---- INSERIRE URL SERVER --->
         data: dbInitializer,
         dataType: "json",
-    }).done(function() {
+        success: function() {
     
-        var dataLogJSON = dataLog.createJSON();
-    
-        $.ajax({
-            type: "POST",
-            url: "url",             <---- INSERIRE URL SERVER --->
-            data: dataLogJSON,
-            dataType: "json"
-        });
-        
-        var actionLogJSON = actionLog.createJSON();
+            var dataLogJSON = dataLog.createJSON();
 
-        $.ajax({
-            type: "POST",
-            url: "url",             <---- INSERIRE URL SERVER --->
-            data: actionLogJSON,
-            dataType: "json"
-        });
+            $.ajax({
+                type: "POST",
+                url: "url",             <---- INSERIRE URL SERVER --->
+                data: dataLogJSON,
+                dataType: "json"
+            });
+
+            var actionLogJSON = actionLog.createJSON();
+
+            $.ajax({
+                type: "POST",
+                url: "url",             <---- INSERIRE URL SERVER --->
+                data: actionLogJSON,
+                dataType: "json"
+            });
+        1},
+        error: function(request,error){
+            console.log("Error");
+        }
     });
     */
 
@@ -76,4 +81,23 @@ exports.setDateStart = function(date){
 
 exports.setDateEnd = function(date){
     dateEnd = date;
+}
+
+exports.initializeAbiliaDb = function(){
+    /*$.ajax({
+        type: "POST",
+        url: "url",             <---- INSERIRE URL SERVER --->
+        success: function(response){
+             var parsedResponse = JSON.parse(response);
+             idTherapeuticCenter = parsedResponse.idTherapeuticCenter;
+             idActivity = parsedResponse.idActivity;
+             idChild = parsedResponse.idChild;
+             idTherapist = parsedResponse.idTherapist;
+             idParent = parsedResponse.idParent;
+         1},
+         error: function(request,error){
+              console.log("Error");
+          }   
+    });
+*/
 }
