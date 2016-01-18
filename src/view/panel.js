@@ -31,8 +31,8 @@ document.addEventListener('DOMContentLoaded', function() {
         port.val(path);
         
     });
+    */
 });
-*/
 
 function startApplication() {    
     var port = document.getElementById("port").value;
