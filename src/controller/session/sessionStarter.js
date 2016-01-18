@@ -30,6 +30,7 @@ exports.startNewSession = function(json) {
     
     JSONTask = JSON.parse(json);
     
+    dataManager.setDateStart(Date.now());
     receiver.startReceiving();
     
     newTask(0);
@@ -81,6 +82,7 @@ function nextTask(){
     task = task + 1;
     if(task > JSONTask.length - 1){
         clearTimeout(timeout);
+        dataManager.setDateEnd(Date.now());
         dataManager.save();
     } else {
         newTask(task);
