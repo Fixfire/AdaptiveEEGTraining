@@ -40,7 +40,7 @@ DataLog.prototype.getEntry = function() {
 
 /* Function to create the final JSON of all log entries for Abilia DB*/
 DataLog.prototype.createJSON = function() {
-    
+    /*
     for (entry in this.entries) {
         this.timestamps.push(this.entries[entry].timestamp);
         this.attentionLevels.push(this.entries[entry].attentionLevel);
@@ -51,7 +51,8 @@ DataLog.prototype.createJSON = function() {
     this.JSONAttentionLevels = this.JSONAttentionLevels + JSON.stringify(this.attentionLevels) +'"';
     this.JSONRelaxationLevels = this.JSONRelaxationLevels + JSON.stringify(this.relaxationLevels) +'"';
     console.log(this.timestamps);
-    return '{' + this.JSONTimestamps + ',' + this.JSONAttentionLevels + ',' + this.JSONRelaxationLevels +'}';
+    return '{' + this.JSONTimestamps + ',' + this.JSONAttentionLevels + ',' + this.JSONRelaxationLevels +'}';*/
+    return JSON.stringify(this.entries);
 }
 
 //Export class
