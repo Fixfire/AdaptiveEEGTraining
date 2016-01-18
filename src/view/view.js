@@ -97,11 +97,11 @@ View.prototype.updateActions = function( event ){
         
         if(event.label == "video"){
             
-            var date = dateFormatter(new Date(packet.timestamp));
+            var date = dateFormatter(new Date(event.timestamp));
             
             var point = {
 			"date": date,
-			"column-3": 0,
+			"column-3": 50,
 			"customBullet": ""
 		    };
             
@@ -122,7 +122,7 @@ View.prototype.updateActions = function( event ){
         } else if(event.label == "light"){
             
             var chart2 = chrome.app.window.get("controlPanel").contentWindow.chart2;
-            var date = dateFormatter(new Date(packet.timestamp));
+            var date = dateFormatter(new Date(event.timestamp));
 
             chart2.dataProvider.push({
 			"date": date,
@@ -134,7 +134,7 @@ View.prototype.updateActions = function( event ){
         } else if(event.label == "music"){
             
             var chart2 = chrome.app.window.get("controlPanel").contentWindow.chart2;
-            var date = dateFormatter(new Date(packet.timestamp));
+            var date = dateFormatter(new Date(event.timestamp));
             
             chart2.dataProvider.push({
 			"date": date,
