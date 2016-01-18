@@ -3,14 +3,6 @@ var dataReceiver = require("./src/controller/headsetReceiver/dataReceiver");
 var starter = require('./src/controller/session/sessionStarter');
 var Dummy = require("./Dummy.js")
 var json;
-var main = (function() {
-
-    document.addEventListener('DOMContentLoaded', function() {
-        var dummy = getUrlVars()["dummy"];
-        var port = getUrlVars()["port"];
-        var session = getUrlVars()["JSONSession"];
-        //TODO var json = require("./" + session + ".json");
-        var json = require("./JSON.json");
 var port ;
 var dummyBool;
 
@@ -20,19 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
      return false;
     });
         
-        if (dummy == "true") {
-            adapter = new Dummy();
-            dataReceiver.setAdapter(adapter);
-            adapter.startDummy();
-            starter.startNewSession(JSON.stringify(json));
-        } else {  
-            var adapter = new Adapter(port);
-			adapter.once("packet", function(data) {
-				starter.startNewSession(JSON.stringify(json));
-			})
-            dataReceiver.setAdapter(adapter);
-            adapter.init();
-        } 
     $('#JSONSession').on('change', function(session) {
         var reader = new FileReader();
        
@@ -88,10 +67,6 @@ document.addEventListener('DOMContentLoaded', function() {
     */
 });
 
-function getUrlVars() {
-    var vars = {};
-    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-    vars[key] = value;
 
 
 //Check input and start the application.
@@ -136,9 +111,30 @@ function startApplication() {
             'height': 1024
         }
     });
-    return vars;
+    start();
   
 }
+
+//initialize applciation.
+function start() {
+    console.log("Launching application");
+    console.log(dummyBool);
+    console.log(port);
+    
+
+    if (dummyBool == true) {
+        adapter = new Dummy();
+        dataReceiver.setAdapter(adapter);
+        adapter.startDummy();
+        starter.startNewSession(JSON.stringify(json));
+    } else {  
+        var adapter = new Adapter(port);
+        adapter.once("packet", function(data) {
+            starter.startNewSession(JSON.stringify(json));
+        })
+        dataReceiver.setAdapter(adapter);
+        adapter.init();
+    } 
 }
 
 
