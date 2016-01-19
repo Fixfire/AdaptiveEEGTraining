@@ -124,17 +124,15 @@ function start() {
 
     if (dummyBool == true) {
         adapter = new Dummy();
-        dataReceiver.setAdapter(adapter);
-        adapter.startDummy();
-        starter.startNewSession(JSON.stringify(json));
     } else {  
         var adapter = new Adapter(port);
-        adapter.once("packet", function(data) {
-            starter.startNewSession(JSON.stringify(json));
-        })
-        dataReceiver.setAdapter(adapter);
-        adapter.init();
     } 
+    
+    adapter.once("packet", function(data) {
+        starter.startNewSession(JSON.stringify(json));
+    })
+    dataReceiver.setAdapter(adapter);
+    adapter.init();
 }
 
 
