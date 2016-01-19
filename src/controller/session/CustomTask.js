@@ -1,6 +1,5 @@
 var events = require('events');
 var packetEmitter;
-
 var level;
 var time;
 var actions;
@@ -10,6 +9,9 @@ var condition;
 var variable;
 var timestamp;
 
+/**
+* Class for handling the custom task.
+**/
 function CustomTask(){
     this.level = 0;
     this.time = 0;
@@ -24,10 +26,9 @@ function CustomTask(){
 CustomTask.prototype.checkPacket = function(packet,object) {
     console.log("I'm attention session and this is the packet ");
     console.log(packet);
-    console.log(object);
-    
+
     object.timestamp = packet.timestamp;
-    console.log(object.timestamp);
+    
     //Logging in cosole for checking
     console.log("rule level : " + object.level);
     console.log("rule time : " + object.time);
@@ -49,7 +50,6 @@ CustomTask.prototype.checkPacket = function(packet,object) {
         if(currentVariable < object.level && object.active){
             clearTimeout(object.timeout);
             object.active = false;
-            console.log("RESETTO TIMEOUT"+object.timeout);
         }
     } else if (object.condition == "below") {
         if(currentVariable <= object.level && !object.active){
@@ -59,7 +59,6 @@ CustomTask.prototype.checkPacket = function(packet,object) {
         if(currentVariable > object.level && object.active){
             clearTimeout(object.timeout);
             object.active = false;
-            console.log("RESETTO TIMEOUT"+object.timeout);
         }
     }
     
@@ -77,7 +76,6 @@ function startActions(object){
     }
     
     starter.removeListener(object);
-
 }
 
 /* Setters & getters */

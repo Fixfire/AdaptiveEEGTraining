@@ -1,5 +1,3 @@
-var BOUND = 5;
-
 var starter = require("./sessionStarter");
 var events = require('events');
 var packetEmitter;
@@ -11,9 +9,11 @@ var active;
 var variable;
 var time;
 var action;
-var lastIntensity;
 var timestamp;
 
+/**
+* Class for handling the following task.
+**/
 function FollowingTask(){
     this.level = 100;
     this.active = false;
@@ -21,7 +21,6 @@ function FollowingTask(){
     this.intensity = 100;
     this.functionType = "linear";
     this.variable = "attention";
-    this.lastIntensity = 100;
     this.packetEmitter = new events.EventEmitter();
 }
 
@@ -31,7 +30,7 @@ FollowingTask.prototype.checkPacket = function(packet,object) {
     console.log(packet);
 
     object.timestamp = packet.timestamp;
-    console.log(object.timestamp);
+
     //Logging in cosole for checking
     console.log("target level : " + object.level);
     console.log("total time : " + object.time);
@@ -60,18 +59,9 @@ FollowingTask.prototype.checkPacket = function(packet,object) {
         
         currentIntensity = ((object.intensity) / object.level )* currentVariable;   
         
-        /*
-        if (Math.abs(currentIntensity - object.lastIntensity)>object.BOUND){
-            console.log('SONO DENTRO');
-            if(currentIntensity - object.lastIntensity > 0){
-                currentIntensity = object.lastIntensity + object.BOUND;
-            }else{
-                currentIntensity = object.lastIntensity - object.BOUND;
-            }
-        }*/
+
     }
     currentIntensity = 100 - currentIntensity;
-    //object.lastIntensity = currentIntensity;
 
     changeIntensity(object, currentIntensity);
 }
@@ -87,12 +77,9 @@ function changeIntensity(object, intensity){
 
 /* Init function to set starting intensity */
 FollowingTask.prototype.startIntensity = function() {
-    //var timestamp = Date.now();
     this.action.timestamp = timestamp;
     this.action.intensity = 100;
-    //console.log(this.action);
     starter.getView().followingActions(JSON.stringify(this.action),"play");
-    //this.packetEmitter.emit("newAction",{label:this.action.label,timestamp:timestamp,intensity:100});
     var object = this;
     setTimeout(function(){
         stopIntensity(object);

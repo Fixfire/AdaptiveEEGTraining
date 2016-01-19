@@ -6,6 +6,7 @@ var json;
 var port ;
 var dummyBool;
 
+//Add listener to all the elements of the page: form submit, file inserting, port selection.
 document.addEventListener('DOMContentLoaded', function() {
     $('#form').submit(function () {
      startApplication();
@@ -103,6 +104,7 @@ function startApplication() {
         }      
     }
     
+    //Hide the control panel in order to show the video if needed.
     $('#controlPanel').hide();
     chrome.app.window.create('./src/view/control-panel.html', {
         id: 'controlPanel',
@@ -117,14 +119,11 @@ function startApplication() {
 
 //initialize applciation.
 function start() {
-    console.log("Launching application");
-    console.log(dummyBool);
-    console.log(port);
-    
-
+    console.log("Launching application");   
+   
     if (dummyBool == true) {
         adapter = new Dummy();
-    } else {  
+    } else {
         var adapter = new Adapter(port);
     } 
     

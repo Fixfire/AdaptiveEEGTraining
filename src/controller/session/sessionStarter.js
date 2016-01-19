@@ -1,4 +1,3 @@
-
 var receiver = require("../headsetReceiver/dataReceiver");
 var CustomTask = require("./CustomTask");
 var FollowingTask = require("./FollowingTask")
@@ -19,7 +18,6 @@ exports.getView = function(){
 /* Function to start a new session */
 exports.startNewSession = function(json) {
 
-    
     //Instantiation of View
     view = new View();
     
@@ -45,10 +43,10 @@ exports.removeListener = function(listener) {
 }
 
 /* Function to create a new tasks of the session */
-function newTask(task){
+function newTask(taskNumber){
     console.log(JSONTask);
-    var JSONScene = JSONTask[task].main;
-    var JSONOption = JSONTask[task].options;
+    var JSONScene = JSONTask[taskNumber].main;
+    var JSONOption = JSONTask[taskNumber].options;
     console.log(JSONOption);
 
     //Creation of new task for every event-condition
@@ -73,7 +71,7 @@ function newTask(task){
     if(JSONOption.timeout != '' && JSONOption.timeout != undefined){
         timeout = setTimeout(receiver.stopTasks,JSONOption.timeout*1000);
       }else{
-        timeout = setTimeout(receiver.stopTasks,10*1000);
+        timeout = setTimeout(receiver.stopTasks, 10*1000);
    }
     return task;
 }
