@@ -6,14 +6,13 @@
             "when":{  
                "event":"attention",
                "level":"50",
-               "time":"3",
+               "time":"1",
                "condition":"below"
             },
             "do":{  
                "0":{  
                     "label":"light",
-                    "action":"on",
-                    "color":"ccff00"
+                    "action":"on"
                }
             }
          },
@@ -22,7 +21,7 @@
             "when":{  
                "event":"attention",
                "level":"30",
-               "time":"1",
+               "time":"2",
                "condition":"above"
             },
             "do":{  

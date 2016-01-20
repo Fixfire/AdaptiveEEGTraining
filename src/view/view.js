@@ -30,14 +30,14 @@ View.prototype.actions = function( JSONaction ){
         var action = settings.action;
         
         if(action == "play"){
-            if(settings.path != undefined && settings.final_intensity != undefined){
-                startMusic(settings.path, settings.final_intensity);
+            if(settings.path != undefined && settings.intensity != undefined){
+                startMusic(settings.path, settings.intensity);
             }
         }
        
         if(action == "continue"){
-            if(settings.final_intensity != undefined){
-                changeMusicVolume(settings.final_intensity);
+            if(settings.intensity != undefined){
+                changeMusicVolume(settings.intensity);
             }
         }
         if(action == "stop"){
@@ -46,8 +46,8 @@ View.prototype.actions = function( JSONaction ){
     }
     
     if(label == "light"){
-        if(settings.color != undefined && settings.final_intensity != undefined){
-            this.setLights(settings.color, settings.final_intensity);
+        if(settings.color != undefined && settings.intensity != undefined){
+            this.setLights(settings.color, settings.intensity);
         }
     }
 }
@@ -162,6 +162,12 @@ View.prototype.playVideo = function() {
     $("#video").get(0).play();
 }
 
+View.prototype.isVideoOn = function(){
+    if($("#video").get(0) != undefined){
+        console.log(!$("#video").get(0).ended);
+        return !$("#video").get(0).ended;
+    }
+}
 
 
 //Metodi per la gestione della stanza
@@ -184,6 +190,12 @@ function changeMusicVolume(volume){
 
 function stopMusic(){
     $("#audio").get(0).pause(); 
+}
+
+View.prototype.isMusicOn = function() {
+    if($("#audio").get(0) != undefined){
+        return !$("#audio").get(0).ended;
+    }
 }
 
 View.prototype.setLights = function( lightsColor, lightIntensity ){
@@ -243,5 +255,7 @@ function dateFormatter(date){
     return data;
     
 }
+
+
 
 
