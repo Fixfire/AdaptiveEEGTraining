@@ -162,6 +162,12 @@ View.prototype.playVideo = function() {
     $("#video").get(0).play();
 }
 
+View.prototype.isVideoOn = function(){
+    if($("#video").get(0) != undefined){
+        console.log(!$("#video").get(0).ended);
+        return !$("#video").get(0).ended;
+    }
+}
 
 
 //Metodi per la gestione della stanza
@@ -184,6 +190,12 @@ function changeMusicVolume(volume){
 
 function stopMusic(){
     $("#audio").get(0).pause(); 
+}
+
+View.prototype.isMusicOn = function() {
+    if($("#audio").get(0) != undefined){
+        return !$("#audio").get(0).ended;
+    }
 }
 
 View.prototype.setLights = function( lightsColor, lightIntensity ){
@@ -243,5 +255,7 @@ function dateFormatter(date){
     return data;
     
 }
+
+
 
 
