@@ -30,14 +30,14 @@ View.prototype.actions = function( JSONaction ){
         var action = settings.action;
         
         if(action == "play"){
-            if(settings.path != undefined && settings.final_intensity != undefined){
-                startMusic(settings.path, settings.final_intensity);
+            if(settings.path != undefined && settings.intensity != undefined){
+                startMusic(settings.path, settings.intensity);
             }
         }
        
         if(action == "continue"){
-            if(settings.final_intensity != undefined){
-                changeMusicVolume(settings.final_intensity);
+            if(settings.intensity != undefined){
+                changeMusicVolume(settings.intensity);
             }
         }
         if(action == "stop"){
@@ -46,8 +46,8 @@ View.prototype.actions = function( JSONaction ){
     }
     
     if(label == "light"){
-        if(settings.color != undefined && settings.final_intensity != undefined){
-            this.setLights(settings.color, settings.final_intensity);
+        if(settings.color != undefined && settings.intensity != undefined){
+            this.setLights(settings.color, settings.intensity);
         }
     }
 }
