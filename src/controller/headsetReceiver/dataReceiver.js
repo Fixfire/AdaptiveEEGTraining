@@ -37,9 +37,9 @@ exports.startReceiving = function() {
 //Stop all the current rule for the current task.
 exports.stopTasks = function(){
     for (task in listeners){
-        var target = parseInt(task) + 1;
+        var target = parseInt(task);
         clearTimeout(listeners[task].getTimeout());
-        packetEmitter.removeListener(target,listeners[task].checkPacket);
+        packetEmitter.removeListener(task,listeners[task].checkPacket);
     }
     packetEmitter.emit('endSession');
 }
@@ -60,8 +60,7 @@ function startConnection() {
 function newPacket(packet) {
   
     for (index in listeners) {
-        var target = parseInt(index) + 1;
-        packetEmitter.emit(target,packet,listeners[index]);
+        packetEmitter.emit(index,packet,listeners[index]);
     }
     packetEmitter.emit("jsonPacket",packet);
 }
