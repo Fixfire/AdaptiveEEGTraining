@@ -19,7 +19,13 @@ var Adapter = module.exports = function Adapter(port) {
     },
     work: function(my) {
         my.headset.on("allComputedPacket", function(data) {
-            self.emit("packet", data);
+          if (data.hasOwnProperty("signal")) {
+            if (data.signal === 0) {
+              self.emit("packet", data);
+            } else {
+              self.emit("lowSignalPacket");
+            }
+          }
         });
     }
 	});
@@ -31,8 +37,6 @@ Adapter.prototype.isInit = false;
 
 Adapter.prototype.init = function() {
     if (!this.isInit) {
-        console.log(this.port);
-        console.log("porto la port");
         this.robot.start();
         this.isInit = true;
     }
