@@ -36,12 +36,14 @@ exports.startReceiving = function() {
 
 //Stop all the current rule for the current task.
 exports.stopTasks = function(){
-    for (task in listeners){
-        var target = parseInt(task);
-        clearTimeout(listeners[task].getTimeout());
-        packetEmitter.removeListener(task,listeners[task].checkPacket);
+    if (listeners.length != 0){ 
+        for (task in listeners){
+            var target = parseInt(task);
+            clearTimeout(listeners[task].getTimeout());
+            packetEmitter.removeListener(task,listeners[task].checkPacket);
+        }
+        packetEmitter.emit('endSession');
     }
-    packetEmitter.emit('endSession');
 }
 
 exports.setAdapter = function(adapt) {
