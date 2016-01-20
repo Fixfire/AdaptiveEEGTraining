@@ -10,6 +10,7 @@ var variable;
 var time;
 var action;
 var timestamp;
+var id;
 
 /**
 * Class for handling the following task.
@@ -148,6 +149,16 @@ FollowingTask.prototype.setAction = function(action){
 FollowingTask.prototype.getAction = function(){
     return this.action;
 }
+
+
+FollowingTask.prototype.getId = function(){
+    return this.id;
+}
+
+FollowingTask.prototype.setId = function(id){
+    this.id = id;
+}
+
 
 FollowingTask.prototype.getTimeout = function(){}
 

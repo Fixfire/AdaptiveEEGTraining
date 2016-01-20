@@ -8,6 +8,7 @@ var timeout;
 var condition;
 var variable;
 var timestamp;
+var id;
 
 /**
 * Class for handling the custom task.
@@ -121,6 +122,14 @@ CustomTask.prototype.getActions = function(){
 
 CustomTask.prototype.getTimeout = function(){
     return this.timeout;
+}
+
+CustomTask.prototype.getId = function(){
+    return this.id;
+}
+
+CustomTask.prototype.setId = function(id){
+    this.id = id;
 }
 
 module.exports = CustomTask;
