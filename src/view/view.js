@@ -2,6 +2,8 @@ function View() {}
 
 module.exports = View;
 
+var videoOn = false;
+var musicOn = false;
 
 //Distinzione tra azioni
 View.prototype.actions = function( JSONaction ){
@@ -153,6 +155,10 @@ View.prototype.videoOnScreen = function ( videoPath ){
     
         //TODO fare CSS per video
         $(".main-content").append('<video id="video"><source src="'+videoPath+'" type="video/mp4"></video>');   
+        $("#video").on('ended',function(){
+            console.log("Ending Video: " + videoOn);
+            videoOn = false; 
+        });
         $("#video").load();
     
 }
@@ -160,23 +166,40 @@ View.prototype.videoOnScreen = function ( videoPath ){
 View.prototype.playVideo = function() {  
     $("#video").load();
     $("#video").get(0).play();
+    videoOn = true;
 }
 
 View.prototype.isVideoOn = function(){
     if($("#video").get(0) != undefined){
-        console.log(!$("#video").get(0).ended);
-        return !$("#video").get(0).ended;
+        console.log("isVideoOn? " + videoOn);
+        return videoOn;
     }
 }
 
+View.prototype.isVideoPlayed = function(){
+    if($("#video").get(0) != undefined){
+        console.log("isVideo Played?" + !$("#video").get(0).played.length == 0);
+        return !$("#video").get(0).played.length == 0; //false if video is not played
+    }
+    return false;
+}
+
+View.prototype.endVideo = function(){
+    videoOn = false;
+}
 
 //Metodi per la gestione della stanza
 function startMusic( musicPath, musicIntensity ) {
     $(".main-content").html("");
     
-    $(".main-content").append('<audio id="audio"><source src="'+musicPath+'" type="audio/mpeg"></audio>');
+    $(".main-content").append('<audio id="audio"><source src="' + musicPath + '" type="audio/mpeg"></audio>');
+    $("#audio").on('ended',function(){
+        console.log("Ending Video: " + musicOn);
+        musicOn = false; 
+    });
     $("#audio").volume = musicIntensity;
     $("#audio").get(0).play();
+    musicOn = true;
 }
 
 function changeMusicVolume(volume){
@@ -190,12 +213,26 @@ function changeMusicVolume(volume){
 
 function stopMusic(){
     $("#audio").get(0).pause(); 
+    musicOn = false;
 }
 
 View.prototype.isMusicOn = function() {
     if($("#audio").get(0) != undefined){
-        return !$("#audio").get(0).ended;
+        console.log("isMusicOn? " + musicOn);
+        return musicOn;
     }
+}
+
+View.prototype.isMusicPlayed = function() {
+    if($("#audio").get(0) != undefined){
+        console.log("isMusic Played?" + !$("#audio").get(0).paused);
+        return !$("#audio").get(0).paused;
+    }
+    return false;
+}
+
+View.prototype.endMusic = function(){
+    musicOn = false;
 }
 
 View.prototype.setLights = function( lightsColor, lightIntensity ){
