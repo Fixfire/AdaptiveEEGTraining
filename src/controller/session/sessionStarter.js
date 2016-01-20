@@ -8,6 +8,7 @@ var view;
 var task = 0;
 var JSONTask;
 var timeout;
+var checkInterval;
 
 var JSONInitializer = '{"environment":"magicRoom"}';
 
@@ -84,7 +85,17 @@ function nextTask(){
         dataManager.setDateEnd(Date.now());
         dataManager.save();
     } else {
-        newTask(task);
+        checkInterval = setInterval(function(){
+            if (view.isMusicOn() || view.isVideoOn()){
+                console.log("VIDEO or MUSIC ON");
+            } else {
+                clearInterval(checkInterval);
+                setTimeout(function() {
+                    newTask(task);
+                },3000);
+            }
+        },1000);
+        
     }
 }
 
