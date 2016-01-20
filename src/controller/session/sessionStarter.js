@@ -52,7 +52,7 @@ function newTask(taskNumber){
 
     //Creation of new task for every event-condition
     for(event in JSONScene){
-        clearTimeout(timeout);
+        
         if(JSONScene[event].type == "custom"){
             var task = new CustomTask();
             createCustomTask(JSONScene[event],task);
@@ -70,18 +70,30 @@ function newTask(taskNumber){
     
     // Checking JSON task's option field
     if(JSONOption.timeout != '' && JSONOption.timeout != undefined){
-        timeout = setTimeout(receiver.stopTasks,JSONOption.timeout*1000);
+        timeout = setTimeout(function(){timeoutActions();},JSONOption.timeout*1000);
       }else{
-        timeout = setTimeout(receiver.stopTasks, 10*1000);
+        timeout = setTimeout(function(){timeoutActions();}, 10*1000);
    }
     return task;
 }
 
+function timeoutActions(){
+    if(!view.isVideoPlayed()){
+        console.log("timout: " + view.isVideoPlayed())
+        view.endVideo();
+    }
+    // Maybe this is useless
+    if (!view.isMusicPlayed()){
+        view.endMusic();
+    }
+    receiver.stopTasks();
+}
+
 /* Pass to the next task when all the previous task's event-conditions are finished and verify if the session is finished */
 function nextTask(){
+    clearTimeout(timeout);
     task = task + 1;
     if(task > JSONTask.length - 1){
-        clearTimeout(timeout);
         dataManager.setDateEnd(Date.now());
         dataManager.save();
     } else {
