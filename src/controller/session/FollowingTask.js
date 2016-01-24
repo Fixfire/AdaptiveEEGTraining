@@ -1,5 +1,6 @@
 var starter = require("./sessionStarter");
 var events = require('events');
+var Controller = require('node-pid-controller');
 var packetEmitter;
 
 var level;
@@ -11,6 +12,7 @@ var time;
 var action;
 var timestamp;
 var id;
+var currentIntensity;
 
 /**
 * Class for handling the following task.
@@ -23,6 +25,8 @@ function FollowingTask(){
     this.functionType = "linear";
     this.variable = "attention";
     this.packetEmitter = new events.EventEmitter();
+    this.ctr = new Controller(0.25,0.01,0.01);
+    console.log(this.ctr);
 }
 
 /* Function called when a new packet arrives */
@@ -45,7 +49,7 @@ FollowingTask.prototype.checkPacket = function(packet,object) {
         currentVariable = packet.meditation;
     }
     
-    var currentIntensity;
+
     
     if(currentVariable > object.level){
         currentVariable = object.level;
@@ -54,17 +58,23 @@ FollowingTask.prototype.checkPacket = function(packet,object) {
     //Following functions
     if (object.functionType == "quadratic") {
         
-        currentIntensity = (object.intensity / object.level) * Math.pow(currentVariable,2) / 100;
-        
+        object.currentIntensity = (object.intensity / object.level) * Math.pow(currentVariable,2) / 100;
+         
     }  else if (object.functionType == "linear") {
         
-        currentIntensity = ((object.intensity) / object.level )* currentVariable;   
-        
-
+        object.currentIntensity = ((object.intensity) / object.level )* currentVariable;   
+     
+    } else if (object.functionType == "pid") {
+        if(object.currentIntensity == null){
+            object.currentIntensity = 100;   
+        }
+        console.log("CurrentVariable" + currentVariable);
+        object.ctr.setTarget(currentVariable);
+        object.currentIntensity = object.currentIntensity + object.ctr.update(object.currentIntensity);
     }
-    currentIntensity = 100 - currentIntensity;
+   object.currentIntensity = 100 - object.currentIntensity;
 
-    changeIntensity(object, currentIntensity);
+    changeIntensity(object, object.currentIntensity);
 }
 
 /* Start view's action */
