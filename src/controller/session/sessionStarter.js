@@ -95,6 +95,7 @@ function nextTask(){
     task = task + 1;
     if(task > JSONTask.length - 1){
         dataManager.setDateEnd(Date.now());
+        view.alert("endSession");
         dataManager.save();
     } else {
         checkInterval = setInterval(function(){
@@ -102,6 +103,7 @@ function nextTask(){
                 console.log("VIDEO or MUSIC ON");
             } else {
                 clearInterval(checkInterval);
+                view.alert("newTask");
                 setTimeout(function() {
                     newTask(task);
                 },3000);
