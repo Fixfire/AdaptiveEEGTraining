@@ -4,6 +4,7 @@ module.exports = View;
 
 var videoOn = false;
 var musicOn = false;
+var counter = 0;
 
 //Distinzione tra azioni
 View.prototype.actions = function( JSONaction ){
@@ -49,7 +50,7 @@ View.prototype.actions = function( JSONaction ){
     
     if(label == "light"){
         if(settings.color != undefined && settings.intensity != undefined){
-            this.setLights(settings.color, settings.intensity);
+            this.setLights(settings.color, settings.intensity, false);
         }
     }
 }
@@ -77,7 +78,7 @@ View.prototype.followingActions = function(JSONaction,action) {
     }
     
     if(label == "light"){
-        this.setLights(settings.color, settings.intensity);
+        this.setLights(settings.color, settings.intensity, true);
     }
 }
 
@@ -235,17 +236,23 @@ View.prototype.endMusic = function(){
     musicOn = false;
 }
 
-View.prototype.setLights = function( lightsColor, lightIntensity ){
-    console.log("LIGHTS ON");
+View.prototype.setLights = function( lightsColor, lightIntensity, isFollow ){
+    if(counter < 2 && isFollow){
+        counter++;
+    } else {
+        console.log("LIGHTS ON");
+        counter = 0;
     
-    /*var json = '{"Action":"EnvironmentAction", "Color":"' + lightsColor + '", "Luminosity":"' + lightIntensity + '"}';
+        /*var json = '{"Action":"EnvironmentAction", "Color":"' + lightsColor + '", "Brightness":"' + lightIntensity + '"}';
+
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:5050",
+            data: json,
+            dataType: "json"
+        });*/ 
+    }
     
-    $.ajax({
-        type: "POST",
-        url: "localhost:5050",
-        data: json,
-        dataType: "json"
-    });*/
 }
 
 function dateFormatter(date){
