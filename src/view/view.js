@@ -255,6 +255,28 @@ View.prototype.setLights = function( lightsColor, lightIntensity, isFollow ){
     
 }
 
+View.prototype.alert = function(type){
+    if(type == "newTask"){
+        var opt = {
+          type: "basic",
+          title: "ALERT",
+          message: "Task completed! A new task will start in 3 seconds",
+          iconUrl: "../../alert.jpg"
+        }
+
+        chrome.notifications.create("string notificationId", opt);
+    } else if (type == "endSession"){
+        var opt = {
+          type: "basic",
+          title: "ALERT",
+          message: "Session ended!",
+          iconUrl: "../../alert.jpg"
+        }
+
+        chrome.notifications.create("string notificationId", opt);
+    }
+}
+
 function dateFormatter(date){
     
     var dat = new Date(date);
