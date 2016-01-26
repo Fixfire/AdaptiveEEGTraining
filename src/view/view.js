@@ -243,14 +243,14 @@ View.prototype.setLights = function( lightsColor, lightIntensity, isFollow ){
         console.log("LIGHTS ON");
         counter = 0;
     
-        /*var json = '{"Action":"EnvironmentAction", "Color":"' + lightsColor + '", "Brightness":"' + lightIntensity + '"}';
+        var json = '{"Action":"EnvironmentAction", "Color":"' + lightsColor + '", "Brightness":"' + lightIntensity + '"}';
 
         $.ajax({
             type: "POST",
             url: "http://localhost:5050",
             data: json,
             dataType: "json"
-        });*/ 
+        });
     }
     
 }
