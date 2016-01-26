@@ -5,14 +5,15 @@
             "type":"custom",
             "when":{  
                "event":"attention",
-               "level":"50",
-               "time":"1",
-               "condition":"below"
+               "level":"0",
+               "time":"0",
+               "condition":"above"
             },
             "do":{  
                "0":{  
-                    "label":"light",
-                    "action":"on"
+                    "label":"video",
+                    "action":"load",
+                    "path":"../../media/video/giraffa.mp4"
                }
             }
          },
@@ -25,12 +26,7 @@
                "condition":"above"
             },
             "do":{  
-              "0":{  
-                    "label":"video",
-                    "action":"load",
-                    "path":"../../media/video/giraffa.mp4"
-               },
-                "1":{  
+              "0":{   
                     "label":"video",
                     "action":"play",
                     "path":"../../media/video/giraffa.mp4"
