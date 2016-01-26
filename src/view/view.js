@@ -107,10 +107,8 @@ View.prototype.updateActions = function( event ){
 			"column-3": 50,
 			"customBullet": ""
 		    };
-            
             if(event.action == "load"){
-                
-                point.customBullet = "icons/pause-icon.png";             
+                point.customBullet = "icons/pause-icon.jpg";             
             }
             if(event.action == "play"){
                 
