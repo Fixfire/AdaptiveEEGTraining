@@ -22,7 +22,7 @@
             "when":{  
                "event":"attention",
                "level":"30",
-               "time":"2",
+               "time":"5",
                "condition":"above"
             },
             "do":{  
@@ -36,7 +36,7 @@
       ],
       "options":{  
          "device":"pc",
-         "timeout":"10"
+         "timeout":"60"
       }
    },
    {  
@@ -45,20 +45,78 @@
             "type":"custom",
             "when":{  
                "event":"attention",
-               "level":"20",
-               "time":"1"
+               "level":"0",
+               "time":"0",
+               "condition":"above"
             },
             "do":{  
                "0":{  
-                  "label":"light",
-                  "action":"on"
+                    "label":"video",
+                    "action":"load",
+                    "path":"../../media/video/gatto.mp4"
+               }
+            }
+         },
+         {  
+            "type":"custom",
+            "when":{  
+               "event":"attention",
+               "level":"30",
+               "time":"5",
+               "condition":"above"
+            },
+            "do":{  
+              "0":{   
+                    "label":"video",
+                    "action":"play",
+                    "path":"../../media/video/gatto.mp4"
                }
             }
          }
       ],
       "options":{  
          "device":"pc",
-         "timeout":"3"
+         "timeout":"60"
+      }
+   },
+    {  
+      "main":[  
+         {  
+            "type":"custom",
+            "when":{  
+               "event":"attention",
+               "level":"0",
+               "time":"0",
+               "condition":"above"
+            },
+            "do":{  
+               "0":{  
+                    "label":"video",
+                    "action":"load",
+                    "path":"../../media/video/coccodrillo.mp4"
+               }
+            }
+         },
+         {  
+            "type":"custom",
+            "when":{  
+               "event":"attention",
+               "level":"30",
+               "time":"5",
+               "condition":"above"
+            },
+            "do":{  
+              "0":{   
+                    "label":"video",
+                    "action":"play",
+                    "path":"../../media/video/coccodrillo.mp4"
+               }
+            }
+         }
+      ],
+      "options":{  
+         "device":"pc",
+         "timeout":"60"
       }
    }
 ]
