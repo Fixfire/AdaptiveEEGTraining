@@ -1,5 +1,6 @@
-# AdaptiveEEGTraining
+# Adaptive 2EG Brain Training
 Advanced User Interfaces Project - Polimi
+Video presentation @ https://www.youtube.com/watch?v=b3ycm1e5eQY
 
 # Adapter's Driver Installation
 - Clone git repo https://github.com/volcacius/cylon-mindlfex.git in project's folder;
@@ -11,3 +12,5 @@ Advanced User Interfaces Project - Polimi
 # Starting Chrome App
 - If browser.js has been already created
 - In Chrome from chrome://extension, enable developer function -> Load Unpacked extension -> select project folder -> Active (To see console right click on the opened window -> inspect)
+- 
+# Install directly the Packed Chrome App
