@@ -101,7 +101,7 @@
             "type":"custom",
             "when":{  
                "event":"attention",
-               "level":"30",
+               "level":"80",
                "time":"5",
                "condition":"above"
             },
@@ -110,6 +110,86 @@
                     "label":"video",
                     "action":"play",
                     "path":"../../media/video/coccodrillo.mp4"
+               }
+            }
+         }
+      ],
+      "options":{  
+         "device":"pc",
+         "timeout":"60"
+      }
+    },
+    {  
+      "main":[  
+         {  
+            "type":"custom",
+            "when":{  
+               "event":"attention",
+               "level":"0",
+               "time":"0",
+               "condition":"above"
+            },
+            "do":{  
+               "0":{  
+                    "label":"video",
+                    "action":"load",
+                    "path":"../../media/video/delfino.mp4"
+               }
+            }
+         },
+         {  
+            "type":"custom",
+            "when":{  
+               "event":"attention",
+               "level":"80",
+               "time":"10",
+               "condition":"above"
+            },
+            "do":{  
+              "0":{   
+                    "label":"video",
+                    "action":"play",
+                    "path":"../../media/video/delfino.mp4"
+               }
+            }
+         }
+      ],
+      "options":{  
+         "device":"pc",
+         "timeout":"60"
+      }
+   },
+    {  
+      "main":[  
+         {  
+            "type":"custom",
+            "when":{  
+               "event":"attention",
+               "level":"0",
+               "time":"0",
+               "condition":"above"
+            },
+            "do":{  
+               "0":{  
+                    "label":"video",
+                    "action":"load",
+                    "path":"../../media/video/granchio.mp4"
+               }
+            }
+         },
+         {  
+            "type":"custom",
+            "when":{  
+               "event":"attention",
+               "level":"90",
+               "time":"7",
+               "condition":"above"
+            },
+            "do":{  
+              "0":{   
+                    "label":"video",
+                    "action":"play",
+                    "path":"../../media/video/granchio.mp4"
                }
             }
          }

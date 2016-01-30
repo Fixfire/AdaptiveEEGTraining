@@ -5,8 +5,8 @@
             "type":"follow",
             "when":{  
                "event":"relaxation",
-               "level":"85",
-               "time":"60"
+               "level":"60",
+               "time":"180"
             },
             "do":{  
                "0":{  
@@ -20,8 +20,8 @@
             "type":"follow",
             "when":{  
                "event":"relaxation",
-               "level":"85",
-               "time":"60"
+               "level":"60",
+               "time":"180"
             },
             "do":{  
                "0":{  
