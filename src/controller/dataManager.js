@@ -39,22 +39,23 @@ exports.save = function(){
     console.log("Date end: " + dateEnd);
     
     //TODO: Call Abilia DB
-    /*
+    
     var dbInitializer = '{"idTherapeuticCenter": "' + idTherapeuticCenter + '","idActivity": "'+ idActivity + '","idChild": "' + idChild + '","idTherapist": "' + idTherapist + '","idParent": "' + idParent + '","notes": "' + notes + '","rating": "' + rating + '","fieldList": {"timestamp":"DATETIME","attention": "INT(10)","relaxation": "INT(3)",“label”: “VARCHAR(32)”,"action": "VARCHAR(32)",“intensity”: “FLOAT”,“color”:”VARCHAR(32)”,“path”:”VARCHAR(100)”},"dateStart": "' + dateStart + '","dateEnd": "' + dateEnd + '","outcome": "' + outcome + '"}';
-    
+  /*  
     $.ajax({
-        type: "POST",
-        url: "url",             <---- INSERIRE URL SERVER --->
-        data: dbInitializer,
+        method: "POST",
+        crossDomain: true,
+        url: "http://bigbiggym.altervista.org/abiliaInit.php",             //<---- INSERIRE URL SERVER --->
+        data: {dbInitializer:dbInitializer},
         dataType: "json",
-        success: function() {
-    
+        success: function(response) {
+            console.log(response);
             var dataLogJSON = dataLog.createJSON();
 
             $.ajax({
                 type: "POST",
-                url: "url",             <---- INSERIRE URL SERVER --->
-                data: dataLogJSON,
+                url: "http://bigbiggym.altervista.org/abiliaDb.php",             //<---- INSERIRE URL SERVER --->
+                data: {log:dataLogJSON},
                 dataType: "json"
             });
 
@@ -62,8 +63,8 @@ exports.save = function(){
 
             $.ajax({
                 type: "POST",
-                url: "url",             <---- INSERIRE URL SERVER --->
-                data: actionLogJSON,
+                url: "http://bigbiggym.altervista.org/abiliaDb.php",             //<---- INSERIRE URL SERVER --->
+                data: {log:actionLogJSON},
                 dataType: "json"
             });
         1},
@@ -71,10 +72,10 @@ exports.save = function(){
             console.log("Error");
         }
     });
-    */
+    
 
 }
-
+*/
 exports.setDateStart = function(date){
     dateStart = date;
 }
