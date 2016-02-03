@@ -6,7 +6,7 @@ var videoOn = false;
 var musicOn = false;
 var counter = 0;
 
-//Distinzione tra azioni
+//Performing actions
 View.prototype.actions = function( JSONaction ){
     
     var settings = JSON.parse(JSONaction);
@@ -55,6 +55,7 @@ View.prototype.actions = function( JSONaction ){
     }
 }
 
+// Performing following actions
 View.prototype.followingActions = function(JSONaction,action) {
     
     var settings = JSON.parse(JSONaction);
@@ -82,7 +83,7 @@ View.prototype.followingActions = function(JSONaction,action) {
     }
 }
 
-
+// Update graph function when new packet is received
 View.prototype.updateGraph = function( packet ) {
     
     var chart1 = chrome.app.window.get("controlPanel").contentWindow.chart1;
@@ -96,6 +97,7 @@ View.prototype.updateGraph = function( packet ) {
     chart1.validateData();
 }
 
+// Update actions graph when new action is performed
 View.prototype.updateActions = function( event ){
         
         if(event.label == "video"){
@@ -146,7 +148,7 @@ View.prototype.updateActions = function( event ){
         }
     }
 
-//Metodi per gestione dei video
+/* Video management */
 View.prototype.videoOnScreen = function ( videoPath ){
         
         //pulisco schermo prima mettere nuovo video
@@ -187,7 +189,7 @@ View.prototype.endVideo = function(){
     videoOn = false;
 }
 
-//Metodi per la gestione della stanza
+/* Music management */
 function startMusic( musicPath, musicIntensity ) {
     $(".main-content").html("");
     
@@ -234,6 +236,7 @@ View.prototype.endMusic = function(){
     musicOn = false;
 }
 
+/*Magic K-Room management */
 View.prototype.setLights = function( lightsColor, lightIntensity, isFollow ){
     if(counter < 2 && isFollow){
         counter++;
@@ -253,6 +256,7 @@ View.prototype.setLights = function( lightsColor, lightIntensity, isFollow ){
     
 }
 
+// Alert viewer
 View.prototype.alert = function(type){
     if(type == "newTask"){
         var opt = {
@@ -275,41 +279,42 @@ View.prototype.alert = function(type){
     }
 }
 
+// Utility method to format a date
 function dateFormatter(date){
     
     var dat = new Date(date);
     
     var data = ""+dat.getFullYear()+"-";
     
-    // MESI
+    // MONTHS
     if((dat.getMonth()*1) <10 ){
         data += "0"+dat.getMonth()+"-";
     }else{
         data += dat.getMonth()+"-";
     }
     
-    // GIORNI
+    // DAYS
     if((dat.getDate()*1) <10 ){
         data += "0"+dat.getDate()+" ";
     }else{
         data += dat.getDate()+" ";
     }
     
-    //ORE
+    //HOURS
     if((dat.getHours()*1) <10 ){
         data += "0"+dat.getHours()+":";
     }else{
         data += dat.getHours()+":";
     }
 
-    //MINUTI
+    //MINUTES
     if((dat.getMinutes()*1) <10 ){
         data += "0"+dat.getMinutes()+":";
     }else{
         data += dat.getMinutes()+":";
     }
     
-    //SECONDI
+    //SECONDS
     if((dat.getSeconds()*1) <10 ){
         data += "0"+dat.getSeconds();
     }else{

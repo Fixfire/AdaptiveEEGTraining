@@ -69,7 +69,7 @@ FollowingTask.prototype.checkPacket = function(packet,object) {
             object.currentIntensity = 100;   
         }
         console.log("CurrentVariable" + currentVariable);
-        object.ctr.setTarget(currentVariable);
+        object.ctr.setTarget(((object.intensity) / object.level )*currentVariable);
         object.currentIntensity = object.currentIntensity + object.ctr.update(object.currentIntensity);
     }
    object.currentIntensity = 100 - object.currentIntensity;

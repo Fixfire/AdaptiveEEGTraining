@@ -21,7 +21,6 @@ target
 /.project
 /.settings
 /RUNNING_PID
-/bin/
 /logs/
 /.cache
 /project/activator-sbt-eclipse-shim.sbt
