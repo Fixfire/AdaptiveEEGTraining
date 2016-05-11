@@ -82,8 +82,8 @@ function timeoutActions(){
         console.log("timout: " + view.isVideoPlayed())
         view.endVideo();
     }
-    // Maybe this is useless
-    if (!view.isMusicPlayed()){
+    // Maybe this is useless, but it is necessary to stop correctly the music
+    if (view.isMusicPlayed()){
         view.endMusic();
     }
     receiver.stopTasks();
@@ -99,7 +99,7 @@ function nextTask(){
         dataManager.save();
     } else {
         checkInterval = setInterval(function(){
-            if (view.isMusicOn() || view.isVideoOn()){
+            if (/*view.isMusicOn() ||*/ view.isVideoOn()){
                 console.log("VIDEO or MUSIC ON");
             } else {
                 clearInterval(checkInterval);
