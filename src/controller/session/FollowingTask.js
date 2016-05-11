@@ -73,6 +73,9 @@ FollowingTask.prototype.checkPacket = function(packet,object) {
         object.currentIntensity = object.currentIntensity + object.ctr.update(object.currentIntensity);
     }
    object.currentIntensity = 100 - object.currentIntensity;
+    if(object.currentIntensity < 0){
+        object.currentIntensity = 0;
+    }
 
     changeIntensity(object, object.currentIntensity);
 }
