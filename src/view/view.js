@@ -234,6 +234,7 @@ View.prototype.isMusicPlayed = function() {
 
 View.prototype.endMusic = function(){
     musicOn = false;
+    stopMusic();
 }
 
 /*Magic K-Room management */
