@@ -12,7 +12,8 @@
                "0":{  
                   "label":"light",
                   "intensity":"100",
-                   "responsive_function":"linear"
+                   "color":"#0000ff",
+                   "responsive_function":"pid"
                }
             }
          },
