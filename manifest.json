@@ -16,7 +16,8 @@
 
   "permissions": [
     "serial",
-    "notifications"
+    "notifications",
+    "<all_urls>"  
   ]
 
 }
