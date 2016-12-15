@@ -245,11 +245,11 @@ View.prototype.setLights = function( lightsColor, lightIntensity, isFollow ){
         console.log("LIGHTS ON");
         counter = 0;
     
-        var json = '{"Action":"EnvironmentAction", "Color":"' + lightsColor + '", "Brightness":"' + lightIntensity + '"}';
+        var json = '{"Action":"LightCommand", "Color":"' + lightsColor + '", "Brightness":"' + parseInt(lightIntensity) + '"}';
 
         $.ajax({
             type: "POST",
-            url: "http://localhost:5050",
+            url: "http://localhost:7070",
             data: json,
             dataType: "json"
         });
