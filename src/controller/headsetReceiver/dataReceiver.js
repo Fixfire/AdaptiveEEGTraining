@@ -38,6 +38,10 @@ exports.startReceiving = function() {
     startConnection();
 }
 
+exports.stopReceiving = function() {
+    stopConnection();
+}
+
 //Stop all the current rule for the current task.
 exports.stopTasks = function(){
     if (listeners.length != 0){ 
@@ -60,6 +64,10 @@ exports.getAdapter = function() {
 
 function startConnection() {
     adapter.on("packet",newPacket);
+}
+
+function stopConnection() {
+    adapter.close();
 }
 
 // Function called when a new packet is received. It spread the packet to all the units that need it.
